@@ -33,6 +33,12 @@ A plataforma serve apenas como um meio de contato entre anunciantes e compradore
 
 ![MER](./imagens/MER/MER.png)
 
+## Prototipação
+
+![Foto1](./imagens/Prototipacao/Foto1.jpeg)
+
+![Foto2](./imagens/Prototipacao/Foto2.jpeg)
+
 ## Integrantes
 [Ecthor Silva](https://github.com/EcthorSilva),
 [Gulherme Soares](https://github.com/Guisoaresz13),
