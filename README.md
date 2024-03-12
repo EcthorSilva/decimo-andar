@@ -38,11 +38,11 @@ A plataforma serve apenas como um meio de contato entre anunciantes e compradore
 
 ![Foto3](./imagens/Prototipacao/Foto3.jpg)
 
-![Foto4](./imagens/Prototipacao/Foto4.jpeg)
+![Foto4](./imagens/Prototipacao/Foto4.jpg)
 
 ![Foto1](./imagens/Prototipacao/Foto1.jpeg)
 
-![Foto2](./imagens/Prototipacao/Foto2.jpg)
+![Foto2](./imagens/Prototipacao/Foto2.jpeg)
 
 ![Foto5](./imagens/Prototipacao/Foto5.jpg)
 
