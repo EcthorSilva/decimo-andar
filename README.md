@@ -35,9 +35,18 @@ A plataforma serve apenas como um meio de contato entre anunciantes e compradore
 
 ## Prototipação
 
+
+![Foto3](./imagens/Prototipacao/Foto3.jpeg)
+
+![Foto4](./imagens/Prototipacao/Foto4.jpeg)
+
 ![Foto1](./imagens/Prototipacao/Foto1.jpeg)
 
 ![Foto2](./imagens/Prototipacao/Foto2.jpeg)
+
+![Foto5](./imagens/Prototipacao/Foto5.jpeg)
+
+![Foto6](./imagens/Prototipacao/Foto6.jpeg)
 
 ## Integrantes
 [Ecthor Silva](https://github.com/EcthorSilva),
