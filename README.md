@@ -48,6 +48,10 @@ A plataforma serve apenas como um meio de contato entre anunciantes e compradore
 
 ![Foto6](./imagens/Prototipacao/Foto6.jpg)
 
+## Logotipo Decimo andar
+
+![Logotipo](./imagens/Logotipo/logotipo.png)
+
 ## Integrantes
 [Ecthor Silva](https://github.com/EcthorSilva),
 [Gulherme Soares](https://github.com/Guisoaresz13),
