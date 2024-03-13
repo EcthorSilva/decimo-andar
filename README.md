@@ -52,6 +52,11 @@ A plataforma serve apenas como um meio de contato entre anunciantes e compradore
 
 ![Logotipo](./imagens/Logotipo/logotipo.png)
 
+## Caso de Uso
+
+![Diagrama de caso de uso](./imagens/Caso%20de%20uso/Décimo%20Andar%20Caso%20de%20USO.png)
+
+
 ## Integrantes
 [Ecthor Silva](https://github.com/EcthorSilva),
 [Gulherme Soares](https://github.com/Guisoaresz13),
