@@ -9,9 +9,7 @@
     <!-- Main Common File -->
     <link rel="stylesheet" href="vendor/css/common.css" />
     <!-- Main File For CSS -->
-    <link rel="stylesheet" href="vendor/css/style.css" />
-
-    <link rel="icons" href="vendor/bootstrap/bootstrap-icons/font/bootstrap-icons.min.css"/>
+    <link rel="stylesheet" href="vendor/custom/style.css" />
   </head>
 
   <body>
@@ -28,8 +26,41 @@
           <li><a href="#" class="nav-link px-2 link-dark">Ajuda</a></li>
           <li><a href="#" class="nav-link px-2 link-dark">Sobre nós</a></li>
         </ul>
-
-        <button type="button" class="btn btn-outline-secondary me-2 d-block text-decoration-none rounded-pill" style="width: 90px; height: 40px;">Login</button>
+        
+        <!-- Caso o usuario não esteja logado -->
+        <li class="botao1 list-group-item nav-item">
+          <a href="../pages/login.html" class="btn btn-outline-secondary me-2 d-block text-decoration-none rounded-pill" style="width: 90px; height: 40px;">Login</a>
+        </li>
+        <!-- Caso o usuario já tenha logado -->
+        <li class="botao2 list-group-item nav-item dropdown-custom visually-hidden">
+          <a href="#" class="d-block link-body-emphasis text-decoration-none" data-bs-toggle="dropdown" aria-expanded="false">
+            <img src="assets/images/perfil/2.jpg" alt="mdo" width="50px" height="50px" class="rounded-circle">
+          </a>
+          <ul class="dropdown-menu  gap-1 p-2 rounded-3 mx-0 shadow w-220px">
+            <li>
+              <a class="dropdown-item rounded-2" href="#">
+              <img src="/vendor/bootstrap/bootstrap-icons/person.svg" alt="" width="20px" title="Perfil">
+                &nbsp; Perfil</a></li>
+            <li>
+              <a class="dropdown-item rounded-2" href="#">
+                <img src="/vendor/bootstrap/bootstrap-icons/heart.svg" alt="" title="Favoritos">
+                &nbsp; Favoritos
+              </a></li>
+            <li>
+              <a class="dropdown-item rounded-2" href="#">
+                <img src="/vendor/bootstrap/bootstrap-icons/gear.svg" alt="" title="Configuração">
+                &nbsp; Configuração</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li>
+              <a class="dropdown-item d-flex gap-2 align-items-center" href="#">
+                <img src="/vendor/bootstrap/bootstrap-icons/box-arrow-left.svg" alt="" title="logout">
+                &nbsp; logout
+              </a>
+            </li>
+          </ul>
+        </li>
       </div>
     </header>
 
@@ -86,7 +117,6 @@
         </div>
       </section>
     </main>
-    
     <!-- Start Footer -->
     <footer class="container">
       <!-- Disclaimer -->
@@ -98,7 +128,7 @@
         </div>
         <div class="col mb-3"></div>
         <div class="col mb-3">
-          <h5>Sobre nós</h5>
+          <h5>Institucional</h5>
           <ul class="nav flex-column">
             <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Sobre o DecimoAndar</a></li>
             <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Sua segurança</a></li>
@@ -118,13 +148,11 @@
           </ul>
         </div>
         <div class="col mb-1">
-          <h5>Segurança</h5>
+          <h5>Suporte</h5>
           <ul class="nav flex-column">
-            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Politica de Privacidade</a></li>
-            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Termos e condições de uso</a></li>
-            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Política de Cookies</a></li>
-            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Preferências de cookies</a></li>
-            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Manual do usuário</a></li>
+            <li class="nav-item mb-2 text-muted">Segunda à sexta das 8:00 às 17:00</li>
+            <li class="nav-item mb-2 text-muted">(11) 91234-5678</li>
+            <li class="nav-item mb-2 text-muted">suporte@decimoandar.com</li>
           </ul>
         </div>
       </div>
