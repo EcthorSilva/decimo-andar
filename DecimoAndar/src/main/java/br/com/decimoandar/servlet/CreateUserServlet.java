@@ -30,8 +30,20 @@ public class CreateUserServlet extends HttpServlet {
         User user = objectMapper.readValue(jsonData, User.class);
 
         UserDao userDao = new UserDao();
-        userDao.createUser(user);
 
-        response.sendRedirect("/index.html");
+        if (userDao.emailExists(user.getEmail())) {
+            // Enviar resposta de erro para o frontend
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "E-mail já está em uso.");
+            System.out.printf("O E-mail %s já esta em uso \n", user.getEmail());
+            return;
+        }
+        if (userDao.docExists(user.getDocPfPj())) {
+            // Enviar resposta de erro para o frontend
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "CPF/CNPJ já está em uso.");
+            System.out.printf("O doc %s já esta em uso \n", user.getDocPfPj());
+            return;
+        }
+        userDao.createUser(user);
+        response.sendRedirect("/pages/login.html");
     }
 }
