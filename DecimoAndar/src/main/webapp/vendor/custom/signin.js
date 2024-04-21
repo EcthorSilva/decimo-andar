@@ -142,21 +142,38 @@ document.addEventListener("DOMContentLoaded", function () {
                     .then(response => {
                         if (response.ok) {
                             console.log("Dados enviados com sucesso!");
-                            window.location.href = "/";
+                            window.location.href = "/pages/login.html";
                         } else {
-                            //throw new Error('Erro ao enviar os dados.');
-                            window.location.href = "/";
+                            console.log("Capturando o erro do backend...")
+                            return response.text();
                         }
                     })
                     .catch(error => {
-                        //console.error('Erro ao enviar os dados:', error);
-                        //exibirErro('Erro ao enviar os dados: ' + error.message);
-                        window.location.href = "/";
+                        console.error('Erro ao enviar os dados:', error);
+                        exibirErro('Erro ao enviar os dados: ' + error.message);
+                    })
+                    .then(errorMessage => {
+                        if (errorMessage) {
+                            // Extrair a mensagem de erro do HTML
+                            var errorText = extractError(errorMessage);
+                            // Exibir a mensagem de erro para o usuário
+                            exibirErro(errorText);
+                        }
                     });
             }
         }
     });
-
+    // Função para extrair a mensagem de erro do HTML
+    function extractError(htmlMessage) {
+        var parser = new DOMParser();
+        var doc = parser.parseFromString(htmlMessage, 'text/html');
+        var h1Element = doc.querySelector('h1');
+        if (h1Element) {
+            return h1Element.textContent;
+        } else {
+            return "Ocorreu um erro desconhecido.";
+        }
+    }
     // Event listener para os radio buttons
     var radioButtons = document.querySelectorAll('input[type="radio"]');
     radioButtons.forEach(function (radio) {
@@ -178,5 +195,3 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 });
-
-console.log("Script de validação de formulário de cadastro carregado com sucesso!");
