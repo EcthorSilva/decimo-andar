@@ -32,6 +32,6 @@ public class CreateUserServlet extends HttpServlet {
         UserDao userDao = new UserDao();
         userDao.createUser(user);
 
-        response.sendRedirect("/pages");
+        response.sendRedirect("/index.html");
     }
 }

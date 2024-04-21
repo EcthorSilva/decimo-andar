@@ -157,6 +157,19 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
+    // Event listener para os radio buttons
+    var radioButtons = document.querySelectorAll('input[type="radio"]');
+    radioButtons.forEach(function (radio) {
+        radio.addEventListener("change", function () {
+            var docSelectLabel = document.querySelector('label[for="doc-select"]');
+            if (radio.value === "cpf") {
+                docSelectLabel.textContent = "CPF";
+            } else if (radio.value === "cnpj") {
+                docSelectLabel.textContent = "CNPJ";
+            }
+        });
+    });
+
     var campos = document.querySelectorAll('input[type="text"], input[type="email"], input[type="password"]');
     campos.forEach(function (campo) {
         campo.addEventListener("focus", function () {
