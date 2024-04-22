@@ -29,9 +29,9 @@ Validação de documentos para compradores para garantir um ambiente seguro para
 O Décimo Andar não é responsável pela venda ou locação de imóveis.  
 A plataforma serve apenas como um meio de contato entre anunciantes e compradores.
 
-## Modelo Entidade-Relacionamento
+## Modelo Fisico Banco de dados 
 
-![MER](./imagens/MER/MER.png)
+
 
 ## Prototipação
 
