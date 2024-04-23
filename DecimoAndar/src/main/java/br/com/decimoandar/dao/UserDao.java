@@ -42,6 +42,36 @@ public class UserDao {
 
     }
 
+    public void deleteUser(User user){
+
+        try {
+            String SQL = "DELETE FROM DECIMO_ANDAR.Usuario WHERE ID = ?";
+
+            Connection connection = DriverManager.getConnection("jdbc:h2:~/test", "sa","sa");
+
+            if (connection != null) {
+                System.out.println("Success in database connection");
+            } else {
+                System.out.println("Failed to connect to the database");
+                return;
+            }
+
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+
+            preparedStatement.setInt(1, user.getIdUser());
+
+            preparedStatement.execute();
+
+            System.out.println("Success in delete user");
+
+            connection.close();
+
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+
+    }
+
     public boolean emailExists(String email) {
         try {
             String SQL = "SELECT COUNT(*) FROM CADASTRO WHERE EMAIL = ?";
