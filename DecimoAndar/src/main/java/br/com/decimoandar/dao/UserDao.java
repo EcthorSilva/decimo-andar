@@ -105,4 +105,22 @@ public class UserDao {
         }
         return false;
     }
+
+    public boolean validateCredentials(String email, String password) {
+        try {
+            String SQL = "SELECT COUNT(*) FROM DECIMO_ANDAR.USUARIO WHERE EMAIL = ? AND SENHA = ?";
+            Connection connection = DriverManager.getConnection("jdbc:h2:~/test", "sa", "sa");
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+            preparedStatement.setString(1, email);
+            preparedStatement.setString(2, password);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt(1) > 0;
+            }
+            connection.close();
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return false;
+    }
 }
