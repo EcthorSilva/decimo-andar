@@ -12,7 +12,7 @@ public class UserDao {
     public void createUser(User user){
 
         try {
-            String SQL = "INSERT INTO CADASTRO (NAME, EMAIL, DOC, PASSWORD) VALUES (?, ?, ?, ?)";
+            String SQL = "INSERT INTO DECIMO_ANDAR.Usuario (NOME_COMPLETO, EMAIL, CPF_CNPJ, SENHA) VALUES (?, ?, ?, ?)";
 
             Connection connection = DriverManager.getConnection("jdbc:h2:~/test", "sa","sa");
 
