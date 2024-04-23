@@ -31,7 +31,7 @@ A plataforma serve apenas como um meio de contato entre anunciantes e compradore
 
 ## Modelo Fisico Banco de dados 
 
-
+![Modelo_Fisico](./imagens/Modelo%20Físico/Modelo_Fisico.jpg)
 
 ## Prototipação
 
