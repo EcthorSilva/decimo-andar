@@ -42,6 +42,28 @@ public class UserDao {
 
     }
 
+    public void readUser(User user) {
+        try {
+            String SQL = "SELECT NOME_COMPLETO, EMAIL, CPF_CNPJ FROM DECIMO_ANDAR.USUARIO WHERE ID = ?";
+            Connection connection = DriverManager.getConnection("jdbc:h2:~/test", "sa", "sa");
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+            preparedStatement.setInt(1, user.getIdUser());
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                user.setName(resultSet.getString("NOME_COMPLETO"));
+                user.setEmail(resultSet.getString("EMAIL"));
+                user.setDocPfPj(resultSet.getString("CPF_CNPJ"));
+                return true;
+            }
+            connection.close();
+            return false;
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+            return false;
+        }
+    }
+
     public void UpdateUser(User user){
         try{
             String SQL = "UPDADE DECIMO_ANDAR.Usarios SET NOME_COMPLETO = ?" +
