@@ -42,6 +42,42 @@ public class UserDao {
 
     }
 
+    public void UpdateUser(User user){
+        try{
+            String SQL = "UPDADE DECIMO_ANDAR.Usarios SET NOME_COMPLETO = ?" +
+                                                          "EMAIL = ?" +
+                                                          "CPF_CNPJ = ? " +
+                                                          "SENHA = ?" +
+                                                          "WHERE ID = ?";
+
+            Connection connection = DriverManager.getConnection("jdbc:h2:~/test", "sa","sa");
+
+            if (connection != null) {
+                System.out.println("Success in database connection");
+            } else {
+                System.out.println("Failed to connect to the database");
+                return;
+            }
+
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+
+            preparedStatement.setString(1, user.getName());
+            preparedStatement.setString(2, user.getEmail());
+            preparedStatement.setString(3, user.getDocPfPj());
+            preparedStatement.setString(4, user.getPassword());
+            preparedStatement.setInt(5, user.getIdUser());
+
+            preparedStatement.execute();
+
+            System.out.println("Success in insert user");
+
+            connection.close();
+
+        }catch (Exception ex){
+            System.out.println("Falha ao fazer o update no usuarios" + ex.getMessage());
+        }
+    }
+
     public void deleteUser(User user){
 
         try {
