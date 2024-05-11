@@ -18,15 +18,12 @@ public class LoginServlet extends HttpServlet {
 
         UserDao userDao = new UserDao();
 
-        // Gera um nome aleatorio para o cookie da sessão
-        String cookieName = "session_" + UUID.randomUUID().toString();
-
         // Verificar as credenciais do usuário no banco de dados
         int userId = userDao.getUserId(email, password);
 
         if (userId != -1) {
             // Criar uma sessão e armazenar informações do usuário, incluindo o ID
-            Cookie loginCookie = new Cookie(cookieName, String.valueOf(userId));
+            Cookie loginCookie = new Cookie("userCookie", String.valueOf(userId));
             loginCookie.setMaxAge(30*60); //setting cookie to expiry in 30 mins
             response.addCookie(loginCookie);
 
