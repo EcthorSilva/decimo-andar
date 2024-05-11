@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
         for (var i = 0; i < cookies.length; i++) {
             var cookie = cookies[i].trim();
             // Verifica se o cookie começa com o prefixo correto
-            if (cookie.startsWith('session_')) {
+            if (cookie.startsWith('userCookie')) {
                 return true; // O cookie de sessão está presente
             }
         }
