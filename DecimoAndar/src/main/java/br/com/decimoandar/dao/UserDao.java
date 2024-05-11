@@ -54,13 +54,10 @@ public class UserDao {
                 user.setName(resultSet.getString("NOME_COMPLETO"));
                 user.setEmail(resultSet.getString("EMAIL"));
                 user.setDocPfPj(resultSet.getString("CPF_CNPJ"));
-                return true;
             }
             connection.close();
-            return false;
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
-            return false;
         }
     }
 
