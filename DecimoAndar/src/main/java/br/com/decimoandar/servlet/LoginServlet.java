@@ -4,11 +4,9 @@ import br.com.decimoandar.dao.UserDao;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.*;
 import java.io.IOException;
+import java.util.UUID;
 
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
@@ -20,13 +18,17 @@ public class LoginServlet extends HttpServlet {
 
         UserDao userDao = new UserDao();
 
-        // Verificar as credenciais do usuário no banco de dados
-        boolean isValidCredentials = userDao.validateCredentials(email, password);
+        // Gera um nome aleatorio para o cookie da sessão
+        String cookieName = "session_" + UUID.randomUUID().toString();
 
-        if (isValidCredentials) {
-            // Criar uma sessão e armazenar informações do usuário
-            HttpSession session = request.getSession();
-            session.setAttribute("email", email);
+        // Verificar as credenciais do usuário no banco de dados
+        int userId = userDao.getUserId(email, password);
+
+        if (userId != -1) {
+            // Criar uma sessão e armazenar informações do usuário, incluindo o ID
+            Cookie loginCookie = new Cookie(cookieName, String.valueOf(userId));
+            loginCookie.setMaxAge(30*60); //setting cookie to expiry in 30 mins
+            response.addCookie(loginCookie);
 
             // Redirecionar para a página do perfil do usuário
             response.sendRedirect("/pages/profile.html");
