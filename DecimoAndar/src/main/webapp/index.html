@@ -173,10 +173,88 @@
     <!-- Bootstrap -->
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- FontAwesome Libirary JS -->
-    <script src="vendor/js/all.min.js"></script>
-    <!-- Main File For JS -->
-    <script src="vendor/js/main.js"></script>
-
     <script src="vendor/custom/custom-main.js"></script>
+
+    <!-- Modal Body -->
+    <div class="modal fade" id="modalId" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog"
+      aria-labelledby="modalTitleId" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered " role="document">
+        <div class="modal-content rounded-3 shadow">
+          <div class="modal-body p-4 text-center">
+            <p class="mb-0">Para garantir uma experiência personalizada e de qualidade, <br> utilizamos cookies de acordo
+              com nossa <a href="#" class="text-body">Política de Privacidade</a>.
+              Os cookies são essenciais para o funcionamento adequado do site, e não é possível recusá-los. <br></p>
+          </div>
+          <div class="modal-footer flex-nowrap p-0 justify-content-center ">
+            <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 m-0 rounded-0"
+              data-bs-dismiss="modal">Entendi</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <div class="col-md-4 mb-3">
+      <div class="card">
+          <div id="carouselId" class="carousel slide" data-bs-ride="carousel">
+              <ol class="carousel-indicators">
+                  <li data-bs-target="#carouselId" data-bs-slide-to="0" class="active" aria-current="true"
+                      aria-label="First slide"></li>
+                  <li data-bs-target="#carouselId" data-bs-slide-to="1" aria-label="Second slide"></li>
+                  <li data-bs-target="#carouselId" data-bs-slide-to="2" aria-label="Third slide"></li>
+              </ol>
+              <div class="carousel-inner" role="listbox">
+                  <div class="carousel-item active">
+                      <img src="/assets/images/imagem1.jpg" class="w-100 d-block" alt="First slide" height="300" width="200"/>
+                  </div>
+                  <div class="carousel-item">
+                      <img src="/assets/images/imagem2.jpg" class="w-100 d-block" alt="Second slide" height="300" width="200"/>
+                  </div>
+                  <div class="carousel-item">
+                      <img src="/assets/images/imagem3.jpg" class="w-100 d-block" alt="Third slide" height="300" width="200"/>
+                  </div>
+              </div>
+              <button class="carousel-control-prev" type="button" data-bs-target="#carouselId" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Previous</span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#carouselId" data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Next</span>
+              </button>
+          </div>
+          <div class="card-body">
+              <h5 class="card-title">Apartamento 2</h5>
+              <p class="card-text">
+                  R$ 7.331 total<br>
+                  R$ 5.000 aluguel<br>
+                  140 m² 2 quartos. 1 vaga<br>
+                  Avenida Brigadeiro Luís Antô...
+              </p>
+              <a href="#" class="btn btn-primary">Ver Mais</a>
+          </div>
+      </div>
+  </div>
+
+
+
+
+    <script>
+      // Verifica se o modal já foi exibido antes usando cookies
+      function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+      }
+      const modalShown = getCookie('modalShown');
+      if (!modalShown) {
+        const myModal = new bootstrap.Modal(document.getElementById("modalId"));
+        myModal.show();
+        // Define um cookie indicando que o modal já foi exibido
+        document.cookie = "modalShown=true; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/";
+      }
+    </script>
+
   </body>
 </html>
