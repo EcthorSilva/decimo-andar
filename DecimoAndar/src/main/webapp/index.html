@@ -178,5 +178,40 @@
     <script src="vendor/js/main.js"></script>
 
     <script src="vendor/custom/custom-main.js"></script>
+
+    <!-- Modal Body -->
+    <div class="modal fade" id="modalId" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog"
+      aria-labelledby="modalTitleId" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered " role="document">
+        <div class="modal-content rounded-3 shadow">
+          <div class="modal-body p-4 text-center">
+            <p class="mb-0">Para garantir uma experiência personalizada e de qualidade, <br> utilizamos cookies de acordo
+              com nossa <a href="#" class="text-body">Política de Privacidade</a>.
+              Os cookies são essenciais para o funcionamento adequado do site, e não é possível recusá-los. <br></p>
+          </div>
+          <div class="modal-footer flex-nowrap p-0 justify-content-center ">
+            <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 m-0 rounded-0"
+              data-bs-dismiss="modal">Entendi</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Verifica se o modal já foi exibido antes usando cookies
+      function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+      }
+      const modalShown = getCookie('modalShown');
+      if (!modalShown) {
+        const myModal = new bootstrap.Modal(document.getElementById("modalId"));
+        myModal.show();
+        // Define um cookie indicando que o modal já foi exibido
+        document.cookie = "modalShown=true; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/";
+      }
+    </script>
+
   </body>
 </html>
