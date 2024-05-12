@@ -14,7 +14,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 
 @WebServlet("/create-imovel")
-public class ImovelServelet extends HttpServlet {
+public class ImovelServlet extends HttpServlet {
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
