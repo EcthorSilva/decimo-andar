@@ -97,7 +97,28 @@ document.addEventListener('DOMContentLoaded', () => {
         if (dados) {
             console.log("Dados do formulário a serem enviados:");
             console.log(JSON.stringify(dados));
-            // Aqui você pode enviar os dados do formulário para o servidor
+
+            // Enviar dados para a servlet usando fetch
+            fetch('/create-imovel', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(dados),
+            })
+            .then(response => {
+                if (response.ok) {
+                    console.log("DADOS ENVIADOS COM SUCESSO");
+                    window.location.href = "/pages/profile.html";
+                } else {
+                    console.log("Erro no backend...");
+                    return response.text();
+                }
+            })
+            .catch(error => {
+                console.log('Erro ao enviar os dados:', error);
+                alert('Erro ao enviar os dados: ' + error.message);
+            });
         }
     });
 });
