@@ -1,14 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
     const cepInput = document.getElementById('cep');
     const logradouroInput = document.getElementById('endereco');
-    const termosCheckbox = document.getElementById('form2Example3cg');
 
     // Função para consultar o CEP e preencher automaticamente os campos de endereço
     async function consultarCEP() {
         const cep = cepInput.value.replace(/\D/g, '');
 
         if (cep.length !== 8) {
-            exibirErro('Por favor, digite um CEP válido com 8 dígitos.');
+            alert('Por favor, digite um CEP válido com 8 dígitos.');
             return;
         }
 
@@ -17,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const data = await response.json();
 
             if (data.erro) {
-                exibirErro('CEP não encontrado.');
+                alert('CEP não encontrado.');
             } else {
                 logradouroInput.value = data.logradouro;
                 document.getElementById('cidade').value = data.localidade;
@@ -25,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         } catch (error) {
             console.error('Erro ao consultar o CEP:', error);
-            exibirErro('Ocorreu um erro ao consultar o CEP. Por favor, tente novamente.');
+            alert('Ocorreu um erro ao consultar o CEP. Por favor, tente novamente.');
         }
     }
 
@@ -36,16 +35,6 @@ document.addEventListener('DOMContentLoaded', () => {
             await consultarCEP();
         }
     });
-
-    function exibirErro(mensagem) {
-        var errorDiv = document.querySelector('.alert-danger');
-        errorDiv.textContent = mensagem;
-        errorDiv.classList.remove('visually-hidden');
-
-        setTimeout(function () {
-            errorDiv.classList.add('visually-hidden');
-        }, 3000);
-    }
 
     function verificarCampos(){
         var tipoImovel = document.getElementById("tipoImovel").value.trim();
@@ -62,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
         var descricaoImovel = document.getElementById("descricaoImovel").value.trim();
 
         if(tipoImovel === "" || tipoVenda === "" || valor === "" || endereco === "" || numero === "" || cidade === "" || uf === "" || cep === "" || numQuartos === "" || numBanheiros === "" || metrosQuadrados === "" || descricaoImovel === ""){
-           exibirErro("Todos os campos são obrigatórios.");
+           alert("Todos os campos são obrigatórios.");
            return null; // Retorna null em caso de campos em branco
         }
 
@@ -82,14 +71,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    document.getElementById('enviaranuncio').addEventListener("click", function() {
+    document.querySelector('.btn-outline-secondary').addEventListener("click", function() {
         console.log("Botão clicado!");
-
-        // Verifica se o cliente concordou com os termos
-        if (!termosCheckbox.checked) {
-            exibirErro("Por favor, leia e concorde com os termos e condições.");
-            return;
-        }
 
         // Chama a função para verificar os campos
         var dados = verificarCampos();
@@ -97,7 +80,28 @@ document.addEventListener('DOMContentLoaded', () => {
         if (dados) {
             console.log("Dados do formulário a serem enviados:");
             console.log(JSON.stringify(dados));
-            // Aqui você pode enviar os dados do formulário para o servidor
+
+            // Enviar dados para a servlet usando fetch
+            fetch('/create-imovel', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(dados),
+            })
+            .then(response => {
+                if (response.ok) {
+                    console.log("DADOS ENVIADOS COM SUCESSO");
+                    window.location.href = "/pages/profile.html";
+                } else {
+                    console.log("Erro no backend...");
+                    return response.text();
+                }
+            })
+            .catch(error => {
+                console.log('Erro ao enviar os dados:', error);
+                //alert('Erro ao enviar os dados: ' + error.message);
+            });
         }
     });
 });
