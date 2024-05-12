@@ -4,14 +4,12 @@ package br.com.decimoandar.servlet;
 import br.com.decimoandar.dao.ImovelDao;
 import br.com.decimoandar.model.Imovel;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import sun.tools.jconsole.JConsole;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.sql.rowset.serial.SerialException;
 import java.io.BufferedReader;
 import java.io.IOException;
 

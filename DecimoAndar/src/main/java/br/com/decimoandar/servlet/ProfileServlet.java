@@ -29,11 +29,11 @@ public class ProfileServlet extends HttpServlet {
         userDao.readUser(user);
 
         // Imprimindo os dados do usuário para debug
-        System.out.println("Dados do usuário recuperados:");
-        System.out.println("ID: " + user.getIdUser());
-        System.out.println("Nome: " + user.getName());
-        System.out.println("Email: " + user.getEmail());
-        System.out.println("CPF/CNPJ: " + user.getDocPfPj());
+        //System.out.println("Dados do usuário recuperados:");
+        //System.out.println("ID: " + user.getIdUser());
+        //System.out.println("Nome: " + user.getName());
+        //System.out.println("Email: " + user.getEmail());
+        //System.out.println("CPF/CNPJ: " + user.getDocPfPj());
 
         // Criando o JSON com os dados do usuário
         String json = "{\"id\": " + user.getIdUser() +
