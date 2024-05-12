@@ -41,4 +41,17 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     updateButtonVisibility();
+
+    // Adicionando a função de logout ao clique do botão de logout
+    document.getElementById("logoutButton").addEventListener("click", function() {
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", "/logout", true);
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                // atualiza a pagina
+                window.location.reload();
+            }
+        };
+        xhr.send();
+    });
 });
