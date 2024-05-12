@@ -9,9 +9,9 @@ import java.sql.PreparedStatement;
 
 public class ImovelDao {
 
-    public void createImovel(Imovel imovel){
+    public void createImovel(Imovel imovel, int userId){
         try {
-            String SQL = "INSERT INTO DECIMO_ANDAR.IMOVEL (TIPO, LOGRADOURO, METROSQUADRADOS, QUANTIDADEQUARTOS, QUANTIDADEBANHEIROS, CEP, DESCRICAO) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            String SQL = "INSERT INTO DECIMO_ANDAR.IMOVEL (TIPO, LOGRADOURO, METROSQUADRADOS, QUANTIDADEQUARTOS, QUANTIDADEBANHEIROS, CEP, DESCRICAO, USER_ID) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
             Connection connection = DriverManager.getConnection("jdbc:h2:~/test", "sa","sa");
 
@@ -32,8 +32,11 @@ public class ImovelDao {
             preparedStatement.setString(6, imovel.getCep());
             preparedStatement.setString(7, imovel.getDescricaoImovel());
 
+            // Definindo o ID do usuário no banco de dados
+            preparedStatement.setInt(8, userId);
+
             preparedStatement.execute();
-            System.out.println("Success in insert user");
+            System.out.println("Success in insert imovel");
 
             connection.close();
         } catch (Exception e) {
