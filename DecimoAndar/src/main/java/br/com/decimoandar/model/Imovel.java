@@ -9,7 +9,7 @@ public class Imovel {
     private String numBanheiros;
     private String cep;
     private String descricaoImovel;
-
+    private int userId;
 
     public Imovel() {
 
@@ -80,4 +80,8 @@ public class Imovel {
     public void setDescricaoImovel(String descricaoImovel) {
         this.descricaoImovel = descricaoImovel;
     }
+
+    public int getUserId() { return userId; }
+
+    public void setUserId(int userId) { this.userId = userId; }
 }
