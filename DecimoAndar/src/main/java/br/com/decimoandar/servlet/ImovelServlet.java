@@ -37,11 +37,6 @@ public class ImovelServlet extends HttpServlet {
 
         // Passando o ID do usuário para o método createImovel
         imovelDao.createImovel(imovel, userId);
-
-        //respondendo
-        response.setContentType("text/plain");
-        response.setCharacterEncoding("UTF-8");
-        response.getWriter().write("Imóvel criado com sucesso!");
     }
 
     private int getUserIdFromCookie(HttpServletRequest request) {

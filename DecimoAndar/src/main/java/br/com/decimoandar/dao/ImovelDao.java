@@ -11,7 +11,7 @@ public class ImovelDao {
 
     public void createImovel(Imovel imovel, int userId){
         try {
-            String SQL = "INSERT INTO DECIMO_ANDAR.IMOVEL (TIPO, LOGRADOURO, METROSQUADRADOS, QUANTIDADEQUARTOS, QUANTIDADEBANHEIROS, CEP, DESCRICAO, USER_ID) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            String SQL = "INSERT INTO DECIMO_ANDAR.Imovel (tipo, tipoVenda, valor, endereco, numero, cidade, uf, cep, numQuartos, numBanheiros, metrosQuadrados, descricao, USER_ID) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
             Connection connection = DriverManager.getConnection("jdbc:h2:~/test", "sa","sa");
 
@@ -25,15 +25,20 @@ public class ImovelDao {
             PreparedStatement preparedStatement = connection.prepareStatement(SQL);
 
             preparedStatement.setString(1, imovel.getTipoImovel());
-            preparedStatement.setString(2, imovel.getEndereco());
-            preparedStatement.setDouble(3, Double.parseDouble(imovel.getMetrosQuadrados()));
-            preparedStatement.setInt(4, Integer.parseInt(imovel.getNumQuartos()));
-            preparedStatement.setInt(5, Integer.parseInt(imovel.getNumBanheiros()));
-            preparedStatement.setString(6, imovel.getCep());
-            preparedStatement.setString(7, imovel.getDescricaoImovel());
+            preparedStatement.setString(2, imovel.getTipoVenda());
+            preparedStatement.setString(3, imovel.getValor());
+            preparedStatement.setString(4, imovel.getEndereco());
+            preparedStatement.setString(5, imovel.getNumero());
+            preparedStatement.setString(6, imovel.getCidade());
+            preparedStatement.setString(7, imovel.getUf());
+            preparedStatement.setString(8, imovel.getCep());
+            preparedStatement.setString(9, imovel.getNumQuartos());
+            preparedStatement.setString(10, imovel.getNumBanheiros());
+            preparedStatement.setString(11, imovel.getMetrosQuadrados());
+            preparedStatement.setString(12, imovel.getDescricaoImovel());
 
             // Definindo o ID do usuário no banco de dados
-            preparedStatement.setInt(8, userId);
+            preparedStatement.setInt(13, userId);
 
             preparedStatement.execute();
             System.out.println("Success in insert imovel");
