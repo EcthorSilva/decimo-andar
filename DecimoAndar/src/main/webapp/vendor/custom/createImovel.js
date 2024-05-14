@@ -1,42 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const cepInput = document.getElementById('cep');
-    const logradouroInput = document.getElementById('endereco');
     const termosCheckbox = document.getElementById('form2Example3cg');
     const fileInput = document.getElementById('imputFile');
-
-    // Função para consultar o CEP e preencher automaticamente os campos de endereço
-    async function consultarCEP() {
-        const cep = cepInput.value.replace(/\D/g, '');
-
-        if (cep.length !== 8) {
-            exibirErro('Por favor, digite um CEP válido com 8 dígitos.');
-            return;
-        }
-
-        try {
-            const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
-            const data = await response.json();
-
-            if (data.erro) {
-                exibirErro('CEP não encontrado.');
-            } else {
-                logradouroInput.value = data.logradouro;
-                document.getElementById('cidade').value = data.localidade;
-                document.getElementById('uf').value = data.uf;
-            }
-        } catch (error) {
-            console.error('Erro ao consultar o CEP:', error);
-            exibirErro('Ocorreu um erro ao consultar o CEP. Por favor, tente novamente.');
-        }
-    }
-
-    // Event listener para consultar o CEP ao pressionar "Enter"
-    cepInput.addEventListener('keypress', async (event) => {
-        if (event.key === 'Enter') {
-            event.preventDefault();
-            await consultarCEP();
-        }
-    });
 
     function exibirErro(mensagem) {
         var errorDiv = document.querySelector('.alert-danger');
@@ -61,7 +25,6 @@ document.addEventListener('DOMContentLoaded', () => {
         var numBanheiros = document.getElementById("numBanheiros").value.trim();
         var metrosQuadrados = document.getElementById("metrosQuadrados").value.trim();
         var descricaoImovel = document.getElementById("descricaoImovel").value.trim();
-        var fotos = fileInput.files;
 
         if (tipoImovel === "" || tipoVenda === "" || valor === "" || endereco === "" || numero === "" || cidade === "" || uf === "" || cep === "" || numQuartos === "" || numBanheiros === "" || metrosQuadrados === "" || descricaoImovel === "") {
             exibirErro("Todos os campos são obrigatórios.");
@@ -80,12 +43,11 @@ document.addEventListener('DOMContentLoaded', () => {
             numQuartos: numQuartos,
             numBanheiros: numBanheiros,
             metrosQuadrados: metrosQuadrados,
-            descricaoImovel: descricaoImovel,
-            fotos: fotos
+            descricaoImovel: descricaoImovel
         }
     }
 
-    document.getElementById('enviaranuncio').addEventListener("click", function () {
+    document.getElementById('enviaranuncio').addEventListener("click", async function () {
         console.log("Botão clicado!");
 
         // Verifica se o cliente concordou com os termos
@@ -99,33 +61,37 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (dados) {
             console.log("Dados do formulário a serem enviados:");
-            console.log(dados);
+            console.log(JSON.stringify(dados));
 
-            // Enviar dados para a servlet usando fetch
-            let formData = new FormData();
-            formData.append('imovel', new Blob([JSON.stringify(dados)], { type: 'application/json' }));
+            // Enviar apenas os dados do formulário para a servlet usando fetch
+            const enviarDados = fetch('/create-imovel', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(dados),
+            });
 
-            for (let i = 0; i < dados.fotos.length; i++) {
-                formData.append('fotos', dados.fotos[i]);
+            // Enviar apenas as imagens para a servlet usando fetch
+            const formData = new FormData();
+            for (let i = 0; i < fileInput.files.length; i++) {
+                formData.append('fotos', fileInput.files[i]);
             }
-
-            fetch('/create-imovel', {
+            const enviarImagens = fetch('/upload-imagem', {
                 method: 'POST',
                 body: formData,
-            })
-                .then(response => {
-                    if (response.ok) {
-                        console.log("DADOS ENVIADOS COM SUCESSO");
-                        window.location.href = "/pages/profile.html";
-                    } else {
-                        console.log("Erro no backend...");
-                        return response.text();
-                    }
-                })
-                .catch(error => {
-                    console.log('Erro ao enviar os dados:', error);
-                    alert('Erro ao enviar os dados: ' + error.message);
-                });
+            });
+
+            // Aguardar o envio das duas requisições simultaneamente
+            try {
+                await Promise.all([enviarDados, enviarImagens]);
+                console.log("DADOS E IMAGENS ENVIADOS COM SUCESSO");
+                // Redirecionar para a página de perfil após o envio
+                window.location.href = "/pages/profile.html";
+            } catch (error) {
+                console.log('Erro ao enviar os dados e imagens:', error);
+                alert('Erro ao enviar os dados e imagens: ' + error.message);
+            }
         }
     });
 });
