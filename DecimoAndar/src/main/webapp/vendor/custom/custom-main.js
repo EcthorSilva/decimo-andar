@@ -50,6 +50,16 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
+    // Direcionando Click do btn "Anunciar" na Header.
+    document.getElementById("AnunciarHeader").addEventListener("click", function() {
+            console.log("Passei aqui zé da bronha")
+        if (checkSessionCookie()) {
+            window.location.href = "/pages/imovel.html"
+        } else {
+            window.location.href = "/pages/login.html"
+        }
+    });
+
     updateButtonVisibility();
 
     // Adicionando a função de logout ao clique do botão de logout
