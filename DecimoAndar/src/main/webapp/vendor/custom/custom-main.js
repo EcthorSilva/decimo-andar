@@ -40,6 +40,16 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
+    // Direcionando Click do btn "Anuncie" em homepage.
+    document.getElementById("AdButton").addEventListener("click", function() {
+
+        if (checkSessionCookie()) {
+            window.location.href = "/pages/imovel.html"   
+        } else {  
+            window.location.href = "/pages/login.html"
+        }
+    });
+
     updateButtonVisibility();
 
     // Adicionando a função de logout ao clique do botão de logout
@@ -54,4 +64,5 @@ document.addEventListener("DOMContentLoaded", function () {
         };
         xhr.send();
     });
+
 });
