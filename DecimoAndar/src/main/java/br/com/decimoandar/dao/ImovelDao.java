@@ -68,18 +68,19 @@ public class ImovelDao {
             Connection connection = DriverManager.getConnection("jdbc:h2:~/test", "sa", "sa");
 
             if (connection != null) {
-                System.out.println("Success in database connection");
+                System.out.println("Upload de Imagens - Success in database connection");
             } else {
                 System.out.println("Failed to connect to the database");
                 return;
             }
 
             for (String imagePath : imagePaths) {
-                String imageSQL = "INSERT INTO DECIMO_ANDAR.Imovel_Images (imovel_id, image_path) VALUES (?, ?)";
+                String imageSQL = "INSERT INTO DECIMO_ANDAR.ImovelImagem (imovel_id, caminho_imagem) VALUES (?, ?)";
                 PreparedStatement imageStatement = connection.prepareStatement(imageSQL);
                 imageStatement.setInt(1, imovelId);
                 imageStatement.setString(2, imagePath);
                 imageStatement.execute();
+                System.out.println("Success in insert images");
             }
 
             connection.close();

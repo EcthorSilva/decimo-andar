@@ -50,6 +50,12 @@ public class UploadImageServlet extends HttpServlet {
                     }
                 }
 
+                // só um teste
+                System.out.println("Caminhos das imagens enviados para ImovelServlet:");
+                for (String imagePath : imagePaths) {
+                    System.out.println(imagePath);
+                }
+
                 // Você pode agora fazer o que quiser com os caminhos das imagens
                 // Por exemplo, salvá-los no banco de dados ou processá-los de outra forma
 
