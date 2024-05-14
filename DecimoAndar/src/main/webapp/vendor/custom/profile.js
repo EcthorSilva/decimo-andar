@@ -49,6 +49,11 @@ document.addEventListener("DOMContentLoaded", function () {
         xhr.send();
     }
 
+    // Direcionando Click do btn "Anunciar" na Header.
+    document.getElementById("AnunciarHeaderProfile").addEventListener("click", function() {
+            window.location.href = "/pages/imovel.html"
+    });
+
     // Chame esta função para buscar e mostrar os dados do usuário
     mostrarDadosUsuario();
 });
