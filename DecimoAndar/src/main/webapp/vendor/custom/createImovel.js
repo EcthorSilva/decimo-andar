@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const cepInput = document.getElementById('cep');
     const logradouroInput = document.getElementById('endereco');
     const termosCheckbox = document.getElementById('form2Example3cg');
+    const fileInput = document.getElementById('imputFile');
 
     // Função para consultar o CEP e preencher automaticamente os campos de endereço
     async function consultarCEP() {
@@ -47,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 3000);
     }
 
-    function verificarCampos(){
+    function verificarCampos() {
         var tipoImovel = document.getElementById("tipoImovel").value.trim();
         var tipoVenda = document.getElementById("tipoVenda").value.trim();
         var valor = document.getElementById("valor").value.trim();
@@ -60,10 +61,11 @@ document.addEventListener('DOMContentLoaded', () => {
         var numBanheiros = document.getElementById("numBanheiros").value.trim();
         var metrosQuadrados = document.getElementById("metrosQuadrados").value.trim();
         var descricaoImovel = document.getElementById("descricaoImovel").value.trim();
+        var fotos = fileInput.files;
 
-        if(tipoImovel === "" || tipoVenda === "" || valor === "" || endereco === "" || numero === "" || cidade === "" || uf === "" || cep === "" || numQuartos === "" || numBanheiros === "" || metrosQuadrados === "" || descricaoImovel === ""){
-           exibirErro("Todos os campos são obrigatórios.");
-           return null; // Retorna null em caso de campos em branco
+        if (tipoImovel === "" || tipoVenda === "" || valor === "" || endereco === "" || numero === "" || cidade === "" || uf === "" || cep === "" || numQuartos === "" || numBanheiros === "" || metrosQuadrados === "" || descricaoImovel === "") {
+            exibirErro("Todos os campos são obrigatórios.");
+            return null; // Retorna null em caso de campos em branco
         }
 
         return {
@@ -78,11 +80,12 @@ document.addEventListener('DOMContentLoaded', () => {
             numQuartos: numQuartos,
             numBanheiros: numBanheiros,
             metrosQuadrados: metrosQuadrados,
-            descricaoImovel: descricaoImovel
+            descricaoImovel: descricaoImovel,
+            fotos: fotos
         }
     }
 
-    document.getElementById('enviaranuncio').addEventListener("click", function() {
+    document.getElementById('enviaranuncio').addEventListener("click", function () {
         console.log("Botão clicado!");
 
         // Verifica se o cliente concordou com os termos
@@ -96,29 +99,33 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (dados) {
             console.log("Dados do formulário a serem enviados:");
-            console.log(JSON.stringify(dados));
+            console.log(dados);
 
             // Enviar dados para a servlet usando fetch
+            let formData = new FormData();
+            formData.append('imovel', new Blob([JSON.stringify(dados)], { type: 'application/json' }));
+
+            for (let i = 0; i < dados.fotos.length; i++) {
+                formData.append('fotos', dados.fotos[i]);
+            }
+
             fetch('/create-imovel', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(dados),
+                body: formData,
             })
-            .then(response => {
-                if (response.ok) {
-                    console.log("DADOS ENVIADOS COM SUCESSO");
-                    window.location.href = "/pages/profile.html";
-                } else {
-                    console.log("Erro no backend...");
-                    return response.text();
-                }
-            })
-            .catch(error => {
-                console.log('Erro ao enviar os dados:', error);
-                alert('Erro ao enviar os dados: ' + error.message);
-            });
+                .then(response => {
+                    if (response.ok) {
+                        console.log("DADOS ENVIADOS COM SUCESSO");
+                        window.location.href = "/pages/profile.html";
+                    } else {
+                        console.log("Erro no backend...");
+                        return response.text();
+                    }
+                })
+                .catch(error => {
+                    console.log('Erro ao enviar os dados:', error);
+                    alert('Erro ao enviar os dados: ' + error.message);
+                });
         }
     });
 });

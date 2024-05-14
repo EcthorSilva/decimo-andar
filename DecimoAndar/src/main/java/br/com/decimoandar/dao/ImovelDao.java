@@ -6,10 +6,11 @@ import br.com.decimoandar.model.User;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.util.List;
 
 public class ImovelDao {
 
-    public void createImovel(Imovel imovel, int userId){
+    public void createImovel(Imovel imovel, int userId, List<String> imagePaths){
         try {
             String SQL = "INSERT INTO DECIMO_ANDAR.Imovel (tipo, tipoVenda, valor, endereco, numero, cidade, uf, cep, numQuartos, numBanheiros, metrosQuadrados, descricao, USER_ID) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
@@ -36,12 +37,19 @@ public class ImovelDao {
             preparedStatement.setString(10, imovel.getNumBanheiros());
             preparedStatement.setString(11, imovel.getMetrosQuadrados());
             preparedStatement.setString(12, imovel.getDescricaoImovel());
-
-            // Definindo o ID do usuário no banco de dados
             preparedStatement.setInt(13, userId);
 
             preparedStatement.execute();
             System.out.println("Success in insert imovel");
+
+            // Save image paths
+            for (String imagePath : imagePaths) {
+                String imageSQL = "INSERT INTO DECIMO_ANDAR.Imovel_Images (imovel_id, image_path) VALUES (?, ?)";
+                PreparedStatement imageStatement = connection.prepareStatement(imageSQL);
+                imageStatement.setInt(1, imovel.getIdImovel()); // Assuming you retrieve the ID of the inserted imovel
+                imageStatement.setString(2, imagePath);
+                imageStatement.execute();
+            }
 
             connection.close();
         } catch (Exception e) {
