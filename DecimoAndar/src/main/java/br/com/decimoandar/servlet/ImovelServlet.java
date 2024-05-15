@@ -1,6 +1,5 @@
 package br.com.decimoandar.servlet;
 
-
 import br.com.decimoandar.dao.ImovelDao;
 import br.com.decimoandar.model.Imovel;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -13,12 +12,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.List;
 
 @WebServlet("/create-imovel")
 public class ImovelServlet extends HttpServlet {
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         StringBuilder stringBuilder = new StringBuilder();
         BufferedReader bufferedReader = request.getReader();
         String line;
@@ -28,6 +28,7 @@ public class ImovelServlet extends HttpServlet {
 
         String jsonData = stringBuilder.toString();
 
+        // Converter o JSON em objeto Imovel
         Imovel imovel = objectMapper.readValue(jsonData, Imovel.class);
 
         // Obtendo o ID do usuário do cookie
@@ -35,8 +36,23 @@ public class ImovelServlet extends HttpServlet {
 
         ImovelDao imovelDao = new ImovelDao();
 
-        // Passando o ID do usuário para o método createImovel
-        imovelDao.createImovel(imovel, userId);
+        // Criar o imóvel no banco de dados
+        int imovelId = imovelDao.createImovel(imovel, userId);
+
+        // Verificar se o imóvel foi criado com sucesso
+        if (imovelId != 0) {
+
+            // Pega o id do anuncio criado e salva em um cookie
+            Cookie imovelCookie = new Cookie("imovelCookie", String.valueOf(imovelId));
+            imovelCookie.setMaxAge(60); //setting cookie to expiry in 1 min
+            response.addCookie(imovelCookie);
+
+            // Enviar resposta de sucesso
+            response.setStatus(HttpServletResponse.SC_CREATED);
+        } else {
+            // Enviar resposta de erro
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        }
     }
 
     private int getUserIdFromCookie(HttpServletRequest request) {

@@ -81,7 +81,7 @@
                                           <option value="apartamento">Apartamento</option>
                                           <option value="studio">Studio</option>
                                         </select>
-                                        <label for="floatingSelect">Selecione o tipo de imovel</label>
+                                        <label for="tipoImovel">Selecione o tipo de imovel</label>
                                     </div>
                                     <!-- Tipo de venda -->
                                     <div class="form-floating mb-4 ">
@@ -89,7 +89,7 @@
                                           <option selected value="vender">Vender</option>
                                           <option value="alugar">Alugar</option>
                                         </select>
-                                        <label for="floatingSelect">Quer vender ou alugar?</label>
+                                        <label for="tipoVenda">Quer vender ou alugar?</label>
                                     </div>
                                     <!-- valor -->
                                     <div class="form-floating  mb-4">
@@ -116,7 +116,7 @@
                                         <div class="col col-md-5">
                                             <div class="form-floating mb-4">
                                                 <input type="text" class="form-control" id="cidade" name="cidade" placeholder="Digite o cidade" required>
-                                                <label for="billingCity"  class="text-muted">Cidade</label>
+                                                <label for="cidade"  class="text-muted">Cidade</label>
                                             </div>
                                         </div>
                                         <!-- UF -->
@@ -171,7 +171,7 @@
                                     <!-- DESCRICAO -->
                                     <div class="form-floating">
                                         <textarea class="form-control" id="descricaoImovel" name="descricaoImovel" required placeholder="Fale um pouco sobre o imovel" placeholder="Adicione uma descrição"></textarea>
-                                        <label for="floatingTextarea"  class="text-muted">Adicione uma descrição ao imovel</label>
+                                        <label for="descricaoImovel"  class="text-muted">Adicione uma descrição ao imovel</label>
                                       </div>
                                 </form>
                             </div>
@@ -227,7 +227,7 @@
                                 <ul class="list-group list-group-flush">
                                     <li class="list-group-item d-flex justify-flex-start border-0 px-0 pb-0 mb-3">
                                         <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3cg" />
-                                        <label class="form-check-label" for="" id="termosc">
+                                        <label class="form-check-label" for="form2Example3cg" id="termosc">
                                             Li e concordo com os <a href="#" class="text-body">termos e condições</a>
                                         </label>
                                     </li>
@@ -300,7 +300,7 @@
 
     <!-- Bootstrap -->
     <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <!-- <script src="../vendor/custom/custom-main.js"></script> -->
+    <script src="../vendor/custom/custom-main.js"></script>
     <script src="../vendor/custom/createImovel.js"></script>
   </body>
 </html>
