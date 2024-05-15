@@ -1,5 +1,8 @@
 package br.com.decimoandar.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Imovel {
 
     private int idImovel;
@@ -16,6 +19,7 @@ public class Imovel {
     private String cep;
     private String descricaoImovel;
     private int userId;
+    private List<String> imagePaths;
 
     public Imovel() {
 
@@ -31,6 +35,17 @@ public class Imovel {
         this.descricaoImovel = descricaoImovel;
     }
 
+    public Imovel(List<String> imagePaths) {
+        this.imagePaths = imagePaths != null ? imagePaths : new ArrayList<>();
+    }
+
+    public List<String> getImagePaths() {
+        return imagePaths;
+    }
+
+    public void setImagePaths(List<String> imagePaths) {
+        this.imagePaths = imagePaths;
+    }
     public String getTipoImovel() {
         return tipoImovel;
     }

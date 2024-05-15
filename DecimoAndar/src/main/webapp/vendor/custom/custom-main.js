@@ -29,50 +29,59 @@ document.addEventListener("DOMContentLoaded", function () {
         var botao1 = document.querySelector('.botao1');
         var botao2 = document.querySelector('.botao2');
 
-        if (checkSessionCookie()) {
-            // Se o cookie de sessão estiver presente, mostra o botão 2 e esconde o botão 1
-            botao1.classList.add('visually-hidden');
-            botao2.classList.remove('visually-hidden');
-        } else {
-            // Se o cookie de sessão não estiver presente, mostra o botão 1 e esconde o botão 2
-            botao1.classList.remove('visually-hidden');
-            botao2.classList.add('visually-hidden');
+        if (botao1 && botao2) {  // Check if the elements exist
+            if (checkSessionCookie()) {
+                // Se o cookie de sessão estiver presente, mostra o botão 2 e esconde o botão 1
+                botao1.classList.add('visually-hidden');
+                botao2.classList.remove('visually-hidden');
+            } else {
+                // Se o cookie de sessão não estiver presente, mostra o botão 1 e esconde o botão 2
+                botao1.classList.remove('visually-hidden');
+                botao2.classList.add('visually-hidden');
+            }
         }
     }
 
-    // Direcionando Click do btn "Anuncie" em homepage.
-    document.getElementById("AdButton").addEventListener("click", function() {
+    // Event listener para o botão "Anuncie" na homepage
+    var adButton = document.getElementById("AdButton");
+    if (adButton) {
+        adButton.addEventListener("click", function() {
+            if (checkSessionCookie()) {
+                window.location.href = "/pages/imovel.html";
+            } else {  
+                window.location.href = "/pages/login.html";
+            }
+        });
+    }
 
-        if (checkSessionCookie()) {
-            window.location.href = "/pages/imovel.html"   
-        } else {  
-            window.location.href = "/pages/login.html"
-        }
-    });
-
-    // Direcionando Click do btn "Anunciar" na Header.
-    document.getElementById("AnunciarHeader").addEventListener("click", function() {
-            console.log("Passei aqui zé da bronha")
-        if (checkSessionCookie()) {
-            window.location.href = "/pages/imovel.html"
-        } else {
-            window.location.href = "/pages/login.html"
-        }
-    });
+    // Event listener para o botão "Anunciar" na Header
+    var anunciarHeader = document.getElementById("AnunciarHeader");
+    if (anunciarHeader) {
+        anunciarHeader.addEventListener("click", function() {
+            console.log("Passei aqui zé da bronha");
+            if (checkSessionCookie()) {
+                window.location.href = "/pages/imovel.html";
+            } else {
+                window.location.href = "/pages/login.html";
+            }
+        });
+    }
 
     updateButtonVisibility();
 
     // Adicionando a função de logout ao clique do botão de logout
-    document.getElementById("logoutButton").addEventListener("click", function() {
-        var xhr = new XMLHttpRequest();
-        xhr.open("GET", "/logout", true);
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                // atualiza a pagina
-                window.location.reload();
-            }
-        };
-        xhr.send();
-    });
-
+    var logoutButton = document.getElementById("logoutButton");
+    if (logoutButton) {
+        logoutButton.addEventListener("click", function() {
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "/logout", true);
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    // Atualiza a página
+                    window.location.reload();
+                }
+            };
+            xhr.send();
+        });
+    }
 });
