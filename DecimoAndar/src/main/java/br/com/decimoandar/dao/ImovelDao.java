@@ -85,7 +85,8 @@ public class ImovelDao {
 
             connection.close();
         } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
+            System.out.println("Error during image paths insertion:");
+            e.printStackTrace();
         }
     }
 }

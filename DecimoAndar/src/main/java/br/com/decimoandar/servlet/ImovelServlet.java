@@ -2,7 +2,6 @@ package br.com.decimoandar.servlet;
 
 import br.com.decimoandar.dao.ImovelDao;
 import br.com.decimoandar.model.Imovel;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.servlet.ServletException;
@@ -13,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet("/create-imovel")
@@ -30,6 +28,7 @@ public class ImovelServlet extends HttpServlet {
 
         String jsonData = stringBuilder.toString();
 
+        // Converter o JSON em objeto Imovel
         Imovel imovel = objectMapper.readValue(jsonData, Imovel.class);
 
         // Obtendo o ID do usuário do cookie
@@ -37,24 +36,16 @@ public class ImovelServlet extends HttpServlet {
 
         ImovelDao imovelDao = new ImovelDao();
 
-        // Passando o ID do usuário para o método createImovel
+        // Criar o imóvel no banco de dados
         int imovelId = imovelDao.createImovel(imovel, userId);
 
         // Verificar se o imóvel foi criado com sucesso
         if (imovelId != 0) {
-            // Obter os caminhos das imagens do JSON
-            JsonNode jsonNode = objectMapper.readTree(jsonData);
-            List<String> imagePaths = new ArrayList<>();
-            if (jsonNode.has("fotos")) {
-                JsonNode fotosNode = jsonNode.get("fotos");
-                for (JsonNode fotoNode : fotosNode) {
-                    String imagePath = fotoNode.asText();
-                    imagePaths.add(imagePath);
-                }
-            }
 
-            // Adicionar os caminhos das imagens ao banco de dados
-            imovelDao.addImagePaths(imovelId, imagePaths);
+            // Pega o id do anuncio criado e salva em um cookie
+            Cookie imovelCookie = new Cookie("imovelCookie", String.valueOf(imovelId));
+            imovelCookie.setMaxAge(60); //setting cookie to expiry in 1 min
+            response.addCookie(imovelCookie);
 
             // Enviar resposta de sucesso
             response.setStatus(HttpServletResponse.SC_CREATED);
