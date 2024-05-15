@@ -28,3 +28,10 @@ CREATE TABLE DECIMO_ANDAR.Usuario (
     CPF_CNPJ TEXT,
     TELEFONE TEXT
 );
+
+CREATE TABLE DECIMO_ANDAR.ImovelImagem (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    imovel_id INT,
+    caminho_imagem VARCHAR(255),
+    FOREIGN KEY (imovel_id) REFERENCES Imovel(id)
+);
