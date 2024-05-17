@@ -104,7 +104,9 @@ public class ImovelServlet extends HttpServlet {
                             String filePath = uploadPath + fileName;
                             File storeFile = new File(filePath);
                             item.write(storeFile);
-                            imagePaths.add(filePath);
+                            // caminho relativo
+                            String relativePath = "/imoveisimg/cad" + uniqueId + "/" + fileName;
+                            imagePaths.add(relativePath);
                         }
                     }
 
