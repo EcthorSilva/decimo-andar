@@ -123,4 +123,45 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     });
+
+    document.getElementById('imputFile').addEventListener('change', function() {
+        var carouselImages = document.getElementById('carouselImages');
+        carouselImages.innerHTML = ''; // Limpar as imagens atuais
+
+        var fileList = this.files;
+        if (fileList.length === 0) {
+            // Adiciona um placeholder se nenhum arquivo for selecionado
+            var carouselItem = document.createElement('div');
+            carouselItem.classList.add('carousel-item');
+            carouselItem.classList.add('active');
+
+            var image = document.createElement('img');
+            image.src = '/assets/images/carouselImagesplaceholder.png'; // Ajuste o caminho conforme necessário
+            image.classList.add('d-block');
+            image.classList.add('w-100');
+            image.alt = 'Placeholder Image';
+            image.height = 300;
+
+            carouselItem.appendChild(image);
+            carouselImages.appendChild(carouselItem);
+        } else {
+            for (var i = 0; i < fileList.length; i++) {
+                var carouselItem = document.createElement('div');
+                carouselItem.classList.add('carousel-item');
+                if (i === 0) {
+                    carouselItem.classList.add('active');
+                }
+
+                var image = document.createElement('img');
+                image.src = URL.createObjectURL(fileList[i]);
+                image.classList.add('d-block');
+                image.classList.add('w-100');
+                image.alt = 'Image ' + (i + 1);
+                image.height = 300;
+
+                carouselItem.appendChild(image);
+                carouselImages.appendChild(carouselItem);
+            }
+        }
+    });
 });
