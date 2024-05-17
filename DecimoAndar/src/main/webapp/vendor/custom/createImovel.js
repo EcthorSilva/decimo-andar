@@ -1,6 +1,40 @@
 document.addEventListener('DOMContentLoaded', () => {
+    const cepInput = document.getElementById('cep');
+    const logradouroInput = document.getElementById('endereco');
     const termosCheckbox = document.getElementById('form2Example3cg');
     const fileInput = document.getElementById('imputFile');
+
+    async function consultarCEP() {
+        const cep = cepInput.value.replace(/\D/g, '');
+
+        if (cep.length !== 8) {
+            exibirErro('Por favor, digite um CEP válido com 8 dígitos.');
+            return;
+        }
+
+        try {
+            const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+            const data = await response.json();
+
+            if (data.erro) {
+                exibirErro('CEP não encontrado.');
+            } else {
+                logradouroInput.value = data.logradouro;
+                document.getElementById('cidade').value = data.localidade;
+                document.getElementById('uf').value = data.uf;
+            }
+        } catch (error) {
+            console.error('Erro ao consultar o CEP:', error);
+            exibirErro('Ocorreu um erro ao consultar o CEP. Por favor, tente novamente.');
+        }
+    }
+
+    cepInput.addEventListener('keypress', async (event) => {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            await consultarCEP();
+        }
+    });
 
     function exibirErro(mensagem) {
         var errorDiv = document.querySelector('.alert-danger');
@@ -50,44 +84,39 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('enviaranuncio').addEventListener("click", async function () {
         console.log("Botão clicado!");
 
-        // Verifica se o cliente concordou com os termos
         if (!termosCheckbox.checked) {
             exibirErro("Por favor, leia e concorde com os termos e condições.");
             return;
         }
 
-        // Chama a função para verificar os campos
         var dados = verificarCampos();
 
         if (dados) {
-            console.log("Dados do formulário a serem enviados:");
-            console.log(JSON.stringify(dados));
-
-            // Enviar apenas os dados do formulário para a servlet usando fetch
-            const enviarDados = fetch('/create-imovel', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(dados),
-            });
-
-            // Enviar apenas as imagens para a servlet usando fetch
             const formData = new FormData();
+
+            // Adiciona dados do formulário ao FormData
+            for (const key in dados) {
+                formData.append(key, dados[key]);
+            }
+
+            // Adiciona imagens ao FormData
             for (let i = 0; i < fileInput.files.length; i++) {
                 formData.append('fotos', fileInput.files[i]);
             }
-            const enviarImagens = fetch('/upload-imagem', {
-                method: 'POST',
-                body: formData,
-            });
 
-            // Aguardar o envio das duas requisições simultaneamente
             try {
-                await Promise.all([enviarDados, enviarImagens]);
-                console.log("DADOS E IMAGENS ENVIADOS COM SUCESSO");
-                // Redirecionar para a página de perfil após o envio
-                window.location.href = "/pages/profile.html";
+                const response = await fetch('/create-imovel', {
+                    method: 'POST',
+                    body: formData,
+                });
+
+                if (response.ok) {
+                    console.log("DADOS E IMAGENS ENVIADOS COM SUCESSO");
+                    window.location.href = "/pages/profile.html";
+                } else {
+                    console.log('Erro ao enviar os dados e imagens:', response.statusText);
+                    alert('Erro ao enviar os dados e imagens: ' + response.statusText);
+                }
             } catch (error) {
                 console.log('Erro ao enviar os dados e imagens:', error);
                 alert('Erro ao enviar os dados e imagens: ' + error.message);

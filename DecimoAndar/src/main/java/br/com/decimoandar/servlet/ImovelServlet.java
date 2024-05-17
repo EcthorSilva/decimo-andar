@@ -2,56 +2,127 @@ package br.com.decimoandar.servlet;
 
 import br.com.decimoandar.dao.ImovelDao;
 import br.com.decimoandar.model.Imovel;
-import com.fasterxml.jackson.databind.ObjectMapper;
+
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @WebServlet("/create-imovel")
+@MultipartConfig
 public class ImovelServlet extends HttpServlet {
-    private final ObjectMapper objectMapper = new ObjectMapper();
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        StringBuilder stringBuilder = new StringBuilder();
-        BufferedReader bufferedReader = request.getReader();
-        String line;
-        while ((line = bufferedReader.readLine()) != null) {
-            stringBuilder.append(line);
-        }
+        Imovel imovel = new Imovel();
+        List<String> imagePaths = new ArrayList<>();
 
-        String jsonData = stringBuilder.toString();
+        boolean isMultipart = ServletFileUpload.isMultipartContent(request);
 
-        // Converter o JSON em objeto Imovel
-        Imovel imovel = objectMapper.readValue(jsonData, Imovel.class);
+        if (isMultipart) {
+            try {
+                List<FileItem> formItems = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(request);
 
-        // Obtendo o ID do usuário do cookie
-        int userId = getUserIdFromCookie(request);
+                for (FileItem item : formItems) {
+                    if (item.isFormField()) {
+                        switch (item.getFieldName()) {
+                            case "tipoImovel":
+                                imovel.setTipoImovel(item.getString());
+                                break;
+                            case "tipoVenda":
+                                imovel.setTipoVenda(item.getString());
+                                break;
+                            case "valor":
+                                imovel.setValor(item.getString());
+                                break;
+                            case "endereco":
+                                imovel.setEndereco(item.getString());
+                                break;
+                            case "numero":
+                                imovel.setNumero(item.getString());
+                                break;
+                            case "cidade":
+                                imovel.setCidade(item.getString());
+                                break;
+                            case "uf":
+                                imovel.setUf(item.getString());
+                                break;
+                            case "cep":
+                                imovel.setCep(item.getString());
+                                break;
+                            case "numQuartos":
+                                imovel.setNumQuartos(item.getString());
+                                break;
+                            case "numBanheiros":
+                                imovel.setNumBanheiros(item.getString());
+                                break;
+                            case "metrosQuadrados":
+                                imovel.setMetrosQuadrados(item.getString());
+                                break;
+                            case "descricaoImovel":
+                                imovel.setDescricaoImovel(item.getString());
+                                break;
+                        }
+                    }
+                }
 
-        ImovelDao imovelDao = new ImovelDao();
+                int userId = getUserIdFromCookie(request);
+                imovel.setUserId(userId);
 
-        // Criar o imóvel no banco de dados
-        int imovelId = imovelDao.createImovel(imovel, userId);
+                ImovelDao imovelDao = new ImovelDao();
+                int imovelId = imovelDao.createImovel(imovel, userId);
 
-        // Verificar se o imóvel foi criado com sucesso
-        if (imovelId != 0) {
+                if (imovelId != 0) {
+                    String uniqueId = new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date());
+                    String baseUploadPath = getServletContext().getRealPath("/imoveisimg/");
+                    File baseUploadDir = new File(baseUploadPath);
+                    if (!baseUploadDir.exists()) {
+                        baseUploadDir.mkdirs();
+                    }
 
-            // Pega o id do anuncio criado e salva em um cookie
-            Cookie imovelCookie = new Cookie("imovelCookie", String.valueOf(imovelId));
-            imovelCookie.setMaxAge(60); //setting cookie to expiry in 1 min
-            response.addCookie(imovelCookie);
+                    String uploadPath = baseUploadPath + "/cad" + uniqueId + "/";
+                    File uploadDir = new File(uploadPath);
+                    if (!uploadDir.exists()) {
+                        uploadDir.mkdirs();
+                    }
 
-            // Enviar resposta de sucesso
-            response.setStatus(HttpServletResponse.SC_CREATED);
-        } else {
-            // Enviar resposta de erro
-            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                    for (FileItem item : formItems) {
+                        if (!item.isFormField() && isImageFile(item)) {
+                            String fileName = "img" + (imagePaths.size() + 1) + getFileExtension(item.getName());
+                            String filePath = uploadPath + fileName;
+                            File storeFile = new File(filePath);
+                            item.write(storeFile);
+                            // caminho relativo
+                            String relativePath = "/imoveisimg/cad" + uniqueId + "/" + fileName;
+                            imagePaths.add(relativePath);
+                        }
+                    }
+
+                    if (!imagePaths.isEmpty()) {
+                        imovelDao.addImagePaths(imovelId, imagePaths);
+                    }
+
+                    response.setStatus(HttpServletResponse.SC_CREATED);
+
+                } else {
+                    response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                }
+
+            } catch (Exception ex) {
+                throw new ServletException("Erro ao processar o formulário", ex);
+            }
         }
     }
 
@@ -64,6 +135,25 @@ public class ImovelServlet extends HttpServlet {
                 }
             }
         }
-        return -1; // Se o cookie não for encontrado, retorna -1 ou outro valor adequado
+        return -1;
+    }
+
+    private String getFileExtension(String fileName) {
+        if (fileName == null || fileName.isEmpty()) {
+            return "";
+        }
+        int dotIndex = fileName.lastIndexOf('.');
+        return (dotIndex == -1) ? "" : fileName.substring(dotIndex);
+    }
+
+    private boolean isImageFile(FileItem item) {
+        String[] validExtensions = {".jpg", ".jpeg", ".png", ".gif"};
+        String fileName = item.getName().toLowerCase();
+        for (String ext : validExtensions) {
+            if (fileName.endsWith(ext)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

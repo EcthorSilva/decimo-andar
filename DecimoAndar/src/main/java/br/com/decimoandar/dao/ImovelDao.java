@@ -68,7 +68,7 @@ public class ImovelDao {
             Connection connection = DriverManager.getConnection("jdbc:h2:~/test", "sa", "sa");
 
             if (connection != null) {
-                System.out.println("Upload de Imagens - Success in database connection");
+                System.out.println("Success in database connection");
             } else {
                 System.out.println("Failed to connect to the database");
                 return;
