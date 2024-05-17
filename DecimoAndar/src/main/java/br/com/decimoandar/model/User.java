@@ -7,6 +7,8 @@ public class User {
     private String email;
     private String docPfPj;
     private String password;
+    private String telefone;
+    private String dataNascimento;
 
     public User() {
 
@@ -58,4 +60,12 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public String getTelefone() { return telefone; }
+
+    public void setTelefone(String telefone) { this.telefone = telefone; }
+
+    public String getDataNascimento() { return dataNascimento; }
+
+    public void setDataNascimento(String dataNascimento) { this.dataNascimento = dataNascimento; }
 }

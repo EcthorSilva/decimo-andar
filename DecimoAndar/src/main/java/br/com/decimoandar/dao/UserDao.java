@@ -44,7 +44,7 @@ public class UserDao {
 
     public void readUser(User user) {
         try {
-            String SQL = "SELECT NOME_COMPLETO, EMAIL, CPF_CNPJ FROM DECIMO_ANDAR.USUARIO WHERE ID = ?";
+            String SQL = "SELECT NOME_COMPLETO, EMAIL, TELEFONE, DATA_NASCIMENTO FROM DECIMO_ANDAR.USUARIO WHERE ID = ?";
             Connection connection = DriverManager.getConnection("jdbc:h2:~/test", "sa", "sa");
             PreparedStatement preparedStatement = connection.prepareStatement(SQL);
             preparedStatement.setInt(1, user.getIdUser());
@@ -53,7 +53,8 @@ public class UserDao {
             if (resultSet.next()) {
                 user.setName(resultSet.getString("NOME_COMPLETO"));
                 user.setEmail(resultSet.getString("EMAIL"));
-                user.setDocPfPj(resultSet.getString("CPF_CNPJ"));
+                user.setTelefone(resultSet.getString("TELEFONE"));
+                user.setDataNascimento(resultSet.getString("DATA_NASCIMENTO"));
             }
             connection.close();
         } catch (Exception e) {
@@ -61,15 +62,10 @@ public class UserDao {
         }
     }
 
-    public void UpdateUser(User user){
-        try{
-            String SQL = "UPDADE DECIMO_ANDAR.Usarios SET NOME_COMPLETO = ?" +
-                                                          "EMAIL = ?" +
-                                                          "CPF_CNPJ = ? " +
-                                                          "SENHA = ?" +
-                                                          "WHERE ID = ?";
-
-            Connection connection = DriverManager.getConnection("jdbc:h2:~/test", "sa","sa");
+    public void updateUserData(User user) {
+        try {
+            String SQL = "UPDATE DECIMO_ANDAR.USUARIO SET TELEFONE = ?, DATA_NASCIMENTO = ? WHERE ID = ?";
+            Connection connection = DriverManager.getConnection("jdbc:h2:~/test", "sa", "sa");
 
             if (connection != null) {
                 System.out.println("Success in database connection");
@@ -80,20 +76,18 @@ public class UserDao {
 
             PreparedStatement preparedStatement = connection.prepareStatement(SQL);
 
-            preparedStatement.setString(1, user.getName());
-            preparedStatement.setString(2, user.getEmail());
-            preparedStatement.setString(3, user.getDocPfPj());
-            preparedStatement.setString(4, user.getPassword());
-            preparedStatement.setInt(5, user.getIdUser());
+            preparedStatement.setString(1, user.getTelefone());
+            preparedStatement.setString(2, user.getDataNascimento());
+            preparedStatement.setInt(3, user.getIdUser());
 
-            preparedStatement.execute();
+            preparedStatement.executeUpdate(); // Use executeUpdate para atualizações
 
-            System.out.println("Success in insert user");
+            System.out.println("Success in updating user data");
 
             connection.close();
 
-        }catch (Exception ex){
-            System.out.println("Falha ao fazer o update no usuarios" + ex.getMessage());
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
         }
     }
 

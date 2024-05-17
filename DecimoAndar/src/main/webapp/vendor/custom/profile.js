@@ -1,21 +1,51 @@
-console.log("profile.js carregado! \n");
-
 document.addEventListener("DOMContentLoaded", function () {
+    var updateUserDataForm = document.getElementById('updateUserDataForm');
+
+    updateUserDataForm.addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        var telefone = document.getElementById('telefone').value;
+        var dataNascimento = document.getElementById('datanasci').value;
+
+        var dados = {
+            telefone: telefone,
+            dataNascimento: dataNascimento
+        };
+
+        fetch('/update-user-data', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(dados),
+        })
+        .then(response => {
+            if (response.ok) {
+                console.log("Dados de usuário atualizados com sucesso!");
+                // Fechar o modal após atualização bem-sucedida
+                $('#modalId').modal('hide');
+                // Atualizar os dados na interface do usuário
+                obterDadosUsuario();
+            } else {
+                console.log("Erro ao atualizar os dados do usuário.");
+                return response.text();
+            }
+        })
+        .catch(error => {
+            console.error('Erro ao atualizar os dados do usuário:', error);
+        });
+    });
+
     // Função para obter os dados do usuário
     function obterDadosUsuario() {
-        var xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === XMLHttpRequest.DONE) {
-                if (xhr.status === 200) {
-                    var userData = JSON.parse(xhr.responseText);
-                    atualizarPerfil(userData);
-                } else {
-                    console.error('Erro ao obter os dados do usuário.');
-                }
-            }
-        };
-        xhr.open('GET', '/profile', true);
-        xhr.send();
+        fetch('/profile')
+        .then(response => response.json())
+        .then(userData => {
+            atualizarPerfil(userData);
+        })
+        .catch(error => {
+            console.error('Erro ao obter os dados do usuário:', error);
+        });
     }
 
     // Função para atualizar o perfil na página
@@ -23,37 +53,15 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById('nome').textContent = userData.name;
         document.getElementById('nome2').textContent = userData.name;
         document.getElementById('email').textContent = userData.email;
-        // Adicione outras linhas de código semelhantes para atualizar outros campos, se necessário
+        document.getElementById('tel').textContent = userData.telefone;
+        document.getElementById('datanascimento').textContent = userData.dataNascimento;
     }
 
     // Chamada da função para obter os dados do usuário quando a página é carregada
     obterDadosUsuario();
 
-
-    function mostrarDadosUsuario() {
-        var xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === XMLHttpRequest.DONE) {
-                if (xhr.status === 200) {
-                    var userData = JSON.parse(xhr.responseText);
-                    console.log("ID: " + userData.id);
-                    console.log("Nome: " + userData.name);
-                    console.log("Email: " + userData.email);
-                    console.log("CPF/CNPJ: " + userData.cpf_cnpj);
-                } else {
-                    console.error('Erro ao obter os dados do usuário.');
-                }
-            }
-        };
-        xhr.open('GET', '/profile', true);
-        xhr.send();
-    }
-
     // Direcionando Click do btn "Anunciar" na Header.
     document.getElementById("AnunciarHeaderProfile").addEventListener("click", function() {
-            window.location.href = "/pages/imovel.html"
+        window.location.href = "/pages/imovel.html";
     });
-
-    // Chame esta função para buscar e mostrar os dados do usuário
-    mostrarDadosUsuario();
 });
