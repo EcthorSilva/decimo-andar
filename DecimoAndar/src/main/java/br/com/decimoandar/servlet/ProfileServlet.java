@@ -28,18 +28,9 @@ public class ProfileServlet extends HttpServlet {
         // Usando a função readUser da UserDao para obter os dados do usuário
         userDao.readUser(user);
 
-        // Imprimindo os dados do usuário para debug
-        //System.out.println("Dados do usuário recuperados:");
-        //System.out.println("ID: " + user.getIdUser());
-        //System.out.println("Nome: " + user.getName());
-        //System.out.println("Email: " + user.getEmail());
-        //System.out.println("CPF/CNPJ: " + user.getDocPfPj());
-
         // Criando o JSON com os dados do usuário
-        String json = "{\"id\": " + user.getIdUser() +
-                ", \"name\": \"" + user.getName() +
-                "\", \"email\": \"" + user.getEmail() +
-                "\", \"cpf_cnpj\": \"" + user.getDocPfPj() + "\"}";
+        ObjectMapper mapper = new ObjectMapper();
+        String json = mapper.writeValueAsString(user);
 
         // Configurando a resposta para JSON
         response.setContentType("application/json");
