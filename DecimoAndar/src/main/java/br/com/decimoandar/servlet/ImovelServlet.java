@@ -3,12 +3,22 @@ package br.com.decimoandar.servlet;
 import br.com.decimoandar.dao.ImovelDao;
 import br.com.decimoandar.model.Imovel;
 
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.*;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @WebServlet("/create-imovel")
@@ -17,49 +27,100 @@ public class ImovelServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Imovel imovel = new Imovel();
+        List<String> imagePaths = new ArrayList<>();
 
-        imovel.setTipoImovel(request.getParameter("tipoImovel"));
-        imovel.setTipoVenda(request.getParameter("tipoVenda"));
-        imovel.setValor(request.getParameter("valor"));
-        imovel.setEndereco(request.getParameter("endereco"));
-        imovel.setNumero(request.getParameter("numero"));
-        imovel.setCidade(request.getParameter("cidade"));
-        imovel.setUf(request.getParameter("uf"));
-        imovel.setCep(request.getParameter("cep"));
-        imovel.setNumQuartos(request.getParameter("numQuartos"));
-        imovel.setNumBanheiros(request.getParameter("numBanheiros"));
-        imovel.setMetrosQuadrados(request.getParameter("metrosQuadrados"));
-        imovel.setDescricaoImovel(request.getParameter("descricaoImovel"));
+        boolean isMultipart = ServletFileUpload.isMultipartContent(request);
 
-        // Obtendo o ID do usuário do cookie
-        int userId = getUserIdFromCookie(request);
-        imovel.setUserId(userId);
+        if (isMultipart) {
+            try {
+                List<FileItem> formItems = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(request);
 
-        ImovelDao imovelDao = new ImovelDao();
-
-        // Criar o imóvel no banco de dados
-        int imovelId = imovelDao.createImovel(imovel, userId);
-
-        if (imovelId != 0) {
-            // Processar imagens
-            List<String> imagePaths = new ArrayList<>();
-            for (Part part : request.getParts()) {
-                if (part.getName().equals("fotos") && part.getSize() > 0) {
-                    String fileName = getFileName(part);
-                    String imagePath = "path/to/save/" + fileName;  //lógica para salvar a imagem
-                    part.write(imagePath);
-                    imagePaths.add(imagePath);
+                for (FileItem item : formItems) {
+                    if (item.isFormField()) {
+                        switch (item.getFieldName()) {
+                            case "tipoImovel":
+                                imovel.setTipoImovel(item.getString());
+                                break;
+                            case "tipoVenda":
+                                imovel.setTipoVenda(item.getString());
+                                break;
+                            case "valor":
+                                imovel.setValor(item.getString());
+                                break;
+                            case "endereco":
+                                imovel.setEndereco(item.getString());
+                                break;
+                            case "numero":
+                                imovel.setNumero(item.getString());
+                                break;
+                            case "cidade":
+                                imovel.setCidade(item.getString());
+                                break;
+                            case "uf":
+                                imovel.setUf(item.getString());
+                                break;
+                            case "cep":
+                                imovel.setCep(item.getString());
+                                break;
+                            case "numQuartos":
+                                imovel.setNumQuartos(item.getString());
+                                break;
+                            case "numBanheiros":
+                                imovel.setNumBanheiros(item.getString());
+                                break;
+                            case "metrosQuadrados":
+                                imovel.setMetrosQuadrados(item.getString());
+                                break;
+                            case "descricaoImovel":
+                                imovel.setDescricaoImovel(item.getString());
+                                break;
+                        }
+                    }
                 }
-            }
 
-            // Adicionar caminhos das imagens no banco de dados
-            if (!imagePaths.isEmpty()) {
-                imovelDao.addImagePaths(imovelId, imagePaths);
-            }
+                int userId = getUserIdFromCookie(request);
+                imovel.setUserId(userId);
 
-            response.setStatus(HttpServletResponse.SC_CREATED);
-        } else {
-            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                ImovelDao imovelDao = new ImovelDao();
+                int imovelId = imovelDao.createImovel(imovel, userId);
+
+                if (imovelId != 0) {
+                    String uniqueId = new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date());
+                    String baseUploadPath = getServletContext().getRealPath("/imoveisimg/");
+                    File baseUploadDir = new File(baseUploadPath);
+                    if (!baseUploadDir.exists()) {
+                        baseUploadDir.mkdirs();
+                    }
+
+                    String uploadPath = baseUploadPath + "/cad" + uniqueId + "/";
+                    File uploadDir = new File(uploadPath);
+                    if (!uploadDir.exists()) {
+                        uploadDir.mkdirs();
+                    }
+
+                    for (FileItem item : formItems) {
+                        if (!item.isFormField() && isImageFile(item)) {
+                            String fileName = "img" + (imagePaths.size() + 1) + getFileExtension(item.getName());
+                            String filePath = uploadPath + fileName;
+                            File storeFile = new File(filePath);
+                            item.write(storeFile);
+                            imagePaths.add(filePath);
+                        }
+                    }
+
+                    if (!imagePaths.isEmpty()) {
+                        imovelDao.addImagePaths(imovelId, imagePaths);
+                    }
+
+                    response.setStatus(HttpServletResponse.SC_CREATED);
+
+                } else {
+                    response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                }
+
+            } catch (Exception ex) {
+                throw new ServletException("Erro ao processar o formulário", ex);
+            }
         }
     }
 
@@ -72,17 +133,25 @@ public class ImovelServlet extends HttpServlet {
                 }
             }
         }
-        return -1; // Se o cookie não for encontrado, retorna -1 ou outro valor adequado
+        return -1;
     }
 
-    private String getFileName(Part part) {
-        String contentDisposition = part.getHeader("content-disposition");
-        String[] items = contentDisposition.split(";");
-        for (String item : items) {
-            if (item.trim().startsWith("filename")) {
-                return item.substring(item.indexOf('=') + 1).trim().replace("\"", "");
+    private String getFileExtension(String fileName) {
+        if (fileName == null || fileName.isEmpty()) {
+            return "";
+        }
+        int dotIndex = fileName.lastIndexOf('.');
+        return (dotIndex == -1) ? "" : fileName.substring(dotIndex);
+    }
+
+    private boolean isImageFile(FileItem item) {
+        String[] validExtensions = {".jpg", ".jpeg", ".png", ".gif"};
+        String fileName = item.getName().toLowerCase();
+        for (String ext : validExtensions) {
+            if (fileName.endsWith(ext)) {
+                return true;
             }
         }
-        return null;
+        return false;
     }
 }
