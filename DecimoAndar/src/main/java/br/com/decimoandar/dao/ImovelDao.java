@@ -126,89 +126,57 @@ public class ImovelDao {
         } catch (Exception e) {
             System.out.println("Erro ao deleter no Database.");
         }
-
-
     }
 
-    public List<Imovel> readImoveisComImagens() {
+    // Função para buscar os imóveis de um usuário logado
+    public List<Imovel> getImoveisUsuarioAtivo(int userId) {
+        List<Imovel> imoveis = new ArrayList<>();
 
         try {
-
             Connection connection = DriverManager.getConnection("jdbc:h2:~/test", "sa", "sa");
 
             if (connection != null) {
                 System.out.println("Success in database connection");
             } else {
                 System.out.println("Failed to connect to the database");
+                return imoveis;
             }
 
+            String SQL = "SELECT endereco, cep, caminho_imagem " +
+                    "FROM DECIMO_ANDAR.Imovel i " +
+                    "LEFT JOIN DECIMO_ANDAR.ImovelImagem ii ON i.id = ii.imovel_id " +
+                    "WHERE i.user_id = ? " +
+                    "GROUP BY i.id " +
+                    "ORDER BY i.id DESC";
 
-            List<Imovel> imoveis = new ArrayList<>();
-            Map<Integer, Imovel> imovelMap;
-            imovelMap = new HashMap<>();
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+            preparedStatement.setInt(1, userId);
+            ResultSet resultSet = preparedStatement.executeQuery();
 
-            try {
-                String query = "SELECT " +
-                        "i.id AS ImovelID, " +
-                        "i.tipo, " +
-                        "i.tipoVenda, " +
-                        "i.valor, " +
-                        "i.endereco, " +
-                        "i.numero, " +
-                        "i.cidade, " +
-                        "i.uf, " +
-                        "i.cep, " +
-                        "i.numQuartos, " +
-                        "i.numBanheiros, " +
-                        "i.metrosQuadrados, " +
-                        "i.descricao, " +
-                        "ii.id AS ImagemID, " +
-                        "ii.caminho_imagem " +
-                        "FROM DECIMO_ANDAR.Imovel i " +
-                        "LEFT JOIN DECIMO_ANDAR.ImovelImagem ii ON i.id = ii.imovel_id";
+            while (resultSet.next()) {
+                String endereco = resultSet.getString("endereco");
+                String cep = resultSet.getString("cep");
+                String caminhoImagem = resultSet.getString("caminho_imagem");
 
-                PreparedStatement ps = connection.prepareStatement(query);
-                ResultSet rs = ps.executeQuery();
+                Imovel imovel = new Imovel();
+                imovel.setEndereco(endereco);
+                imovel.setCep(cep);
 
-
-                // Processar os resultados da consulta
-                while (rs.next()) {
-                    int imovelId = rs.getInt("ImovelID");
-                    Imovel imovel = imovelMap.get(imovelId);
-
-                    // Se o imóvel ainda não está no mapa, cria um novo
-                    if (imovel == null) {
-                        imovel = new Imovel();
-                        imovel.setIdImovel(imovelId);
-                        imovel.setTipoImovel(rs.getString("tipo"));
-                        imovel.setTipoVenda(rs.getString("tipoVenda"));
-                        imovel.setValor(rs.getString("valor"));
-                        imovel.setEndereco(rs.getString("endereco"));
-                        imovel.setNumero(rs.getString("numero"));
-                        imovel.setCidade(rs.getString("cidade"));
-                        imovel.setUf(rs.getString("uf"));
-                        imovel.setCep(rs.getString("cep"));
-                        imovel.setNumQuartos(rs.getString("numQuartos"));
-                        imovel.setNumBanheiros(rs.getString("numBanheiros"));
-                        imovel.setMetrosQuadrados(rs.getString("metrosQuadrados"));
-                        imovel.setDescricaoImovel(rs.getString("descricao"));
-
-                        imovelMap.put(imovelId, imovel);
-                        imoveis.add(imovel);
-                    }
-
+                // Apenas adiciona a primeira imagem encontrada
+                if (caminhoImagem != null && imovel.getImagePaths() == null) {
+                    List<String> imagePaths = new ArrayList<>();
+                    imagePaths.add(caminhoImagem);
+                    imovel.setImagePaths(imagePaths);
                 }
 
-
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
+                imoveis.add(imovel);
             }
 
-            return imoveis;
-
+            connection.close();
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            System.out.println("Error: " + e.getMessage());
         }
 
+        return imoveis;
     }
 }
