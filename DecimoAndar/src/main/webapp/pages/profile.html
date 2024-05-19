@@ -1,321 +1,365 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DecimoAndar</title>
-      <link rel="stylesheet" href="../vendor/bootstrap/css/bootstrap.min.css">
-      <!-- JQuery -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <!-- Main File For CSS -->
-    <link rel="stylesheet" href="../vendor/custom/style.css" />
-  </head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DecimoAndar</title>
+  <link rel="stylesheet" href="../vendor/bootstrap/css/bootstrap.min.css">
+  <!-- JQuery -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+  <!-- Main File For CSS -->
+  <link rel="stylesheet" href="../vendor/custom/style.css" />
+</head>
 
-  <body>
-    <!-- Start Header -->
-    <header class="p-3 border-bottom shadow bg-body fixed-top">
-      <div class="container d-flex flex-wrap align-items-center justify-content-center justify-content-md-between mb-1 ">
-        <a href="/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
-          <img src="../assets/icons/icons8-home.svg" alt="" width="50" height="50" title="instagram">
+<body>
+  <!-- Start Header -->
+  <header class="p-3 border-bottom shadow bg-body fixed-top">
+    <div class="container d-flex flex-wrap align-items-center justify-content-center justify-content-md-between mb-1 ">
+      <a href="/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
+        <img src="../assets/icons/icons8-home.svg" alt="" width="50" height="50" title="instagram">
+      </a>
+
+      <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+        <li><a href="#" class="nav-link px-2 link-dark">Comprar</a></li>
+        <li><a id="AnunciarHeaderProfile" class="nav-link px-2 link-dark">Anunciar</a></li>
+        <li><a href="#" class="nav-link px-2 link-dark">Ajuda</a></li>
+        <li><a href="#" class="nav-link px-2 link-dark">Sobre nós</a></li>
+      </ul>
+
+      <!-- Caso o usuario não esteja logado -->
+      <li class="botao1 list-group-item nav-item">
+        <a href="../pages/login.html" class="btn btn-outline-secondary me-2 d-block text-decoration-none rounded-pill"
+          style="width: 90px; height: 40px;">Login</a>
+      </li>
+      <!-- Caso o usuario já tenha logado -->
+      <li class="botao2 list-group-item nav-item dropdown-custom visually-hidden">
+        <a href="#" class="d-block link-body-emphasis text-decoration-none" data-bs-toggle="dropdown"
+          aria-expanded="false">
+          <img src="../assets/images/perfil/perfil.jpg" alt="mdo" width="50px" height="50px" class="rounded-circle">
         </a>
-
-        <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-          <li><a href="#" class="nav-link px-2 link-dark">Comprar</a></li>
-          <li><a id="AnunciarHeaderProfile" class="nav-link px-2 link-dark">Anunciar</a></li>
-          <li><a href="#" class="nav-link px-2 link-dark">Ajuda</a></li>
-          <li><a href="#" class="nav-link px-2 link-dark">Sobre nós</a></li>
-        </ul>
-        
-        <!-- Caso o usuario não esteja logado -->
-        <li class="botao1 list-group-item nav-item">
-          <a href="../pages/login.html" class="btn btn-outline-secondary me-2 d-block text-decoration-none rounded-pill" style="width: 90px; height: 40px;">Login</a>
-        </li>
-        <!-- Caso o usuario já tenha logado -->
-        <li class="botao2 list-group-item nav-item dropdown-custom visually-hidden">
-          <a href="#" class="d-block link-body-emphasis text-decoration-none" data-bs-toggle="dropdown" aria-expanded="false">
-            <img src="../assets/images/perfil/perfil.jpg" alt="mdo" width="50px" height="50px" class="rounded-circle">
-          </a>
-          <ul class="dropdown-menu  gap-1 p-2 rounded-3 mx-0 shadow w-220px">
-            <li>
-              <a class="dropdown-item rounded-2" href="../pages/profile.html">
+        <ul class="dropdown-menu  gap-1 p-2 rounded-3 mx-0 shadow w-220px">
+          <li>
+            <a class="dropdown-item rounded-2" href="../pages/profile.html">
               <img src="../vendor/bootstrap/bootstrap-icons/person.svg" alt="" width="20px" title="Perfil">
-                &nbsp; Perfil</a></li>
-            <li>
-              <a class="dropdown-item rounded-2" href="#">
-                <img src="../vendor/bootstrap/bootstrap-icons/heart.svg" alt="" title="Favoritos">
-                &nbsp; Favoritos
-              </a></li>
-            <li>
-              <a class="dropdown-item rounded-2" href="#">
-                <img src="../vendor/bootstrap/bootstrap-icons/gear.svg" alt="" title="Configuração">
-                &nbsp; Configuração</a></li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-            <li>
-              <a class="dropdown-item d-flex gap-2 align-items-center" id="logoutButton">
-                <img src="../vendor/bootstrap/bootstrap-icons/box-arrow-left.svg" alt="" title="logout">
-                &nbsp; logout
-              </a>
-            </li>
-          </ul>
-        </li>
-      </div>
-    </header>
+              &nbsp; Perfil</a>
+          </li>
+          <li>
+            <a class="dropdown-item rounded-2" href="#">
+              <img src="../vendor/bootstrap/bootstrap-icons/heart.svg" alt="" title="Favoritos">
+              &nbsp; Favoritos
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item rounded-2" href="#">
+              <img src="../vendor/bootstrap/bootstrap-icons/gear.svg" alt="" title="Configuração">
+              &nbsp; Configuração</a>
+          </li>
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+          <li>
+            <a class="dropdown-item d-flex gap-2 align-items-center" id="logoutButton">
+              <img src="../vendor/bootstrap/bootstrap-icons/box-arrow-left.svg" alt="" title="logout">
+              &nbsp; logout
+            </a>
+          </li>
+        </ul>
+      </li>
+    </div>
+  </header>
 
-    <!-- Start Main Content -->
-    <main>
-        <section class="bg-light d-flex align-items-center" style="height: 100vh;">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-4">
-                        <!-- mini perfil -->
-                        <div class="card mb-4">
-                            <div class="card-body text-center">
-                                <!-- exemplo de como recuperar a imagem do banco /imoveisimg/cad20240514212415650/img1.jpg -->
-                                <img src="/assets/images/perfil/perfil.jpg" alt="avatar" class="rounded-circle" style="width: 150px;">
-                                <div class="d-flex align-items-center justify-content-center my-2">
-                                    <label for="input-imagem">
-                                        <img id="icone-imagem" src="../vendor/bootstrap/bootstrap-icons/camera.svg" alt="" width="20" height="20" title="">
-                                    </label>
-                                    <input id="input-imagem" type="file" accept="image/*" style="display: none;">
-                                </div>
-                                <h5 class="my-2" id="nome">${user.name}</h5>
-                            </div>
-                        </div>
-                        <!-- card com os dados pessoais -->
-                        <div class="card mb-4">
-                            <div class="card-header py-2 d-flex align-items-center justify-content-between">
-                                <h5 class="mb-0">Resumo</h5>
-                                <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#modalId">
-                                    <a class="text-muted" href="#"><img src="../vendor/bootstrap/bootstrap-icons/pencil-square.svg" alt="" width="20" height="20" title=""></a>
-                                </button>
-                            </div>
-                            <div class="card-body text-center">
-                                <div class="text-start">
-                                    <div class="row">
-                                        <div class="col-sm-3">
-                                            <p class="mb-0">Nome:</p>
-                                        </div>
-                                        <div class="col-sm-9">
-                                            <p class="text-muted mb-0 userNome" id="nome2">${user.name}</p>
-                                        </div>
-                                    </div>
-                                    <hr>
-                                    <div class="row">
-                                        <div class="col-sm-3">
-                                            <p class="mb-0">E-mail:</p>
-                                        </div>
-                                        <div class="col-sm-9">
-                                            <p class="text-muted mb-0 userEmail" id="email">${user.email}</p>
-                                        </div>
-                                    </div>
-                                    <hr>
-                                    <div class="row">
-                                        <div class="col-sm-3">
-                                            <p class="mb-0">Telefone:</p>
-                                        </div>
-                                        <div class="col-sm-9">
-                                            <p class="text-muted mb-0 userCell" id="tel">${user.telefone}</p>
-                                        </div>
-                                    </div>
-                                    <hr>
-                                    <div class="row align-items-center">
-                                        <div class="col-sm-3">
-                                            <p class="mb-0">Data Nasc:</p>
-                                        </div>
-                                        <div class="col-sm-9">
-                                            <p class="text-muted mb-0 userCell" id="datanascimento">${user.data}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+  <!-- Start Main Content -->
+  <main>
+    <section class="bg-light d-flex align-items-center" style="height: 100vh;">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-4">
+            <!-- mini perfil -->
+            <div class="card mb-4">
+              <div class="card-body text-center">
+                <!-- exemplo de como recuperar a imagem do banco /imoveisimg/cad20240514212415650/img1.jpg -->
+                <img src="/assets/images/perfil/perfil.jpg" alt="avatar" class="rounded-circle" style="width: 150px;">
+                <div class="d-flex align-items-center justify-content-center my-2">
+                  <label for="input-imagem">
+                    <img id="icone-imagem" src="../vendor/bootstrap/bootstrap-icons/camera.svg" alt="" width="20"
+                      height="20" title="">
+                  </label>
+                  <input id="input-imagem" type="file" accept="image/*" style="display: none;">
+                </div>
+                <h5 class="my-2" id="nome">${user.name}</h5>
+              </div>
+            </div>
+            <!-- card com os dados pessoais -->
+            <div class="card mb-4">
+              <div class="card-header py-2 d-flex align-items-center justify-content-between">
+                <h5 class="mb-0">Resumo</h5>
+                <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#modalId">
+                  <a class="text-muted" href="#"><img src="../vendor/bootstrap/bootstrap-icons/pencil-square.svg" alt=""
+                      width="20" height="20" title=""></a>
+                </button>
+              </div>
+              <div class="card-body text-center">
+                <div class="text-start">
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <p class="mb-0">Nome:</p>
                     </div>
-                    <div class="col-lg-8">
-                        <div class="card mb-4">
-                            <div class="card-header py-3">
-                                <h5 class="mb-0">Ultimos Anuncios</h5>
-                            </div>
-                            <div>
-                              <div id="carouselId" class="carousel slide" data-bs-ride="carousel">
-                                <ol class="carousel-indicators">
-                                  <li
-                                    data-bs-target="#carouselId"
-                                    data-bs-slide-to="0"
-                                    class="active"
-                                    aria-current="true"
-                                    aria-label="First slide"
-                                  ></li>
-                                  <li
-                                    data-bs-target="#carouselId"
-                                    data-bs-slide-to="1"
-                                    aria-label="Second slide"
-                                  ></li>
-                                  <li
-                                    data-bs-target="#carouselId"
-                                    data-bs-slide-to="2"
-                                    aria-label="Third slide"
-                                  ></li>
-                                </ol>
-                              </div>
-                            </div>
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
-                                        <p><strong>text</strong></p>
-                                        <p>#text</p>
-                                    </div>
-                                    <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
-                                        <p><strong>text</strong></p>
-                                        <p>text</p>
-                                    </div>
-                                    <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
-                                        <p><strong>text</strong></p>
-                                        <p>text</p>
-                                    </div>
-                                    <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
-                                        <p><strong>text</strong></p>
-                                        <p>text</p>
-                                    </div>
-                                </div>
-                                <hr class="my-4">
-                                <div class="row">
-                                    <div class="col-lg-6 col-md-6 mb-4 mb-lg-0">
-                                        <p><strong>text</strong></p>
-                                        <p class="text-muted">
-                                            <b>Av. Eng. Eusébio Stevaux</b><br>
-                                            Número 823, Santo Amaro<br>
-                                            CEP 04696-000 - São Paulo, SP
-                                        </p>
-                                    </div>
-                                    <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
-                                        <p><strong>text</strong></p>
-                                        <p>text</p>
-                                    </div>
-                                </div>
-                                <hr class="my-4">
-                                <div class="row">
-                                    <div class="col-lg-11 col-md-6 mb-4 mb-lg-0">
-                                        <button type="button"  class="btn btn-primary btn-block btn-lg">
-                                            <a href="../pages/imovel.html" class="fw-bold text-body">Anunciar</a>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
+                    <div class="col-sm-9">
+                      <p class="text-muted mb-0 userNome" id="nome2">${user.name}</p>
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <p class="mb-0">E-mail:</p>
+                    </div>
+                    <div class="col-sm-9">
+                      <p class="text-muted mb-0 userEmail" id="email">${user.email}</p>
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <p class="mb-0">Telefone:</p>
+                    </div>
+                    <div class="col-sm-9">
+                      <p class="text-muted mb-0 userCell" id="tel">${user.telefone}</p>
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row align-items-center">
+                    <div class="col-sm-3">
+                      <p class="mb-0">Data Nasc:</p>
+                    </div>
+                    <div class="col-sm-9">
+                      <p class="text-muted mb-0 userCell" id="datanascimento">${user.data}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-8">
+            <div class="card mb-4">
+              <div class="card-header py-3">
+                <h5 class="mb-0">Ultimos Anuncios</h5>
+              </div>
+
+              <div class="card-body">
+                <div class="row justify-content-center">
+                  <!-- ANUNCIO 01 --->
+                  <div class="card" style="width: 20rem; margin: 0px 20px 0px 20px;">
+                    <!-- <img class="card-img-top" src="../imoveisimg/cad20240519140132843/img1.png" alt="Card image cap">  -->
+                    <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                      <div class="carousel-inner" id="carouselImages">
+                        <div class="carousel-item active">
+                          <img src="../assets//images/imagem1.jpg" class="d-block w-100" alt="Placeholder Image"
+                            height="250">
                         </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="card mb-4 mb-md-0">
-                                    <div class="card-body mb-4 mb-md-0">
-                                        
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="card mb-4 mb-md-0">
-                                    <div class="card-body">
-                                        
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="carousel-item active">
+                          <img src="../assets//images/imagem1.jpg" class="d-block w-100" alt="Placeholder Image"
+                            height="250">
                         </div>
+                        <div class="carousel-item active">
+                          <img src="../assets//images/imagem1.jpg" class="d-block w-100" alt="Placeholder Image"
+                            height="250">
+                        </div>
+                      </div>
+                      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
+                        data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                      </button>
+                      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
+                        data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                      </button>
+                    </div>
+                    <div class="card-body">
+                      <h5 class="card-title">Código: 0101010<h5>
+                      <h6 class="card-title">Rua. Sla oq<h6>
+                      <h7 class="card-title">CEP: 04844-300</h7>
+                      <p class="card-text"></p>
+                      <a href="#" class="btn btn-primary">Ver Imovel</a>
+                    </div>
+                  </div>
+                    <!-- ANUNCIO 02 --->
+                    <div class="card" style="width: 20rem; margin: 0px 20px 0px 20px;">
+                      <!-- <img class="card-img-top" src="../imoveisimg/cad20240519140132843/img1.png" alt="Card image cap">  -->
+                      <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner" id="carouselImages">
+                          <div class="carousel-item active">
+                            <img src="../assets//images/imagem1.jpg" class="d-block w-100" alt="Placeholder Image"
+                              height="250">
+                          </div>
+                          <div class="carousel-item active">
+                            <img src="../assets//images/imagem1.jpg" class="d-block w-100" alt="Placeholder Image"
+                              height="250">
+                          </div>
+                          <div class="carousel-item active">
+                            <img src="../assets//images/imagem1.jpg" class="d-block w-100" alt="Placeholder Image"
+                              height="250">
+                          </div>
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
+                          data-bs-slide="prev">
+                          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                          <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
+                          data-bs-slide="next">
+                          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                          <span class="visually-hidden">Next</span>
+                        </button>
+                      </div>
+                      <div class="card-body">
+                        <h5 class="card-title">Código: 0101010<h5>
+                        <h6 class="card-title">Rua. Sla oq<h6>
+                        <h7 class="card-title">CEP: 04844-300</h7>
+                        <p class="card-text"></p>
+                        <a href="#" class="btn btn-primary">Ver Imovel</a>
+                      </div>
                     </div>
                 </div>
+                <hr class="my-4">
+                <div class="row">
+                  <div class="col-lg-11 col-md-6 mb-4 mb-lg-0">
+                    <button type="button" class="btn btn-primary btn-block btn-lg">
+                      <a href="../pages/imovel.html" class="fw-bold text-body">Anunciar</a>
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
-        </section>    
-    </main>
-    <!-- Start Footer -->
-    <footer class="container">
-      <!-- Disclaimer -->
-      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-5 py-5 my-1 border-top">
-        <div class="col mb-1 d-flex align-items-center">
-          <a href="/" class="d-flex align-items-center mb-3 link-dark text-decoration-none">
-            <img src="../assets/images/logotipo.png" alt="DecimoAndar" style="width: 150px; height: 150px;">
-          </a>
-        </div>
-        <div class="col mb-3"></div>
-        <div class="col mb-3">
-          <h5>Institucional</h5>
-          <ul class="nav flex-column">
-            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Sobre o DecimoAndar</a></li>
-            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Sua segurança</a></li>
-            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Garantia</a></li>
-            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Regiões atendidas</a></li>
-            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Central de Ajuda</a></li>
-          </ul>
-        </div>
-        <div class="col mb-3">
-          <h5>Segurança</h5>
-          <ul class="nav flex-column">
-            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Politica de Privacidade</a></li>
-            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Termos e condições de uso</a></li>
-            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Política de Cookies</a></li>
-            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Preferências de cookies</a></li>
-            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Manual do usuário</a></li>
-          </ul>
-        </div>
-        <div class="col mb-1">
-          <h5>Suporte</h5>
-          <ul class="nav flex-column">
-            <li class="nav-item mb-2 text-muted">Segunda à sexta das 8:00 às 17:00</li>
-            <li class="nav-item mb-2 text-muted">(11) 91234-5678</li>
-            <li class="nav-item mb-2 text-muted">suporte@decimoandar.com</li>
-          </ul>
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="card mb-4 mb-md-0">
+                  <div class="card-body mb-4 mb-md-0">
+
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="card mb-4 mb-md-0">
+                  <div class="card-body">
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
         </div>
       </div>
-      <!-- Footer -->
-      <div class="d-flex flex-wrap justify-content-between align-items-center py-3 my-2 border-top">
-        <div class="col-md-4 d-flex align-items-center">
-          <span class="mb-3 mb-md-0 text-muted">© 2024 DecimoAndar LTDA</span>
-        </div>
-    
-        <ul class="nav col-md-4 justify-content-end list-unstyled d-flex align-items-center">
-          <li class="ms-3"><a class="text-muted" href="#"><img src="../vendor/bootstrap/bootstrap-icons/instagram.svg" alt="" width="24" height="24" title="instagram"></a></li>
-          <li class="ms-3"><a class="text-muted" href="#"><img src="../vendor/bootstrap/bootstrap-icons/facebook.svg" alt="" width="24" height="32" title="instagram"></a></li>
-          <li class="ms-3"><a class="text-muted" href="#"><img src="../vendor/bootstrap/bootstrap-icons/twitter-x.svg" alt="" width="24" height="32" title="instagram"></a></li>
+    </section>
+  </main>
+  <!-- Start Footer -->
+  <footer class="container">
+    <!-- Disclaimer -->
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-5 py-5 my-1 border-top">
+      <div class="col mb-1 d-flex align-items-center">
+        <a href="/" class="d-flex align-items-center mb-3 link-dark text-decoration-none">
+          <img src="../assets/images/logotipo.png" alt="DecimoAndar" style="width: 150px; height: 150px;">
+        </a>
+      </div>
+      <div class="col mb-3"></div>
+      <div class="col mb-3">
+        <h5>Institucional</h5>
+        <ul class="nav flex-column">
+          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Sobre o DecimoAndar</a></li>
+          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Sua segurança</a></li>
+          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Garantia</a></li>
+          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Regiões atendidas</a></li>
+          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Central de Ajuda</a></li>
         </ul>
       </div>
-    </footer>
+      <div class="col mb-3">
+        <h5>Segurança</h5>
+        <ul class="nav flex-column">
+          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Politica de Privacidade</a></li>
+          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Termos e condições de uso</a></li>
+          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Política de Cookies</a></li>
+          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Preferências de cookies</a></li>
+          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Manual do usuário</a></li>
+        </ul>
+      </div>
+      <div class="col mb-1">
+        <h5>Suporte</h5>
+        <ul class="nav flex-column">
+          <li class="nav-item mb-2 text-muted">Segunda à sexta das 8:00 às 17:00</li>
+          <li class="nav-item mb-2 text-muted">(11) 91234-5678</li>
+          <li class="nav-item mb-2 text-muted">suporte@decimoandar.com</li>
+        </ul>
+      </div>
+    </div>
+    <!-- Footer -->
+    <div class="d-flex flex-wrap justify-content-between align-items-center py-3 my-2 border-top">
+      <div class="col-md-4 d-flex align-items-center">
+        <span class="mb-3 mb-md-0 text-muted">© 2024 DecimoAndar LTDA</span>
+      </div>
 
-    <!-- Bootstrap -->
-    <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <!-- <script src="/vendor/custom/custom-main.js"></script> -->
-    <script src="../vendor/custom/profile.js"></script>
-    
-    <!-- Modal Body -->
-    <!-- if you want to close by clicking outside the modal, delete the last endpoint:data-bs-backdrop and data-bs-keyboard -->
-    <div class="modal fade" id="modalId" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document">
-        <div class="modal-content rounded-4 shadow">
-          <div class="modal-header p-5 pb-4 border-bottom-0 mb-3">
-            <h1 class="modal-title fs-5" >Atualizar dados pessoais</h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-            <div class="modal-body p-5 pt-0">
-                <form id="updateUserDataForm">
-                    <div class="form-floating mb-3">
-                        <input type="tel" class="form-control rounded-3" id="telefone" name="telefone" placeholder="(11) 9 1111-1111">
-                        <label for="telefone">Telefone</label>
-                    </div>
-                    <div class="form-floating mb-3">
-                        <input type="date" class="form-control rounded-3" id="datanasci" name="dataNascimento" placeholder="dd/mm/aaaa">
-                        <label for="datanasci">Data de Nascimento</label>
-                    </div>
-                    <button class="w-100 mb-2 btn btn-lg rounded-3 btn-outline-secondary me-2 d-block text-decoration-none rounded-pill" type="submit">Salvar</button>
-                </form>
+      <ul class="nav col-md-4 justify-content-end list-unstyled d-flex align-items-center">
+        <li class="ms-3"><a class="text-muted" href="#"><img src="../vendor/bootstrap/bootstrap-icons/instagram.svg"
+              alt="" width="24" height="24" title="instagram"></a></li>
+        <li class="ms-3"><a class="text-muted" href="#"><img src="../vendor/bootstrap/bootstrap-icons/facebook.svg"
+              alt="" width="24" height="32" title="instagram"></a></li>
+        <li class="ms-3"><a class="text-muted" href="#"><img src="../vendor/bootstrap/bootstrap-icons/twitter-x.svg"
+              alt="" width="24" height="32" title="instagram"></a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <!-- Bootstrap -->
+  <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- <script src="/vendor/custom/custom-main.js"></script> -->
+  <script src="../vendor/custom/profile.js"></script>
+
+  <!-- Modal Body -->
+  <!-- if you want to close by clicking outside the modal, delete the last endpoint:data-bs-backdrop and data-bs-keyboard -->
+  <div class="modal fade" id="modalId" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog"
+    aria-labelledby="modalTitleId" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document">
+      <div class="modal-content rounded-4 shadow">
+        <div class="modal-header p-5 pb-4 border-bottom-0 mb-3">
+          <h1 class="modal-title fs-5">Atualizar dados pessoais</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body p-5 pt-0">
+          <form id="updateUserDataForm">
+            <div class="form-floating mb-3">
+              <input type="tel" class="form-control rounded-3" id="telefone" name="telefone"
+                placeholder="(11) 9 1111-1111">
+              <label for="telefone">Telefone</label>
             </div>
+            <div class="form-floating mb-3">
+              <input type="date" class="form-control rounded-3" id="datanasci" name="dataNascimento"
+                placeholder="dd/mm/aaaa">
+              <label for="datanasci">Data de Nascimento</label>
+            </div>
+            <button
+              class="w-100 mb-2 btn btn-lg rounded-3 btn-outline-secondary me-2 d-block text-decoration-none rounded-pill"
+              type="submit">Salvar</button>
+          </form>
         </div>
       </div>
     </div>
-    
-    <!-- Optional: Place to the bottom of scripts -->
-    <script>
-      const myModal = new bootstrap.Modal(
-        document.getElementById("modalId"),
-        options,
-      );
-    </script>
-  </body>
+  </div>
+
+  <!-- Optional: Place to the bottom of scripts -->
+  <script>
+    const myModal = new bootstrap.Modal(
+      document.getElementById("modalId"),
+      options,
+    );
+  </script>
+</body>
+
 </html>
