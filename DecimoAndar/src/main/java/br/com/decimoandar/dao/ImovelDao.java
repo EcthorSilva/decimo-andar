@@ -89,4 +89,42 @@ public class ImovelDao {
             e.printStackTrace();
         }
     }
+
+    //Função para excluir o Imóvel;
+    public void deleteImovel(int imovelId) {
+
+        try {
+            Connection connection = DriverManager.getConnection("jdbc:h2:~/test", "sa", "sa");
+
+            if (connection != null) {
+                System.out.println("Success in database connection");
+            } else {
+                System.out.println("Failed to connect to the database");
+                return;
+            }
+
+            String deleteImovelImagemSQL = "DELETE FROM DECIMO_ANDAR.ImovelImagem WHERE imovel_id = ?";
+            String deleteImovelSQL = "DELETE FROM DECIMO_ANDAR.Imovel WHERE id = ?";
+
+            PreparedStatement psDeleteImovelImagem = null;
+            PreparedStatement psDeleteImovel = null;
+
+            psDeleteImovelImagem = connection.prepareStatement(deleteImovelImagemSQL);
+            psDeleteImovelImagem.setInt(1, imovelId);
+            psDeleteImovel.executeUpdate();
+
+            psDeleteImovel = connection.prepareStatement(deleteImovelSQL);
+            psDeleteImovel.setInt(1, imovelId);
+            psDeleteImovel.executeUpdate();
+
+            connection.close();
+
+        } catch (Exception e) {
+            System.out.println("Erro ao deleter no Database.");
+        }
+
+
+    }
+
+
 }
