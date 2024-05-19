@@ -127,4 +127,56 @@ public class ImovelDao {
             System.out.println("Erro ao deleter no Database.");
         }
     }
+
+    // Função para buscar os imóveis de um usuário logado
+    public List<Imovel> getImoveisUsuarioAtivo(int userId) {
+        List<Imovel> imoveis = new ArrayList<>();
+
+        try {
+            Connection connection = DriverManager.getConnection("jdbc:h2:~/test", "sa", "sa");
+
+            if (connection != null) {
+                System.out.println("Success in database connection");
+            } else {
+                System.out.println("Failed to connect to the database");
+                return imoveis;
+            }
+
+            String SQL = "SELECT endereco, cep, caminho_imagem " +
+                    "FROM DECIMO_ANDAR.Imovel i " +
+                    "LEFT JOIN DECIMO_ANDAR.ImovelImagem ii ON i.id = ii.imovel_id " +
+                    "WHERE i.user_id = ? " +
+                    "GROUP BY i.id " +
+                    "ORDER BY i.id DESC";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+            preparedStatement.setInt(1, userId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                String endereco = resultSet.getString("endereco");
+                String cep = resultSet.getString("cep");
+                String caminhoImagem = resultSet.getString("caminho_imagem");
+
+                Imovel imovel = new Imovel();
+                imovel.setEndereco(endereco);
+                imovel.setCep(cep);
+
+                // Apenas adiciona a primeira imagem encontrada
+                if (caminhoImagem != null && imovel.getImagePaths() == null) {
+                    List<String> imagePaths = new ArrayList<>();
+                    imagePaths.add(caminhoImagem);
+                    imovel.setImagePaths(imagePaths);
+                }
+
+                imoveis.add(imovel);
+            }
+
+            connection.close();
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+
+        return imoveis;
+    }
 }
