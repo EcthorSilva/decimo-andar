@@ -191,6 +191,34 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     }
+        // Função para excluir a conta do usuário
+        function deleteAccount() {
+            fetch('/delete-account', {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert("Conta excluída com sucesso!");
+                    window.location.href = "/pages/profile.html"; // Redirecionar para a página de login ou outra página apropriada
+                } else {
+                    console.error("Erro ao excluir a conta.");
+                    return response.text();
+                }
+            })
+            .catch(error => {
+                console.error('Erro ao excluir a conta:', error);
+            });
+        }
+
+    // Adiciona o evento clique ao botão para chamar a função de exclusão do usuário.
+    document.getElementById("bntExcluirConta").addEventListener("click", function() {
+                if (confirm("Tem certeza de que deseja excluir sua conta?")) {
+                    deleteAccount();
+                }
+            });
 
     // Adiciona o evento de clique para carregar detalhes do imóvel quando o botão "Ver" é clicado
     $(document).on('click', '.btn-ver', function() {

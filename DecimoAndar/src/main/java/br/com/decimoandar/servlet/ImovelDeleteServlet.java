@@ -14,7 +14,7 @@ import java.io.IOException;
 
 @WebServlet("/delete-imovel")
 @MultipartConfig
-public class imovelDeleteServlet extends HttpServlet {
+public class ImovelDeleteServlet extends HttpServlet {
 
     protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String imovelIdParam = request.getParameter("id");
