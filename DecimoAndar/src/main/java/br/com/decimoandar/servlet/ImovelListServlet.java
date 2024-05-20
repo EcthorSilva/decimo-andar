@@ -53,6 +53,7 @@ public class ImovelListServlet extends HttpServlet {
         for (int i = 0; i < imoveis.size(); i++) {
             Imovel imovel = imoveis.get(i);
             json.append("{");
+            json.append("\"id\":\"").append(imovel.getIdImovel()).append("\",");
             json.append("\"endereco\":\"").append(imovel.getEndereco()).append("\",");
             json.append("\"cep\":\"").append(imovel.getCep()).append("\",");
             json.append("\"imagePaths\":[");
