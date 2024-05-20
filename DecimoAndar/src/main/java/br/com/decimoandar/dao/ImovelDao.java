@@ -107,16 +107,17 @@ public class ImovelDao {
             String deleteImovelImagemSQL = "DELETE FROM DECIMO_ANDAR.ImovelImagem WHERE imovel_id = ?";
             String deleteImovelSQL = "DELETE FROM DECIMO_ANDAR.Imovel WHERE id = ?";
 
-            PreparedStatement psDeleteImovelImagem = null;
-            PreparedStatement psDeleteImovel = null;
+            System.out.println(imovelId);
 
-            psDeleteImovelImagem = connection.prepareStatement(deleteImovelImagemSQL);
+            PreparedStatement psDeleteImovelImagem = connection.prepareStatement(deleteImovelImagemSQL);
             psDeleteImovelImagem.setLong(1, imovelId);
-            psDeleteImovel.executeUpdate();
+            psDeleteImovelImagem.execute();
 
-            psDeleteImovel = connection.prepareStatement(deleteImovelSQL);
+            System.out.println(imovelId);
+
+            PreparedStatement psDeleteImovel = connection.prepareStatement(deleteImovelSQL);
             psDeleteImovel.setLong(1, imovelId);
-            psDeleteImovel.executeUpdate();
+            psDeleteImovel.execute();
 
             connection.close();
 
