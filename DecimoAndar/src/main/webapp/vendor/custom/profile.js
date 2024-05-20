@@ -1,73 +1,3 @@
-document.addEventListener("DOMContentLoaded", function () {
-    var updateUserDataForm = document.getElementById('updateUserDataForm');
-
-    updateUserDataForm.addEventListener('submit', function (event) {
-        event.preventDefault();
-
-        var telefone = document.getElementById('telefone').value;
-        var dataNascimento = document.getElementById('datanasci').value;
-
-        var dados = {
-            telefone: telefone,
-            dataNascimento: dataNascimento
-        };
-
-        fetch('/update-user-data', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(dados),
-        })
-        .then(response => {
-            if (response.ok) {
-                console.log("Dados de usuário atualizados com sucesso!");
-                // Fechar o modal após atualização bem-sucedida
-                $('#modalId').modal('hide');
-                // Atualizar os dados na interface do usuário
-                obterDadosUsuario();
-            } else {
-                console.log("Erro ao atualizar os dados do usuário.");
-                return response.text();
-            }
-        })
-        .catch(error => {
-            console.error('Erro ao atualizar os dados do usuário:', error);
-        });
-    });
-
-    // Função para obter os dados do usuário
-    function obterDadosUsuario() {
-        fetch('/profile')
-        .then(response => response.json())
-        .then(userData => {
-            atualizarPerfil(userData);
-        })
-        .catch(error => {
-            console.error('Erro ao obter os dados do usuário:', error);
-        });
-    }
-
-    // Função para atualizar o perfil na página
-    function atualizarPerfil(userData) {
-        document.getElementById('nome').textContent = userData.name;
-        document.getElementById('nome2').textContent = userData.name;
-        document.getElementById('email').textContent = userData.email;
-        document.getElementById('tel').textContent = userData.telefone;
-        document.getElementById('datanascimento').textContent = userData.dataNascimento;
-    }
-
-    // Chamada da função para obter os dados do usuário quando a página é carregada
-    obterDadosUsuario();
-
-    // Direcionando Click do btn "Anunciar" na Header.
-    document.getElementById("AnunciarHeaderProfile").addEventListener("click", function() {
-        window.location.href = "/pages/imovel.html";
-    });
-});
-
-
-// para pegar os anuncios do usuario
 $(document).ready(function() {
     // Função para carregar os imóveis do usuário via AJAX
     function loadImoveis() {
@@ -118,4 +48,39 @@ $(document).ready(function() {
 
     // Chama a função para carregar os imóveis ao carregar a página
     loadImoveis();
+
+    // Função para carregar detalhes do imóvel
+    function loadPropertyDetails(propertyId) {
+        $.ajax({
+            type: "GET",
+            url: `/property-details?id=${propertyId}`,
+            dataType: "json",
+            success: function(data) {
+                // Atualiza a interface com os detalhes do imóvel
+                console.log("Detalhes do Imóvel:", data);
+
+                // Exemplo de como você pode acessar os dados recebidos:
+                console.log("ID do Imóvel:", data.id);
+                console.log("Tipo de Imóvel:", data.tipoImovel);
+                console.log("Tipo de Venda:", data.tipoVenda);
+                console.log("Valor:", data.valor);
+                console.log("Endereço:", data.endereco);
+                console.log("Número:", data.numero);
+                console.log("Cidade:", data.cidade);
+                console.log("UF:", data.uf);
+                console.log("CEP:", data.cep);
+                console.log("Número de Quartos:", data.numQuartos);
+                console.log("Número de Banheiros:", data.numBanheiros);
+                console.log("Metros Quadrados:", data.metrosQuadrados);
+                console.log("Descrição do Imóvel:", data.descricaoImovel);
+                console.log("Caminhos das Imagens:", data.imagePaths);
+
+                // Aqui você pode manipular os dados recebidos do imóvel
+            }
+        });
+    }
+
+    // Exemplo de chamada para carregar detalhes do imóvel
+    loadPropertyDetails(1); // Substitua 1 pelo ID do imóvel desejado
+
 });

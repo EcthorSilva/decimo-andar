@@ -9,9 +9,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class ImovelDao {
 
@@ -182,5 +179,78 @@ public class ImovelDao {
             System.out.println("Error: " + e.getMessage());
         }
         return imoveis;
+    }
+
+    // Função para buscar um imóvel pelo ID
+    public Imovel getImovelById(int imovelId) {
+        Imovel imovel = null;
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = DriverManager.getConnection("jdbc:h2:~/test", "sa", "sa");
+
+            if (connection != null) {
+                System.out.println("Success in database connection");
+            } else {
+                System.out.println("Failed to connect to the database");
+                return null;
+            }
+
+            String SQL = "SELECT i.id AS id_imovel, i.tipo AS tipo_imovel, i.tipoVenda, i.valor, i.endereco, i.numero, i.cidade, i.uf, i.cep, " +
+                    "i.numQuartos, i.numBanheiros, i.metrosQuadrados, i.descricao, i.USER_ID, ii.caminho_imagem " +
+                    "FROM DECIMO_ANDAR.Imovel i " +
+                    "LEFT JOIN DECIMO_ANDAR.ImovelImagem ii ON i.id = ii.imovel_id " +
+                    "WHERE i.id = ?";
+
+            preparedStatement = connection.prepareStatement(SQL);
+            preparedStatement.setInt(1, imovelId);
+            resultSet = preparedStatement.executeQuery();
+
+            List<String> imagePaths = new ArrayList<>();
+
+            while (resultSet.next()) {
+                if (imovel == null) {
+                    imovel = new Imovel();
+                    imovel.setIdImovel(resultSet.getInt("id_imovel"));
+                    imovel.setTipoImovel(resultSet.getString("tipo_imovel"));
+                    imovel.setTipoVenda(resultSet.getString("tipoVenda"));
+                    imovel.setValor(resultSet.getString("valor"));
+                    imovel.setEndereco(resultSet.getString("endereco"));
+                    imovel.setNumero(resultSet.getString("numero"));
+                    imovel.setCidade(resultSet.getString("cidade"));
+                    imovel.setUf(resultSet.getString("uf"));
+                    imovel.setCep(resultSet.getString("cep"));
+                    imovel.setNumQuartos(resultSet.getString("numQuartos"));
+                    imovel.setNumBanheiros(resultSet.getString("numBanheiros"));
+                    imovel.setMetrosQuadrados(resultSet.getString("metrosQuadrados"));
+                    imovel.setDescricaoImovel(resultSet.getString("descricao"));
+                    imovel.setUserId(resultSet.getInt("USER_ID"));
+                }
+
+                String caminhoImagem = resultSet.getString("caminho_imagem");
+                if (caminhoImagem != null) {
+                    imagePaths.add(caminhoImagem);
+                }
+            }
+
+            if (imovel != null) {
+                imovel.setImagePaths(imagePaths);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
+        } finally {
+            try {
+                if (resultSet != null) resultSet.close();
+                if (preparedStatement != null) preparedStatement.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                System.out.println("Error closing resources: " + e.getMessage());
+            }
+        }
+
+        return imovel;
     }
 }
