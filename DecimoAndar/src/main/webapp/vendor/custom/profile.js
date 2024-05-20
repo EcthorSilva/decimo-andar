@@ -94,7 +94,7 @@ $(document).ready(function() {
                                                 <h6 class="card-title">${imovel.endereco}</h6>
                                                 <p class="card-text"><strong>CEP: </strong>${imovel.cep}</p>
                                                 <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-                                                    <button type="button" class="btn btn-outline-secondary px-3 me-md-2">Ver</button>
+                                                    <a href="/property-details?id=${imovel.id}" class="btn btn-outline-secondary px-3 me-md-2">Ver</a>
                                                     <button type="button" class="btn btn-outline-danger px-3"><i class="bi bi-trash3"></i> Excluir</button>
                                                 </div>
                                             </div>

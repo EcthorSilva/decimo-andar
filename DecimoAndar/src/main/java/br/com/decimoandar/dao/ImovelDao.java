@@ -129,6 +129,7 @@ public class ImovelDao {
     }
 
     // Função para buscar os imóveis de um usuário logado
+    // Função para buscar os imóveis de um usuário logado
     public List<Imovel> getImoveisUsuarioAtivo(int userId) {
         List<Imovel> imoveis = new ArrayList<>();
 
@@ -142,7 +143,7 @@ public class ImovelDao {
                 return imoveis;
             }
 
-            String SQL = "SELECT endereco, cep, caminho_imagem " +
+            String SQL = "SELECT i.id as id_imovel, endereco, cep, caminho_imagem " +
                     "FROM DECIMO_ANDAR.Imovel i " +
                     "LEFT JOIN DECIMO_ANDAR.ImovelImagem ii ON i.id = ii.imovel_id " +
                     "WHERE i.user_id = ? " +
@@ -154,13 +155,17 @@ public class ImovelDao {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
+                int idImovel = resultSet.getInt("id_imovel");
                 String endereco = resultSet.getString("endereco");
                 String cep = resultSet.getString("cep");
                 String caminhoImagem = resultSet.getString("caminho_imagem");
 
                 Imovel imovel = new Imovel();
+                imovel.setIdImovel(idImovel);
                 imovel.setEndereco(endereco);
                 imovel.setCep(cep);
+
+                System.out.println(imovel.getIdImovel());
 
                 // Apenas adiciona a primeira imagem encontrada
                 if (caminhoImagem != null && imovel.getImagePaths() == null) {
@@ -176,7 +181,6 @@ public class ImovelDao {
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
-
         return imoveis;
     }
 }
