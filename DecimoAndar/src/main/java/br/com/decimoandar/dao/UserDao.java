@@ -9,12 +9,12 @@ import java.sql.ResultSet;
 
 
 public class UserDao {
-    public void createUser(User user){
+    public void createUser(User user) {
 
         try {
             String SQL = "INSERT INTO DECIMO_ANDAR.Usuario (NOME_COMPLETO, EMAIL, CPF_CNPJ, SENHA) VALUES (?, ?, ?, ?)";
 
-            Connection connection = DriverManager.getConnection("jdbc:h2:~/test", "sa","sa");
+            Connection connection = DriverManager.getConnection("jdbc:h2:~/test", "sa", "sa");
 
             if (connection != null) {
                 System.out.println("Success in database connection");
@@ -91,12 +91,16 @@ public class UserDao {
         }
     }
 
-    public void deleteUser(User user){
+    public void deleteUser(User user) {
+
 
         try {
-            String SQL = "DELETE FROM DECIMO_ANDAR.Usuario WHERE ID = ?";
+            String delImagem = "DELETE FROM DECIMO_ANDAR.ImovelImagem" +
+                    " WHERE imovel_id IN (SELECT id FROM DECIMO_ANDAR.Imovel WHERE USER_ID = ?)";
+            String delImovel = "DELETE FROM DECIMO_ANDAR.Imovel WHERE USER_ID = ?";
+            String delUser = "DELETE FROM DECIMO_ANDAR.Usuario WHERE ID = ?";
 
-            Connection connection = DriverManager.getConnection("jdbc:h2:~/test", "sa","sa");
+            Connection connection = DriverManager.getConnection("jdbc:h2:~/test", "sa", "sa");
 
             if (connection != null) {
                 System.out.println("Success in database connection");
@@ -105,10 +109,16 @@ public class UserDao {
                 return;
             }
 
-            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
-
+            PreparedStatement preparedStatement = connection.prepareStatement(delImagem);
             preparedStatement.setInt(1, user.getIdUser());
+            preparedStatement.execute();
 
+            preparedStatement = connection.prepareStatement(delImovel);
+            preparedStatement.setInt(1, user.getIdUser());
+            preparedStatement.execute();
+
+            preparedStatement = connection.prepareStatement(delUser);
+            preparedStatement.setInt(1, user.getIdUser());
             preparedStatement.execute();
 
             System.out.println("Success in delete user");
