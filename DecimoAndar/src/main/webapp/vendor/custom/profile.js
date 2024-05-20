@@ -64,11 +64,7 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("AnunciarHeaderProfile").addEventListener("click", function() {
         window.location.href = "/pages/imovel.html";
     });
-});
 
-// para pegar o id 
-
-$(document).ready(function () {
     // Função para carregar os imóveis do usuário via AJAX
     function loadImoveis() {
         $.ajax({
@@ -119,6 +115,7 @@ $(document).ready(function () {
     // Chama a função para carregar os imóveis ao carregar a página
     loadImoveis();
 
+    // Função para carregar os detalhes do imóvel quando o botão "Ver" é clicado
     function loadPropertyDetails(propertyId) {
         $.ajax({
             type: "GET",
@@ -178,5 +175,11 @@ $(document).ready(function () {
     $(document).on('click', '.btn-ver', function() {
         var propertyId = $(this).data('imovel-id');
         loadPropertyDetails(propertyId);
+    });
+
+    // Script para redirecionar para a página de anúncio ao clicar no botão "Ver"
+    $(document).on('click', '.btn-ver', function() {
+        var propertyId = $(this).data('imovel-id');
+        window.location.href = `/pages/anuncio.html?id=${propertyId}`;
     });
 });
