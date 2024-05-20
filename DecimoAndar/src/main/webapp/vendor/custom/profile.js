@@ -66,54 +66,75 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // Função para carregar os imóveis do usuário via AJAX
-    function loadImoveis() {
-        $.ajax({
-            type: "GET",
-            url: "/list-imoveis",
-            dataType: "json",
-            success: function (data) {
-                // Limpa o carrossel antes de adicionar os novos cards
-                $("#carouselExampleIndicators2 .carousel-inner").empty();
+   function loadImoveis() {
+      $.ajax({
+         type: "GET",
+         url: "/list-imoveis",
+         dataType: "json",
+         success: function (data) {
+            // Limpa o carrossel antes de adicionar os novos cards
+            $("#carouselExampleIndicators2 .carousel-inner").empty();
 
-                // Itera sobre os imóveis recebidos e adiciona os cards ao carrossel
-                for (var i = 0; i < data.length; i += 3) {
-                    var active = i === 0 ? 'active' : '';
-                    var items = data.slice(i, i + 3);
-                    var item = `
-                        <div class="carousel-item ${active}">
-                            <div class="row">
-                                ${items.map(imovel => `
-                                    <div class="col-md-4 mb-3">
-                                        <div class="card">
-                                            <img class="img-fluid" src="${imovel.imagePaths[0]}" alt="Imagem do Imóvel">
-                                            <div class="card-body">
-                                                <h6 class="card-title">${imovel.endereco}</h6>
-                                                <p class="card-text"><strong>CEP: </strong>${imovel.cep}</p>
-                                                <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-                                                    <button class="btn btn-outline-secondary px-3 me-md-2 btn-ver" data-imovel-id="${imovel.id}">Ver</button>
-                                                    <button type="button" class="btn btn-outline-danger px-3"><i class="bi bi-trash3"></i> Excluir</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                `).join('')}
-                            </div>
-                        </div>
-                    `;
-                    $("#carouselExampleIndicators2 .carousel-inner").append(item);
-                }
-
-                // Atualiza o carrossel
-                $('#carouselExampleIndicators2').carousel();
-            },
-            error: function () {
-                alert("Erro ao carregar imóveis.");
+            // Itera sobre os imóveis recebidos e adiciona os cards ao carrossel
+            for (var i = 0; i < data.length; i += 3) {
+               var active = i === 0 ? 'active' : '';
+               var items = data.slice(i, i + 3);
+               var item = `
+                                       <div class="carousel-item ${active}">
+                                           <div class="row">
+                                               ${items.map(imovel => `
+                                                   <div class="col-md-4 mb-3">
+                                                       <div class="card">
+                                                           <img class="img-fluid" src="${imovel.imagePaths[0]}" alt="Imagem do Imóvel">
+                                                           <div class="card-body">
+                                                               <h6 class="card-title">${imovel.endereco}</h6>
+                                                               <p class="card-text"><strong>CEP: </strong>${imovel.cep}</p>
+                                                               <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+                                                                  <button class="btn btn-outline-secondary px-3 me-md-2 btn-ver" data-imovel-id="${imovel.id}">Ver</button>
+                                                                  <button id="btnExcluirAnuncio-${imovel.id}" type="button" class="btn btn-outline-danger px-3 btnExcluirAnuncio"><i class="bi bi-trash3"></i> Excluir</button>
+                                                               </div>
+                                                           </div>
+                                                       </div>
+                                                   </div>
+                                               `).join('')}
+                                           </div>
+                                       </div>
+                                   `;
+               $("#carouselExampleIndicators2 .carousel-inner").append(item);
             }
-        });
-    }
 
-    // Chama a função para carregar os imóveis ao carregar a página
-    loadImoveis();
+            // Atualiza o carrossel
+            $('#carouselExampleIndicators2').carousel();
+
+            // Adicionar evento de clique aos botões de exclusão
+            $('.btnExcluirAnuncio').click(function () {
+               var imovelId = $(this).attr('id').split('-')[1];
+               deleteImovel(imovelId);
+            });
+         },
+         error: function () {
+            alert("Erro ao carregar imóveis.");
+         }
+      });
+   }
+
+   // Função para excluir um imóvel via AJAX
+   function deleteImovel(imovelId) {
+      $.ajax({
+         type: "DELETE",
+         url: `/delete-imovel?id=${imovelId}`,
+         success: function () {
+            alert("Imóvel excluído com sucesso!");
+            loadImoveis(); // Recarrega os imóveis após a exclusão
+         },
+         error: function () {
+            alert("Erro ao excluir imóvel.");
+         }
+      });
+   }
+
+   // Chama a função para carregar os imóveis ao carregar a página
+   loadImoveis();
 
     // Função para carregar os detalhes do imóvel quando o botão "Ver" é clicado
     function loadPropertyDetails(propertyId) {
@@ -183,3 +204,4 @@ document.addEventListener("DOMContentLoaded", function () {
         window.location.href = `/pages/anuncio.html?id=${propertyId}`;
     });
 });
+
