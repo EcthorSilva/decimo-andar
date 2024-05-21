@@ -1,307 +1,327 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-  <head>
+<head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DecimoAndar</title>
     <link rel="stylesheet" href="../vendor/bootstrap/css/bootstrap.min.css">
     <!-- Main File For CSS -->
-    <link rel="stylesheet" href="../vendor/custom/style.css" />
-  </head>
+    <link rel="stylesheet" href="../vendor/custom/style.css"/>
+</head>
 
-  <body>
-    <!-- Start Header -->
-    <header class="p-3 border-bottom shadow bg-body fixed-top">
-      <div class="container d-flex flex-wrap align-items-center justify-content-center justify-content-md-between mb-1 ">
+<body>
+<!-- Start Header -->
+<header class="p-3 border-bottom shadow bg-body fixed-top">
+    <div class="container d-flex flex-wrap align-items-center justify-content-center justify-content-md-between mb-1 ">
         <a href="/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
-          <img src="../assets/icons/icons8-home.svg" alt="" width="50" height="50" title="instagram">
+            <img src="../assets/icons/icons8-home.svg" alt="" width="50" height="50" title="instagram">
         </a>
 
         <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-          <li><a href="#" class="nav-link px-2 link-dark">Comprar</a></li>
-          <li><a href="#" class="nav-link px-2 link-dark">Anunciar</a></li>
-          <li><a href="#" class="nav-link px-2 link-dark">Ajuda</a></li>
-          <li><a href="#" class="nav-link px-2 link-dark">Sobre nós</a></li>
+            <li><a href="#" class="nav-link px-2 link-dark">Comprar</a></li>
+            <li><a href="#" class="nav-link px-2 link-dark">Anunciar</a></li>
+            <li><a href="#" class="nav-link px-2 link-dark">Ajuda</a></li>
+            <li><a href="#" class="nav-link px-2 link-dark">Sobre nós</a></li>
         </ul>
-        
+
         <!-- Caso o usuario não esteja logado -->
         <li class="botao1 list-group-item nav-item">
-          <a href="../pages/login.html" class="btn btn-outline-secondary me-2 d-block text-decoration-none rounded-pill" style="width: 90px; height: 40px;">Login</a>
+            <a href="../pages/login.html"
+               class="btn btn-outline-secondary me-2 d-block text-decoration-none rounded-pill"
+               style="width: 90px; height: 40px;">Login</a>
         </li>
         <!-- Caso o usuario já tenha logado -->
         <li class="botao2 list-group-item nav-item dropdown-custom visually-hidden">
-          <a href="#" class="d-block link-body-emphasis text-decoration-none" data-bs-toggle="dropdown" aria-expanded="false">
-            <img src="../assets/images/perfil/perfil.jpg" alt="mdo" width="50px" height="50px" class="rounded-circle">
-          </a>
-          <ul class="dropdown-menu  gap-1 p-2 rounded-3 mx-0 shadow w-220px">
-            <li>
-              <a class="dropdown-item rounded-2" href="../pages/profile.html">
-              <img src="../vendor/bootstrap/bootstrap-icons/person.svg" alt="" width="20px" title="Perfil">
-                &nbsp; Perfil</a></li>
-            <li>
-              <a class="dropdown-item rounded-2" href="#">
-                <img src="../vendor/bootstrap/bootstrap-icons/heart.svg" alt="" title="Favoritos">
-                &nbsp; Favoritos
-              </a></li>
-            <li>
-              <a class="dropdown-item rounded-2" href="#">
-                <img src="../vendor/bootstrap/bootstrap-icons/gear.svg" alt="" title="Configuração">
-                &nbsp; Configuração</a></li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-            <li>
-              <a class="dropdown-item d-flex gap-2 align-items-center" href="#">
-                <img src="../vendor/bootstrap/bootstrap-icons/box-arrow-left.svg" alt="" title="logout">
-                &nbsp; logout
-              </a>
-            </li>
-          </ul>
+            <a href="#" class="d-block link-body-emphasis text-decoration-none" data-bs-toggle="dropdown"
+               aria-expanded="false">
+                <img src="../assets/images/perfil/perfil.jpg" alt="mdo" width="50px" height="50px"
+                     class="rounded-circle">
+            </a>
+            <ul class="dropdown-menu  gap-1 p-2 rounded-3 mx-0 shadow w-220px">
+                <li>
+                    <a class="dropdown-item rounded-2" href="../pages/profile.html">
+                        <img src="../vendor/bootstrap/bootstrap-icons/person.svg" alt="" width="20px" title="Perfil">
+                        &nbsp; Perfil</a></li>
+                <li>
+                    <a id="bntExcluirConta" class="dropdown-item rounded-2" href="#">
+                        <img src="../vendor/bootstrap/bootstrap-icons/person-x-fill.svg" alt="" title="Excluir conta">
+                        &nbsp; Excluir conta</a>
+                </li>
+                <li>
+                    <hr class="dropdown-divider">
+                </li>
+                <li>
+                    <a class="dropdown-item d-flex gap-2 align-items-center" href="#">
+                        <img src="../vendor/bootstrap/bootstrap-icons/box-arrow-left.svg" alt="" title="logout">
+                        &nbsp; logout
+                    </a>
+                </li>
+            </ul>
         </li>
-      </div>
-    </header>
+    </div>
+</header>
 
-    <!-- Start Main Content -->
-    <main class="py-5 ">
-      <div class="container py-5">
+<!-- Start Main Content -->
+<main class="py-5 ">
+    <div class="container py-5">
         <div class="row d-flex justify-content-center my-4">
-          <div class="col-md-6">
-            <div class="card mb-4">
-              <div class="card-header py-3">
-                <h5 class="mb-0">Anuncie seu imovel</h5>
-              </div>
-              <div class="card-body">
-                <form id="form-cadastroImovel" enctype="multipart/form-data" class="mt-3">
-                  <!-- Tipo Imovel -->
-                  <div class="form-floating mb-4 ">
-                    <select class="form-select" id="tipoImovel" name="tipoImovel" aria-label="Large select example">
-                      <option selected value="casa">Casa</option>
-                      <option value="apartamento">Apartamento</option>
-                      <option value="studio">Studio</option>
-                    </select>
-                    <label for="tipoImovel">Selecione o tipo de imovel</label>
-                  </div>
-                  <!-- Tipo de venda -->
-                  <div class="form-floating mb-4 ">
-                    <select class="form-select" id="tipoVenda" name="tipoVenda" aria-label="Large select example">
-                      <option selected value="vender">Vender</option>
-                      <option value="alugar">Alugar</option>
-                    </select>
-                    <label for="tipoVenda">Quer vender ou alugar?</label>
-                  </div>
-                  <!-- valor -->
-                  <div class="form-floating  mb-4">
-                    <input type="text" class="form-control" id="valor" name="valor" required
-                      placeholder="Digite valor do imovel">
-                    <label for="valor" class="text-muted">Preço (R$)</label>
-                  </div>
-                  <!-- Endereço -->
-                  <div class="row">
-                    <div class="col col-md-9">
-                      <div class="form-floating  mb-4">
-                        <input type="text" class="form-control" id="endereco" name="endereco" required
-                          placeholder="Digite seu endereço">
-                        <label for="endereco" class="text-muted">Endereço</label>
-                      </div>
+            <div class="col-md-6">
+                <div class="card mb-4">
+                    <div class="card-header py-3">
+                        <h5 class="mb-0">Anuncie seu imovel</h5>
                     </div>
-                    <div class="col col-md-3 ">
-                      <div class="form-floating md-1 mb-4">
-                        <input type="text" class="form-control" id="numero" name="numero" placeholder="Digite o numero"
-                          required>
-                        <label for="UF" class="text-muted">Numero</label>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <!-- CIDADE -->
-                    <div class="col col-md-5">
-                      <div class="form-floating mb-4">
-                        <input type="text" class="form-control" id="cidade" name="cidade" placeholder="Digite o cidade"
-                          required>
-                        <label for="cidade" class="text-muted">Cidade</label>
-                      </div>
-                    </div>
-                    <!-- UF -->
-                    <div class="col col-md-3 ">
-                      <div class="form-floating md-1 mb-4">
-                        <input type="text" class="form-control" id="uf" name="uf" placeholder="Digite o UF" required>
-                        <label for="UF" class="text-muted">UF</label>
-                      </div>
-                    </div>
-                    <!-- CEP -->
-                    <div class="col col-md-4">
-                      <div class="form-floating mb-1">
-                        <input type="text" class="form-control" id="cep" name="cep" placeholder="Digite o CEP" required>
-                        <label for="cep" class="text-muted">CEP</label>
-                      </div>
-                    </div>
-                  </div>
-                  <!-- numero de quartos e banheiros -->
-                  <div class="row">
-                    <!-- quartos -->
-                    <div class="col col-md-6">
-                      <div class="form-floating mb-4 ">
-                        <select class="form-select" id="numQuartos" name="numQuartos" required>
-                          <option selected value="1">1</option>
-                          <option value="2">2</option>
-                          <option value="3">3</option>
-                          <option value="4">4</option>
-                          <option value="5 ou mais">5 ou mais</option>
-                        </select>
-                        <label for="numQuartos">Número de quartos</label>
-                      </div>
-                    </div>
-                    <!-- banheiros -->
-                    <div class="col col-md-6">
-                      <div class="form-floating mb-4 ">
-                        <select class="form-select" id="numBanheiros" name="numBanheiros" required>
-                          <option selected value="1">1</option>
-                          <option value="2">2</option>
-                          <option value="3">3</option>
-                          <option value="4">4</option>
-                          <option value="5 ou mais">5 ou mais</option>
-                        </select>
-                        <label for="numBanheiros">Número de banheiros</label>
-                      </div>
-                    </div>
-                  </div>
-                  <!-- metros quadrados -->
-                  <div class="form-floating  mb-4">
-                    <input type="text" class="form-control" id="metrosQuadrados" name="metrosQuadrados" required>
-                    <label for="metrosQuadrados" class="text-muted">Área (m²)</label>
-                  </div>
-                  <!-- DESCRICAO -->
-                  <div class="form-floating">
+                    <div class="card-body">
+                        <form id="form-cadastroImovel" enctype="multipart/form-data" class="mt-3">
+                            <!-- Tipo Imovel -->
+                            <div class="form-floating mb-4 ">
+                                <select class="form-select" id="tipoImovel" name="tipoImovel"
+                                        aria-label="Large select example">
+                                    <option selected value="casa">Casa</option>
+                                    <option value="apartamento">Apartamento</option>
+                                    <option value="studio">Studio</option>
+                                </select>
+                                <label for="tipoImovel">Selecione o tipo de imovel</label>
+                            </div>
+                            <!-- Tipo de venda -->
+                            <div class="form-floating mb-4 ">
+                                <select class="form-select" id="tipoVenda" name="tipoVenda"
+                                        aria-label="Large select example">
+                                    <option selected value="vender">Vender</option>
+                                    <option value="alugar">Alugar</option>
+                                </select>
+                                <label for="tipoVenda">Quer vender ou alugar?</label>
+                            </div>
+                            <!-- valor -->
+                            <div class="form-floating  mb-4">
+                                <input type="text" class="form-control" id="valor" name="valor" required
+                                       placeholder="Digite valor do imovel">
+                                <label for="valor" class="text-muted">Preço (R$)</label>
+                            </div>
+                            <!-- Endereço -->
+                            <div class="row">
+                                <div class="col col-md-9">
+                                    <div class="form-floating  mb-4">
+                                        <input type="text" class="form-control" id="endereco" name="endereco" required
+                                               placeholder="Digite seu endereço">
+                                        <label for="endereco" class="text-muted">Endereço</label>
+                                    </div>
+                                </div>
+                                <div class="col col-md-3 ">
+                                    <div class="form-floating md-1 mb-4">
+                                        <input type="text" class="form-control" id="numero" name="numero"
+                                               placeholder="Digite o numero"
+                                               required>
+                                        <label for="UF" class="text-muted">Numero</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <!-- CIDADE -->
+                                <div class="col col-md-5">
+                                    <div class="form-floating mb-4">
+                                        <input type="text" class="form-control" id="cidade" name="cidade"
+                                               placeholder="Digite o cidade"
+                                               required>
+                                        <label for="cidade" class="text-muted">Cidade</label>
+                                    </div>
+                                </div>
+                                <!-- UF -->
+                                <div class="col col-md-3 ">
+                                    <div class="form-floating md-1 mb-4">
+                                        <input type="text" class="form-control" id="uf" name="uf"
+                                               placeholder="Digite o UF" required>
+                                        <label for="UF" class="text-muted">UF</label>
+                                    </div>
+                                </div>
+                                <!-- CEP -->
+                                <div class="col col-md-4">
+                                    <div class="form-floating mb-1">
+                                        <input type="text" class="form-control" id="cep" name="cep"
+                                               placeholder="Digite o CEP" required>
+                                        <label for="cep" class="text-muted">CEP</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- numero de quartos e banheiros -->
+                            <div class="row">
+                                <!-- quartos -->
+                                <div class="col col-md-6">
+                                    <div class="form-floating mb-4 ">
+                                        <select class="form-select" id="numQuartos" name="numQuartos" required>
+                                            <option selected value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5 ou mais">5 ou mais</option>
+                                        </select>
+                                        <label for="numQuartos">Número de quartos</label>
+                                    </div>
+                                </div>
+                                <!-- banheiros -->
+                                <div class="col col-md-6">
+                                    <div class="form-floating mb-4 ">
+                                        <select class="form-select" id="numBanheiros" name="numBanheiros" required>
+                                            <option selected value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5 ou mais">5 ou mais</option>
+                                        </select>
+                                        <label for="numBanheiros">Número de banheiros</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- metros quadrados -->
+                            <div class="form-floating  mb-4">
+                                <input type="text" class="form-control" id="metrosQuadrados" name="metrosQuadrados"
+                                       required>
+                                <label for="metrosQuadrados" class="text-muted">Área (m²)</label>
+                            </div>
+                            <!-- DESCRICAO -->
+                            <div class="form-floating">
                     <textarea class="form-control" id="descricaoImovel" name="descricaoImovel" required
-                      placeholder="Fale um pouco sobre o imovel" placeholder="Adicione uma descrição"></textarea>
-                    <label for="descricaoImovel" class="text-muted">Adicione uma descrição ao imovel</label>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-          <!-- RESUMO -->
-          <div class="col-md-5">
-            <div class="card mb-4">
-              <div class="card-header py-3">
-                <h5 class="mb-0">Fotos</h5>
-              </div>
-              <div class="card-body">
-                <ul class="list-group list-group-flush">
-                  <li class="list-group-item d-flex justify-content-center align-items-center border-0 px-0 pb-0 mb-2">
-                    <div class="row">
-                      <div class="col col-md-12">
-                        <div class="input-group">
-                          <input type="file" class="form-control" id="imputFile" accept="image/*"
-                            aria-describedby="inputGroupFileAddon04" aria-label="Upload" multiple>
-                        </div>
-                      </div>
+                              placeholder="Fale um pouco sobre o imovel"
+                              placeholder="Adicione uma descrição"></textarea>
+                                <label for="descricaoImovel" class="text-muted">Adicione uma descrição ao imovel</label>
+                            </div>
+                        </form>
                     </div>
-                  </li>
-                  <hr class="my-3 text-muted">
-                  <li class="d-flex justify-content-center align-items-center border-0 px-0">
-                     <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-                        <div class="carousel-inner" id="carouselImages">
-                           <div class="carousel-item active">
-                              <img src="/assets/images/carouselImagesplaceholder.png" class="d-block w-100" alt="Placeholder Image"
-                                 height="300">
-                           </div>
-                        </div>
-                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
-                           data-bs-slide="prev">
-                           <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                           <span class="visually-hidden">Previous</span>
-                        </button>
-                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
-                           data-bs-slide="next">
-                           <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                           <span class="visually-hidden">Next</span>
-                        </button>
-                     </div>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <!-- RESUMO 2 -->
-            <div class="card mb-4">
-              <div class="card-body">
-                <ul class="list-group list-group-flush">
-                  <li class="list-group-item d-flex justify-flex-start border-0 px-0 pb-0 mb-3">
-                    <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3cg" />
-                    <label class="form-check-label" for="form2Example3cg" id="termosc">
-                      Li e concordo com os <a href="#" class="text-body">termos e condições</a>
-                    </label>
-                  </li>
-                </ul>
-                <div class="d-flex justify-content-center ">
-                  <button type="button" class="btn btn-outline-secondary px-3" id="enviaranuncio">Enviar anuncio</button>
                 </div>
-              </div>
             </div>
-            <div class="alert alert-danger d-flex justify-content-center mb-1 visually-hidden" role="alert">
-              <strong>Error</strong>
+            <!-- RESUMO -->
+            <div class="col-md-5">
+                <div class="card mb-4">
+                    <div class="card-header py-3">
+                        <h5 class="mb-0">Fotos</h5>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item d-flex justify-content-center align-items-center border-0 px-0 pb-0 mb-2">
+                                <div class="row">
+                                    <div class="col col-md-12">
+                                        <div class="input-group">
+                                            <input type="file" class="form-control" id="imputFile" accept="image/*"
+                                                   aria-describedby="inputGroupFileAddon04" aria-label="Upload"
+                                                   multiple>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <hr class="my-3 text-muted">
+                            <li class="d-flex justify-content-center align-items-center border-0 px-0">
+                                <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                                    <div class="carousel-inner" id="carouselImages">
+                                        <div class="carousel-item active">
+                                            <img src="/assets/images/carouselImagesplaceholder.png"
+                                                 class="d-block w-100" alt="Placeholder Image"
+                                                 height="300">
+                                        </div>
+                                    </div>
+                                    <button class="carousel-control-prev" type="button"
+                                            data-bs-target="#carouselExampleControls"
+                                            data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Previous</span>
+                                    </button>
+                                    <button class="carousel-control-next" type="button"
+                                            data-bs-target="#carouselExampleControls"
+                                            data-bs-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Next</span>
+                                    </button>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- RESUMO 2 -->
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item d-flex justify-flex-start border-0 px-0 pb-0 mb-3">
+                                <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3cg"/>
+                                <label class="form-check-label" for="form2Example3cg" id="termosc">
+                                    Li e concordo com os <a href="#" class="text-body">termos e condições</a>
+                                </label>
+                            </li>
+                        </ul>
+                        <div class="d-flex justify-content-center ">
+                            <button type="button" class="btn btn-outline-secondary px-3" id="enviaranuncio">Enviar
+                                anuncio
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="alert alert-danger d-flex justify-content-center mb-1 visually-hidden" role="alert">
+                    <strong>Error</strong>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
-    </main>
-    <!-- Start Footer -->
-    <footer class="container">
-      <!-- Disclaimer -->
-      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-5 py-5 my-1 border-top">
+    </div>
+</main>
+<!-- Start Footer -->
+<footer class="container">
+    <!-- Disclaimer -->
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-5 py-5 my-1 border-top">
         <div class="col mb-1 d-flex align-items-center">
-          <a href="/" class="d-flex align-items-center mb-3 link-dark text-decoration-none">
-            <img src="../assets/images/logotipo.png" alt="DecimoAndar" style="width: 150px; height: 150px;">
-          </a>
+            <a href="/" class="d-flex align-items-center mb-3 link-dark text-decoration-none">
+                <img src="../assets/images/logotipo.png" alt="DecimoAndar" style="width: 150px; height: 150px;">
+            </a>
         </div>
         <div class="col mb-3"></div>
         <div class="col mb-3">
-          <h5>Institucional</h5>
-          <ul class="nav flex-column">
-            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Sobre o DecimoAndar</a></li>
-            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Sua segurança</a></li>
-            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Garantia</a></li>
-            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Regiões atendidas</a></li>
-            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Central de Ajuda</a></li>
-          </ul>
+            <h5>Institucional</h5>
+            <ul class="nav flex-column">
+                <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Sobre o DecimoAndar</a></li>
+                <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Sua segurança</a></li>
+                <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Garantia</a></li>
+                <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Regiões atendidas</a></li>
+                <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Central de Ajuda</a></li>
+            </ul>
         </div>
         <div class="col mb-3">
-          <h5>Segurança</h5>
-          <ul class="nav flex-column">
-            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Politica de Privacidade</a></li>
-            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Termos e condições de uso</a></li>
-            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Política de Cookies</a></li>
-            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Preferências de cookies</a></li>
-            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Manual do usuário</a></li>
-          </ul>
+            <h5>Segurança</h5>
+            <ul class="nav flex-column">
+                <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Politica de Privacidade</a></li>
+                <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Termos e condições de uso</a></li>
+                <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Política de Cookies</a></li>
+                <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Preferências de cookies</a></li>
+                <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Manual do usuário</a></li>
+            </ul>
         </div>
         <div class="col mb-1">
-          <h5>Suporte</h5>
-          <ul class="nav flex-column">
-            <li class="nav-item mb-2 text-muted">Segunda à sexta das 8:00 às 17:00</li>
-            <li class="nav-item mb-2 text-muted">(11) 91234-5678</li>
-            <li class="nav-item mb-2 text-muted">suporte@decimoandar.com</li>
-          </ul>
+            <h5>Suporte</h5>
+            <ul class="nav flex-column">
+                <li class="nav-item mb-2 text-muted">Segunda à sexta das 8:00 às 17:00</li>
+                <li class="nav-item mb-2 text-muted">(11) 91234-5678</li>
+                <li class="nav-item mb-2 text-muted">suporte@decimoandar.com</li>
+            </ul>
         </div>
-      </div>
-      <!-- Footer -->
-      <div class="d-flex flex-wrap justify-content-between align-items-center py-3 my-2 border-top">
+    </div>
+    <!-- Footer -->
+    <div class="d-flex flex-wrap justify-content-between align-items-center py-3 my-2 border-top">
         <div class="col-md-4 d-flex align-items-center">
-          <span class="mb-3 mb-md-0 text-muted">© 2024 DecimoAndar LTDA</span>
+            <span class="mb-3 mb-md-0 text-muted">© 2024 DecimoAndar LTDA</span>
         </div>
-    
-        <ul class="nav col-md-4 justify-content-end list-unstyled d-flex align-items-center">
-          <li class="ms-3"><a class="text-muted" href="#"><img src="../vendor/bootstrap/bootstrap-icons/instagram.svg" alt="" width="24" height="24" title="instagram"></a></li>
-          <li class="ms-3"><a class="text-muted" href="#"><img src="../vendor/bootstrap/bootstrap-icons/facebook.svg" alt="" width="24" height="32" title="instagram"></a></li>
-          <li class="ms-3"><a class="text-muted" href="#"><img src="../vendor/bootstrap/bootstrap-icons/twitter-x.svg" alt="" width="24" height="32" title="instagram"></a></li>
-        </ul>
-      </div>
-    </footer>
 
-    <!-- Bootstrap -->
-    <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="../vendor/custom/custom-main.js"></script>
-    <script src="../vendor/custom/createImovel.js"></script>
-  </body>
+        <ul class="nav col-md-4 justify-content-end list-unstyled d-flex align-items-center">
+            <li class="ms-3"><a class="text-muted" href="#"><img src="../vendor/bootstrap/bootstrap-icons/instagram.svg"
+                                                                 alt="" width="24" height="24" title="instagram"></a>
+            </li>
+            <li class="ms-3"><a class="text-muted" href="#"><img src="../vendor/bootstrap/bootstrap-icons/facebook.svg"
+                                                                 alt="" width="24" height="32" title="instagram"></a>
+            </li>
+            <li class="ms-3"><a class="text-muted" href="#"><img src="../vendor/bootstrap/bootstrap-icons/twitter-x.svg"
+                                                                 alt="" width="24" height="32" title="instagram"></a>
+            </li>
+        </ul>
+    </div>
+</footer>
+
+<!-- Bootstrap -->
+<script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="../vendor/custom/custom-main.js"></script>
+<script src="../vendor/custom/createImovel.js"></script>
+</body>
 </html>
