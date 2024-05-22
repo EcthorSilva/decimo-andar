@@ -306,5 +306,45 @@ public class ImovelDao {
         }
         return imoveis;
     }
+    public String getAdvertiserPhoneNumber(int userId) {
+        String phoneNumber = null;
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = DriverManager.getConnection("jdbc:h2:~/test", "sa", "sa");
+
+            if (connection != null) {
+                System.out.println("Success in database connection");
+            } else {
+                System.out.println("Failed to connect to the database");
+                return null;
+            }
+
+            String SQL = "SELECT telefone FROM DECIMO_ANDAR.Usuario WHERE id = ?";
+
+            preparedStatement = connection.prepareStatement(SQL);
+            preparedStatement.setInt(1, userId);
+            resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                phoneNumber = resultSet.getString("telefone");
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
+        } finally {
+            try {
+                if (resultSet != null) resultSet.close();
+                if (preparedStatement != null) preparedStatement.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                System.out.println("Error closing resources: " + e.getMessage());
+            }
+        }
+
+        return phoneNumber;
+    }
 
 }
