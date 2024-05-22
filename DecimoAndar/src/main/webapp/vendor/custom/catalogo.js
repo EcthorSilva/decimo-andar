@@ -1,4 +1,9 @@
 document.addEventListener("DOMContentLoaded", function () {
+   // Variável para armazenar o filtro atual
+   let currentFilter = {
+       orderByPrice: null,
+       tipoVenda: null
+   };
 
    // Função para carregar os imóveis via AJAX
    function loadImoveis() {
@@ -10,7 +15,8 @@ document.addEventListener("DOMContentLoaded", function () {
                return response.json();
            })
            .then(data => {
-               renderImoveis(data);
+               console.log("Imóveis carregados:", data); // Log dos imóveis carregados
+               applyFiltersAndRender(data);
            })
            .catch(error => {
                console.error('Erro ao carregar imóveis:', error);
@@ -19,6 +25,32 @@ document.addEventListener("DOMContentLoaded", function () {
                    container.innerHTML = '<p>Erro ao carregar imóveis. Por favor, tente novamente mais tarde.</p>';
                }
            });
+   }
+
+   // Função para aplicar os filtros e renderizar os imóveis
+   function applyFiltersAndRender(imoveis) {
+       let filteredImoveis = imoveis;
+
+       // Aplicar filtro por tipo de venda
+       if (currentFilter.tipoVenda) {
+           console.log("Filtrando por tipo de venda:", currentFilter.tipoVenda); // Log do tipo de venda atual
+           filteredImoveis = filteredImoveis.filter(imovel => imovel.tipoVenda.toLowerCase() === currentFilter.tipoVenda);
+           console.log("Imóveis filtrados por tipo de venda:", filteredImoveis); // Log dos imóveis filtrados
+       }
+
+       // Aplicar ordenação por preço
+       if (currentFilter.orderByPrice) {
+           filteredImoveis.sort((a, b) => {
+               if (currentFilter.orderByPrice === 'asc') {
+                   return a.valor - b.valor;
+               } else if (currentFilter.orderByPrice === 'desc') {
+                   return b.valor - a.valor;
+               }
+               return 0;
+           });
+       }
+
+       renderImoveis(filteredImoveis);
    }
 
    // Função para renderizar os imóveis na página
@@ -132,9 +164,6 @@ document.addEventListener("DOMContentLoaded", function () {
        return cardAnchor;
    }
 
-   // Chama a função para carregar os imóveis ao carregar a página
-   loadImoveis();
-
    // Função para carregar os detalhes do imóvel quando o botão "Ver" é clicado
    function loadPropertyDetails(propertyId) {
        fetch(`/property?id=${propertyId}`)
@@ -148,4 +177,38 @@ document.addEventListener("DOMContentLoaded", function () {
            });
    }
 
+   // Função para aplicar o filtro de tipo de venda
+   function applyTipoVendaFilter() {
+       var tipoVenda = document.querySelector('input[name="tipoVenda"]:checked');
+       if (tipoVenda) {
+           currentFilter.tipoVenda = tipoVenda.value.toLowerCase(); // Converte para minúsculas
+       } else {
+           currentFilter.tipoVenda = null;
+       }
+       console.log("Filtro tipo de venda atualizado para:", currentFilter.tipoVenda); // Log do filtro tipo de venda
+       loadImoveis();
+   }
+
+   // Adicionar evento de change aos radiobuttons de tipo de venda
+   var tipoVendaRadios = document.querySelectorAll('input[name="tipoVenda"]');
+   tipoVendaRadios.forEach(function (radio) {
+       radio.addEventListener('change', applyTipoVendaFilter);
+   });
+
+   // Função para aplicar o filtro de ordenação quando o botão de busca for clicado
+   var buscarButton = document.querySelector('button.btn');
+   buscarButton.addEventListener('click', function () {
+       // Obtem o valor selecionado do filtro de preço
+       var select = document.getElementById('inputGroupSelect04');
+       var orderByPrice = select.value;
+
+       // Atualiza o filtro de ordenação
+       currentFilter.orderByPrice = orderByPrice === '1' ? 'asc' : orderByPrice === '2' ? 'desc' : null;
+
+       // Recarrega os imóveis com os filtros aplicados
+       loadImoveis();
+   });
+
+   // Chama a função para carregar os imóveis ao carregar a página
+   loadImoveis();
 });
