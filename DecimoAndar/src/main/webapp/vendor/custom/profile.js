@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const telefoneRegex = /^\(?\d{2}\)?[\s-]?\d{4,5}[\s-]?\d{4}$/;
             return telefoneRegex.test(telefone);
         }
-        
+
         function calcularIdade(dataNascimento) {
             const hoje = new Date();
             const nascimento = new Date(dataNascimento);
@@ -35,12 +35,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 alert("Telefone inválido.");
                 return;
             }
-        
+
             if (calcularIdade(dados.dataNascimento) < 18) {
                 alert("Usuário deve ter 18 anos ou mais.");
                 return;
             }
-        
+
             fetch('/update-user-data', {
                 method: 'POST',
                 headers: {
@@ -48,33 +48,33 @@ document.addEventListener("DOMContentLoaded", function () {
                 },
                 body: JSON.stringify(dados),
             })
-            .then(response => {
-                if (response.ok) {
-                    alert("Dados de usuário atualizados com sucesso!");
-                    $('#modalId').modal('hide');
-                    obterDadosUsuario();
-                } else {
-                    return response.text().then(text => {
-                        alert("Erro ao atualizar os dados do usuário:", text);
-                    });
-                }
-            })
-            .catch(error => {
-                console.error('Erro ao atualizar os dados do usuário:', error);
-            });
+                .then(response => {
+                    if (response.ok) {
+                        alert("Dados de usuário atualizados com sucesso!");
+                        $('#modalId').modal('hide');
+                        obterDadosUsuario();
+                    } else {
+                        return response.text().then(text => {
+                            alert("Erro ao atualizar os dados do usuário:", text);
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro ao atualizar os dados do usuário:', error);
+                });
         }
     });
 
     // Função para obter os dados do usuário
     function obterDadosUsuario() {
         fetch('/profile')
-        .then(response => response.json())
-        .then(userData => {
-            atualizarPerfil(userData);
-        })
-        .catch(error => {
-            console.error('Erro ao obter os dados do usuário:', error);
-        });
+            .then(response => response.json())
+            .then(userData => {
+                atualizarPerfil(userData);
+            })
+            .catch(error => {
+                console.error('Erro ao obter os dados do usuário:', error);
+            });
     }
 
     // Função para atualizar o perfil na página
@@ -89,26 +89,21 @@ document.addEventListener("DOMContentLoaded", function () {
     // Chamada da função para obter os dados do usuário quando a página é carregada
     obterDadosUsuario();
 
-    // Direcionando Click do btn "Anunciar" na Header.
-    document.getElementById("AnunciarHeaderProfile").addEventListener("click", function() {
-        window.location.href = "/pages/imovel.html";
-    });
-
     // Função para carregar os imóveis do usuário via AJAX
-   function loadImoveis() {
-      $.ajax({
-         type: "GET",
-         url: "/list-imoveis",
-         dataType: "json",
-         success: function (data) {
-            // Limpa o carrossel antes de adicionar os novos cards
-            $("#carouselExampleIndicators2 .carousel-inner").empty();
+    function loadImoveis() {
+        $.ajax({
+            type: "GET",
+            url: "/list-imoveis",
+            dataType: "json",
+            success: function (data) {
+                // Limpa o carrossel antes de adicionar os novos cards
+                $("#carouselExampleIndicators2 .carousel-inner").empty();
 
-            // Itera sobre os imóveis recebidos e adiciona os cards ao carrossel
-            for (var i = 0; i < data.length; i += 3) {
-               var active = i === 0 ? 'active' : '';
-               var items = data.slice(i, i + 3);
-               var item = `
+                // Itera sobre os imóveis recebidos e adiciona os cards ao carrossel
+                for (var i = 0; i < data.length; i += 3) {
+                    var active = i === 0 ? 'active' : '';
+                    var items = data.slice(i, i + 3);
+                    var item = `
                                        <div class="carousel-item ${active}">
                                            <div class="row">
                                                ${items.map(imovel => `
@@ -129,40 +124,40 @@ document.addEventListener("DOMContentLoaded", function () {
                                            </div>
                                        </div>
                                    `;
-               $("#carouselExampleIndicators2 .carousel-inner").append(item);
+                    $("#carouselExampleIndicators2 .carousel-inner").append(item);
+                }
+
+                // Atualiza o carrossel
+                $('#carouselExampleIndicators2').carousel();
+
+                // Adicionar evento de clique aos botões de exclusão
+                $('.btnExcluirAnuncio').click(function () {
+                    var imovelId = $(this).attr('id').split('-')[1];
+                    deleteImovel(imovelId);
+                });
+            },
+            error: function () {
             }
+        });
+    }
 
-            // Atualiza o carrossel
-            $('#carouselExampleIndicators2').carousel();
+    // Função para excluir um imóvel via AJAX
+    function deleteImovel(imovelId) {
+        $.ajax({
+            type: "DELETE",
+            url: `/delete-imovel?id=${imovelId}`,
+            success: function () {
+                alert("Imóvel excluído com sucesso!");
+                loadImoveis(); // Recarrega os imóveis após a exclusão
+            },
+            error: function () {
+                alert("Erro ao excluir imóvel.");
+            }
+        });
+    }
 
-            // Adicionar evento de clique aos botões de exclusão
-            $('.btnExcluirAnuncio').click(function () {
-               var imovelId = $(this).attr('id').split('-')[1];
-               deleteImovel(imovelId);
-            });
-         },
-         error: function () {
-         }
-      });
-   }
-
-   // Função para excluir um imóvel via AJAX
-   function deleteImovel(imovelId) {
-      $.ajax({
-         type: "DELETE",
-         url: `/delete-imovel?id=${imovelId}`,
-         success: function () {
-            alert("Imóvel excluído com sucesso!");
-            loadImoveis(); // Recarrega os imóveis após a exclusão
-         },
-         error: function () {
-            alert("Erro ao excluir imóvel.");
-         }
-      });
-   }
-
-   // Chama a função para carregar os imóveis ao carregar a página
-   loadImoveis();
+    // Chama a função para carregar os imóveis ao carregar a página
+    loadImoveis();
 
     // Função para carregar os detalhes do imóvel quando o botão "Ver" é clicado
     function loadPropertyDetails(propertyId) {
@@ -219,37 +214,37 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     }
-      // Função para obter os dados do usuário e verificar o telefone
-        function verificarTelefoneCadastrado() {
-            fetch('/profile')
-                .then(response => response.json())
-                .then(userData => {
-                    if (userData.telefone && userData.telefone.trim() !== "") {
-                        window.location.href = "/pages/imovel.html";
-                    } else {
-                        alert("Por favor, cadastre seu telefone antes de anunciar.");
-                        window.location.href = "/pages/profile.html";
-                    }
-                })
-                .catch(error => {
-                    console.error('Erro ao obter os dados do usuário:', error);
-                    alert("Erro ao verificar dados do usuário.");
-                });
-        }
+    // Função para obter os dados do usuário e verificar o telefone
+    function verificarTelefoneCadastrado() {
+        fetch('/profile')
+            .then(response => response.json())
+            .then(userData => {
+                if (userData.telefone && userData.telefone.trim() !== "") {
+                    window.location.href = "/pages/imovel.html";
+                } else {
+                    alert("Por favor, cadastre seu telefone antes de anunciar.");
+                    window.location.href = "/pages/profile.html";
+                }
+            })
+            .catch(error => {
+                console.error('Erro ao obter os dados do usuário:', error);
+                alert("Erro ao verificar dados do usuário.");
+            });
+    }
 
-        // Adicionando evento de clique no botão "Anunciar" do perfil
-        document.getElementById("btnAnunciarProfile").addEventListener("click", function() {
-            verificarTelefoneCadastrado();
-        });
+    // Adicionando evento de clique no botão "Anunciar" do perfil
+    document.getElementById("btnAnunciarProfile").addEventListener("click", function () {
+        verificarTelefoneCadastrado();
+    });
 
     // Adiciona o evento de clique para carregar detalhes do imóvel quando o botão "Ver" é clicado
-    $(document).on('click', '.btn-ver', function() {
+    $(document).on('click', '.btn-ver', function () {
         var propertyId = $(this).data('imovel-id');
         loadPropertyDetails(propertyId);
     });
 
     // Script para redirecionar para a página de anúncio ao clicar no botão "Ver"
-    $(document).on('click', '.btn-ver', function() {
+    $(document).on('click', '.btn-ver', function () {
         var propertyId = $(this).data('imovel-id');
         window.location.href = `/pages/anuncio.html?id=${propertyId}`;
     });
