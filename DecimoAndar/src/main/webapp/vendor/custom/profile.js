@@ -191,6 +191,28 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     }
+      // Função para obter os dados do usuário e verificar o telefone
+        function verificarTelefoneCadastrado() {
+            fetch('/profile')
+                .then(response => response.json())
+                .then(userData => {
+                    if (userData.telefone && userData.telefone.trim() !== "") {
+                        window.location.href = "/pages/imovel.html";
+                    } else {
+                        alert("Por favor, cadastre seu telefone antes de anunciar.");
+                        window.location.href = "/pages/profile.html";
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro ao obter os dados do usuário:', error);
+                    alert("Erro ao verificar dados do usuário.");
+                });
+        }
+
+        // Adicionando evento de clique no botão "Anunciar" do perfil
+        document.getElementById("btnAnunciarProfile").addEventListener("click", function() {
+            verificarTelefoneCadastrado();
+        });
 
     // Adiciona o evento de clique para carregar detalhes do imóvel quando o botão "Ver" é clicado
     $(document).on('click', '.btn-ver', function() {
