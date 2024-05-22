@@ -12,54 +12,70 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
-@WebServlet("/properties")
+@WebServlet("/property")
 public class CatalogListServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
+            // Instancia o DAO de Imovel
             ImovelDao imovelDao = new ImovelDao();
-            List<Imovel> imoveis = imovelDao.getImoveisParaExibicao(9); // Limita a 9 imóveis por vez
 
-            if (imoveis.isEmpty()) {
-                response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-                return;
-            }
+            // Obtém o limite de imóveis para exibição (opcional)
+            int limit = 10; // Por exemplo, limitamos a 10 imóveis
 
-            // Monta a resposta como texto plano
-            String responseText = buildResponseText(imoveis);
+            // Obtém a lista de imóveis para exibição do banco de dados
+            List<Imovel> imoveis = imovelDao.getImoveisParaExibicao(limit);
 
-            // Escreve a resposta
-            response.setContentType("text/plain");
+            // Converte a lista de imóveis em formato JSON
+            String json = convertToJson(imoveis);
+
+            // Define o tipo de conteúdo da resposta como JSON
+            response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
             PrintWriter out = response.getWriter();
-            out.print(responseText);
+            // Escreve a resposta como JSON
+            out.print(json);
             out.flush();
 
         } catch (Exception e) {
+            // Em caso de erro, retorna erro 500 - Internal Server Error
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             e.printStackTrace();
         }
     }
 
-    private String buildResponseText(List<Imovel> imoveis) {
-        StringBuilder responseText = new StringBuilder();
+    private String convertToJson(List<Imovel> imoveis) {
+        StringBuilder json = new StringBuilder("["); // Inicia um array JSON
 
-        for (Imovel imovel : imoveis) {
-            responseText.append("ID: ").append(imovel.getIdImovel()).append("\n");
-            responseText.append("Tipo de Venda: ").append(imovel.getTipoVenda()).append("\n");
-            responseText.append("Valor: ").append(imovel.getValor()).append("\n");
-            responseText.append("Endereço: ").append(imovel.getEndereco()).append("\n");
+        // Percorre a lista de imóveis
+        for (int i = 0; i < imoveis.size(); i++) {
+            Imovel imovel = imoveis.get(i);
+            json.append("{");
+            json.append("\"id\":\"").append(imovel.getIdImovel()).append("\",");
+            json.append("\"tipoVenda\":\"").append(imovel.getTipoVenda()).append("\",");
+            json.append("\"valor\":\"").append(imovel.getValor()).append("\",");
+            json.append("\"endereco\":\"").append(imovel.getEndereco()).append("\",");
+            json.append("\"imagePaths\":[");
 
-            List<String> imagePaths = imovel.getImagePaths();
-            if (imagePaths != null && !imagePaths.isEmpty()) {
-                responseText.append("Caminho da primeira imagem: ").append(imagePaths.get(0)).append("\n");
-            } else {
-                responseText.append("Caminho da primeira imagem: Não disponível\n");
+            // Adiciona os caminhos das imagens
+            if (imovel.getImagePaths() != null) {
+                for (int j = 0; j < imovel.getImagePaths().size(); j++) {
+                    json.append("\"").append(imovel.getImagePaths().get(j)).append("\"");
+                    if (j < imovel.getImagePaths().size() - 1) {
+                        json.append(",");
+                    }
+                }
             }
 
-            responseText.append("\n");
+            json.append("]}");
+
+            // Adiciona vírgula entre os objetos JSON, exceto no último
+            if (i < imoveis.size() - 1) {
+                json.append(",");
+            }
         }
 
-        return responseText.toString();
+        json.append("]"); // Fecha o array JSON
+        return json.toString();
     }
 }

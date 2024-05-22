@@ -1,21 +1,35 @@
-console.log('Catalogo.js carregado com sucesso!');
-
 document.addEventListener("DOMContentLoaded", function () {
-   // Função para carregar os imóveis do usuário via AJAX
+
+   // Função para carregar os imóveis via AJAX
    function loadImoveis() {
-       fetch('/list-imoveis')
-           .then(response => response.json())
+       fetch('/property') // Endpoint para listar os imóveis
+           .then(response => {
+               if (!response.ok) {
+                   throw new Error('Erro ao carregar imóveis.');
+               }
+               return response.json();
+           })
            .then(data => {
                renderImoveis(data);
            })
            .catch(error => {
                console.error('Erro ao carregar imóveis:', error);
+               var container = document.getElementById('imoveisContainer');
+               if (container) {
+                   container.innerHTML = '<p>Erro ao carregar imóveis. Por favor, tente novamente mais tarde.</p>';
+               }
            });
    }
 
    // Função para renderizar os imóveis na página
    function renderImoveis(imoveis) {
        var container = document.getElementById('imoveisContainer');
+
+       // Verifica se o container existe
+       if (!container) {
+           console.error('Elemento #imoveisContainer não encontrado.');
+           return;
+       }
 
        // Limpa o conteúdo atual
        container.innerHTML = '';
@@ -26,7 +40,7 @@ document.addEventListener("DOMContentLoaded", function () {
        for (var i = 0; i < rowCount; i++) {
            // Cria uma linha
            var row = document.createElement('div');
-           row.className = 'row justify-content-center';
+           row.className = 'row';
 
            // Adiciona os cards nesta linha
            for (var j = 0; j < 3; j++) {
@@ -34,7 +48,10 @@ document.addEventListener("DOMContentLoaded", function () {
                if (index < imoveis.length) {
                    var imovel = imoveis[index];
                    var card = createCard(imovel);
-                   row.appendChild(card);
+                   var col = document.createElement('div');
+                   col.className = 'col-md-4 mb-3';
+                   col.appendChild(card);
+                   row.appendChild(col);
                }
            }
 
@@ -44,19 +61,28 @@ document.addEventListener("DOMContentLoaded", function () {
 
    // Função para criar um card de imóvel
    function createCard(imovel) {
-       var cardCol = document.createElement('div');
-       cardCol.className = 'col-md-4 mb-3';
-
        var cardAnchor = document.createElement('a');
        cardAnchor.href = '#';
        cardAnchor.className = 'text-decoration-none text-dark shadow-lg';
+       cardAnchor.setAttribute('data-imovel-id', imovel.id); // Define o ID do imóvel
+
+       cardAnchor.addEventListener('click', function (event) {
+           event.preventDefault(); // Evita o comportamento padrão de redirecionamento
+           var propertyId = this.getAttribute('data-imovel-id');
+           loadPropertyDetails(propertyId);
+       });
 
        var card = document.createElement('div');
        card.className = 'card h-100';
 
+       // Ajuste para obter a primeira imagem, se disponível
+       var imagePath = imovel.imagePaths && imovel.imagePaths.length > 0 ? imovel.imagePaths[0] : '';
+
        var cardImage = document.createElement('img');
-       cardImage.className = 'img-fluid';
-       cardImage.src = imovel.imagem;
+       cardImage.className = 'card-img-top img-fluid';
+       cardImage.style.height = '200px';  // Ajuste para altura fixa
+       cardImage.style.objectFit = 'cover';  // Ajuste para object-fit cover
+       cardImage.src = imagePath; // Ajuste para obter a imagem corretamente
        cardImage.alt = 'Imagem do Imóvel';
        card.appendChild(cardImage);
 
@@ -65,7 +91,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
        var cardTitle = document.createElement('h5');
        cardTitle.className = 'card-title px-2';
-       cardTitle.textContent = `R$ ${imovel.preco}`;
+       cardTitle.textContent = `R$ ${imovel.valor}`;
        cardBody.appendChild(cardTitle);
 
        var cardBody2 = document.createElement('div');
@@ -95,16 +121,15 @@ document.addEventListener("DOMContentLoaded", function () {
        cardBody3.appendChild(tipoLabel);
 
        var tipoText = document.createElement('p');
-       tipoText.textContent = imovel.tipo;
+       tipoText.textContent = imovel.tipoVenda; // Ajuste para obter o tipo de venda
        cardBody3.appendChild(tipoText);
 
        cardBody.appendChild(cardBody3);
 
        card.appendChild(cardBody);
        cardAnchor.appendChild(card);
-       cardCol.appendChild(cardAnchor);
 
-       return cardCol;
+       return cardAnchor;
    }
 
    // Chama a função para carregar os imóveis ao carregar a página
@@ -112,22 +137,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
    // Função para carregar os detalhes do imóvel quando o botão "Ver" é clicado
    function loadPropertyDetails(propertyId) {
-       fetch(`/property-details?id=${propertyId}`)
+       fetch(`/property?id=${propertyId}`)
            .then(response => response.json())
            .then(data => {
-               // Implemente aqui a lógica para exibir os detalhes do imóvel
-               console.log('Detalhes do imóvel:', data);
+               // Redireciona para a página de anúncio com o ID do imóvel
+               window.location.href = `/pages/anuncio.html?id=${propertyId}`;
            })
            .catch(error => {
                console.error('Erro ao carregar detalhes do imóvel:', error);
            });
    }
 
-   // Adiciona o evento de clique para carregar detalhes do imóvel quando o botão "Ver" é clicado
-   document.addEventListener('click', function (event) {
-       if (event.target && event.target.classList.contains('btn-ver')) {
-           var propertyId = event.target.dataset.imovelId;
-           loadPropertyDetails(propertyId);
-       }
-   });
 });
