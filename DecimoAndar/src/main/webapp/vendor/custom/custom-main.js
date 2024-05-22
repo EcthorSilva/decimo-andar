@@ -64,6 +64,24 @@ document.addEventListener("DOMContentLoaded", function () {
                 });
             }
 
+            // Função para obter os dados do usuário e verificar o telefone
+            function verificarTelefoneHeader() {
+                fetch('/profile')
+                    .then(response => response.json())
+                    .then(userData => {
+                        if (userData.telefone && userData.telefone.trim() !== "") {
+                            window.location.href = "/pages/imovel.html";
+                        } else {
+                            alert("Por favor, cadastre seu telefone antes de anunciar.");
+                            window.location.href = "/pages/profile.html";
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Erro ao obter os dados do usuário:', error);
+                        alert("Erro ao verificar dados do usuário.");
+                    });
+            }
+
         // Adiciona o evento clique ao botão para chamar a função de exclusão do usuário.
         document.getElementById("bntExcluirConta").addEventListener("click", function() {
                     if (confirm("Tem certeza de que deseja excluir sua conta?")) {
@@ -83,18 +101,19 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // Event listener para o botão "Anunciar" na Header
-    var anunciarHeader = document.getElementById("AnunciarHeader");
-    if (anunciarHeader) {
-        anunciarHeader.addEventListener("click", function() {
-            console.log("Passei aqui zé da bronha");
-            if (checkSessionCookie()) {
-                window.location.href = "/pages/imovel.html";
-            } else {
-                window.location.href = "/pages/login.html";
-            }
-        });
-    }
+// Event listener para o botão "Anunciar" na Header
+var anunciarHeader = document.getElementById("AnunciarHeader");
+if (anunciarHeader) {
+    anunciarHeader.addEventListener("click", function() {
+        if (checkSessionCookie()) {
+            verificarTelefoneHeader();
+        } else {
+            // Armazena a intenção de anunciar na sessão ou localStorage antes de redirecionar
+            sessionStorage.setItem('redirectAfterLogin', 'verificarTelefoneHeader');
+            window.location.href = "/pages/login.html";
+        }
+    });
+}
 
     updateButtonVisibility();
 
