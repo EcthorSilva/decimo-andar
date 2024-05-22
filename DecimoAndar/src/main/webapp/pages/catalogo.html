@@ -73,7 +73,6 @@
             </li>
          </div>
       </header>
-
       <!-- Start Main Content -->
       <main class="py-5">
          <div class="container mt-5">
@@ -81,6 +80,9 @@
                <div class="col-lg-3">
                   <!-- mini perfil -->
                   <div class="card mb-4">
+                     <div class="card-header py-2 d-flex align-items-center justify-content-between">
+                        <h5 class="mb-0">Filtrar por preço</h5>
+                     </div>
                      <div class="card-body ">
                          <div class="input-group">
                            <select class="form-select" id="inputGroupSelect04" aria-label="Example select with button addon">
@@ -88,7 +90,7 @@
                              <option value="1">Preço crescente</option>
                              <option value="2">Preço decrescente</option>
                            </select>
-                           <button class="btn btn-outline-secondary" type="button">Button</button>
+                           <button class="btn btn-outline-secondary" type="button">Buscar</button>
                          </div>
                      </div>
                   </div>
@@ -99,211 +101,81 @@
                      </div>
                      <div class="card-body text-center">
                         <div class="text-start">
+                           <h6 class="text-black">Tipo de contrato</h6>
                            <ul class="list-group list-group-flush">
-                              <li class="list-group-item d-flex justify-flex-start border-0 px-0 pb-0">
-                                  <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3cg">
-                                  <label class="form-check-label" for="">
-                                      Venda
-                                  </label>
+                              <li class="list-group-item d-flex justify-content-start border-0 px-0 pb-0 mt-1">
+                                 <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="tipoVenda" id="locacaoRadio" value="locacao">
+                                    <label class="form-check-label" for="locacaoRadio">
+                                       Venda
+                                    </label>
+                                 </div>
                               </li>
-                              <li class="list-group-item d-flex justify-flex-start border-0 px-0 pb-0 mt-1">
-                                  <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3cg">
-                                  <label class="form-check-label" for="">
-                                      Locação
-                                  </label>
+                              <li class="list-group-item d-flex justify-content-start border-0 px-0 pb-0 mt-1">
+                                 <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="tipoVenda" id="locacaoRadio" value="locacao">
+                                    <label class="form-check-label" for="locacaoRadio">
+                                       Locação
+                                    </label>
+                                 </div>
                               </li>
-                          </ul>
+                           </ul>
                            <hr>
-                           <ul class="list-group list-group-flush">
-                              <li class="list-group-item d-flex justify-flex-start border-0 px-0 pb-0">
-                                  <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3cg">
-                                  <label class="form-check-label" for="">
-                                      Venda
-                                  </label>
-                              </li>
-                              <li class="list-group-item d-flex justify-flex-start border-0 px-0 pb-0 mt-1">
-                                  <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3cg">
-                                  <label class="form-check-label" for="">
-                                      Locação
-                                  </label>
-                              </li>
-                          </ul>
+                           <h6 class="text-black">Detalhes do Imovel</h6>
+                           <div class="input-group mt-3">
+                              <select class="form-select" id="inputGroupSelect04" aria-label="Example select with button addon">
+                                <option selected>Numero quarto</option>
+                                <option class="input-group" value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5 ou mais</option>
+                              </select>
+                              <button class="btn btn-outline-secondary disabled" type="button">Buscar</button>
+                           </div>
+                           <div class="input-group mt-3">
+                              <select class="form-select" id="inputGroupSelect04" aria-label="Example select with button addon">
+                                <option selected>Numero banheiros</option>
+                                <option class="input-group" value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5 ou mais</option>
+                              </select>
+                              <button class="btn btn-outline-secondary disabled" type="button">Buscar</button>
+                           </div>
                            <hr>
-                           <ul class="list-group list-group-flush">
-                              <li class="list-group-item d-flex justify-flex-start border-0 px-0 pb-0">
-                                  <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3cg">
-                                  <label class="form-check-label" for="">
-                                      Venda
-                                  </label>
+                           <h6 class="text-black mt-3">Tipo de contrato</h6>
+                           <ul class="list-group list-group-flush ">
+                              <li class="list-group-item d-flex justify-content-start border-0 px-0 pb-0 mt-1 disabled">
+                                 <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="tipoVenda" id="locacaoRadio" value="locacao">
+                                    <label class="form-check-label" for="locacaoRadio">
+                                       Particular
+                                    </label>
+                                 </div>
                               </li>
-                              <li class="list-group-item d-flex justify-flex-start border-0 px-0 pb-0 mt-1">
-                                  <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3cg">
-                                  <label class="form-check-label" for="">
-                                      Locação
-                                  </label>
+                              <li class="list-group-item d-flex justify-content-start border-0 px-0 pb-0 mt-1 disabled">
+                                 <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="tipoVenda" id="locacaoRadio" value="locacao">
+                                    <label class="form-check-label" for="locacaoRadio">
+                                       Profissional
+                                    </label>
+                                 </div>
                               </li>
-                          </ul>
+                           </ul>
                         </div>
                      </div>
                   </div>
                </div>
       
                <div class="col-lg-9">
-                  <div class="card mb-4">
+                  <div class="card mb-4" >
                      <div class="card-header-pills mt-3 d-flex justify-content-between align-items-baseline ">
                         <!-- titulo aqui lindinho -->
                      </div>
-                     <div class="card-body">
-                        <div class="row justify-content-center">
-                           <div class="row">
-                              <div class="col-md-4 mb-3">
-                                 <div class="card">
-                                    <img class="img-fluid" src="/assets/images/imagem2.jpg" alt="Imagem do Imóvel">
-                                    <div class="card-body">
-                                       <h6 class="card-title">${imovel.endereco}</h6>
-                                       <p class="card-text"><strong>CEP: </strong>${imovel.cep}</p>
-                                       <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-                                          <button class="btn btn-outline-secondary px-3 me-md-2 btn-ver"
-                                             data-imovel-id="${imovel.id}">Ver</button>
-                                       </div>
-                                    </div>
-                                 </div>
-                              </div>
-                              <div class="col-md-4 mb-3">
-                                 <div class="card">
-                                    <img class="img-fluid" src="/assets/images/imagem2.jpg" alt="Imagem do Imóvel">
-                                    <div class="card-body">
-                                       <h6 class="card-title">${imovel.endereco}</h6>
-                                       <p class="card-text"><strong>CEP: </strong>${imovel.cep}</p>
-                                       <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-                                          <button class="btn btn-outline-secondary px-3 me-md-2 btn-ver"
-                                             data-imovel-id="${imovel.id}">Ver</button>
-                                          <button id="btnExcluirAnuncio-${imovel.id}" type="button"
-                                             class="btn btn-outline-danger px-3 btnExcluirAnuncio"><i class="bi bi-trash3"></i>
-                                             Excluir</button>
-                                       </div>
-                                    </div>
-                                 </div>
-                              </div>
-                              <div class="col-md-4 mb-3">
-                                 <div class="card">
-                                    <img class="img-fluid" src="/assets/images/imagem2.jpg" alt="Imagem do Imóvel">
-                                    <div class="card-body">
-                                       <h6 class="card-title">${imovel.endereco}</h6>
-                                       <p class="card-text"><strong>CEP: </strong>${imovel.cep}</p>
-                                       <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-                                          <button class="btn btn-outline-secondary px-3 me-md-2 btn-ver"
-                                             data-imovel-id="${imovel.id}">Ver</button>
-                                          <button id="btnExcluirAnuncio-${imovel.id}" type="button"
-                                             class="btn btn-outline-danger px-3 btnExcluirAnuncio"><i class="bi bi-trash3"></i>
-                                             Excluir</button>
-                                       </div>
-                                    </div>
-                                 </div>
-                              </div>
-                           </div>
-                           <div class="row">
-                              <div class="col-md-4 mb-3">
-                                 <div class="card">
-                                    <img class="img-fluid" src="/assets/images/imagem2.jpg" alt="Imagem do Imóvel">
-                                    <div class="card-body">
-                                       <h6 class="card-title">${imovel.endereco}</h6>
-                                       <p class="card-text"><strong>CEP: </strong>${imovel.cep}</p>
-                                       <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-                                          <button class="btn btn-outline-secondary px-3 me-md-2 btn-ver"
-                                             data-imovel-id="${imovel.id}">Ver</button>
-                                          <button id="btnExcluirAnuncio-${imovel.id}" type="button"
-                                             class="btn btn-outline-danger px-3 btnExcluirAnuncio"><i class="bi bi-trash3"></i>
-                                             Excluir</button>
-                                       </div>
-                                    </div>
-                                 </div>
-                              </div>
-                              <div class="col-md-4 mb-3">
-                                 <div class="card">
-                                    <img class="img-fluid" src="/assets/images/imagem2.jpg" alt="Imagem do Imóvel">
-                                    <div class="card-body">
-                                       <h6 class="card-title">${imovel.endereco}</h6>
-                                       <p class="card-text"><strong>CEP: </strong>${imovel.cep}</p>
-                                       <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-                                          <button class="btn btn-outline-secondary px-3 me-md-2 btn-ver"
-                                             data-imovel-id="${imovel.id}">Ver</button>
-                                          <button id="btnExcluirAnuncio-${imovel.id}" type="button"
-                                             class="btn btn-outline-danger px-3 btnExcluirAnuncio"><i class="bi bi-trash3"></i>
-                                             Excluir</button>
-                                       </div>
-                                    </div>
-                                 </div>
-                              </div>
-                              <div class="col-md-4 mb-3">
-                                 <div class="card">
-                                    <img class="img-fluid" src="/assets/images/imagem2.jpg" alt="Imagem do Imóvel">
-                                    <div class="card-body">
-                                       <h6 class="card-title">${imovel.endereco}</h6>
-                                       <p class="card-text"><strong>CEP: </strong>${imovel.cep}</p>
-                                       <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-                                          <button class="btn btn-outline-secondary px-3 me-md-2 btn-ver"
-                                             data-imovel-id="${imovel.id}">Ver</button>
-                                          <button id="btnExcluirAnuncio-${imovel.id}" type="button"
-                                             class="btn btn-outline-danger px-3 btnExcluirAnuncio"><i class="bi bi-trash3"></i>
-                                             Excluir</button>
-                                       </div>
-                                    </div>
-                                 </div>
-                              </div>
-                           </div>
-                           <div class="row">
-                              <div class="col-md-4 mb-3">
-                                 <div class="card">
-                                    <img class="img-fluid" src="/assets/images/imagem2.jpg" alt="Imagem do Imóvel">
-                                    <div class="card-body">
-                                       <h6 class="card-title">${imovel.endereco}</h6>
-                                       <p class="card-text"><strong>CEP: </strong>${imovel.cep}</p>
-                                       <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-                                          <button class="btn btn-outline-secondary px-3 me-md-2 btn-ver"
-                                             data-imovel-id="${imovel.id}">Ver</button>
-                                          <button id="btnExcluirAnuncio-${imovel.id}" type="button"
-                                             class="btn btn-outline-danger px-3 btnExcluirAnuncio"><i class="bi bi-trash3"></i>
-                                             Excluir</button>
-                                       </div>
-                                    </div>
-                                 </div>
-                              </div>
-                              <div class="col-md-4 mb-3">
-                                 <div class="card">
-                                    <img class="img-fluid" src="/assets/images/imagem2.jpg" alt="Imagem do Imóvel">
-                                    <div class="card-body">
-                                       <h6 class="card-title">${imovel.endereco}</h6>
-                                       <p class="card-text"><strong>CEP: </strong>${imovel.cep}</p>
-                                       <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-                                          <button class="btn btn-outline-secondary px-3 me-md-2 btn-ver"
-                                             data-imovel-id="${imovel.id}">Ver</button>
-                                          <button id="btnExcluirAnuncio-${imovel.id}" type="button"
-                                             class="btn btn-outline-danger px-3 btnExcluirAnuncio"><i class="bi bi-trash3"></i>
-                                             Excluir</button>
-                                       </div>
-                                    </div>
-                                 </div>
-                              </div>
-                              <div class="col-md-4 mb-3">
-                                 <div class="card">
-                                    <img class="img-fluid" src="/assets/images/imagem2.jpg" alt="Imagem do Imóvel">
-                                    <div class="card-body">
-                                       <h6 class="card-title">${imovel.endereco}</h6>
-                                       <p class="card-text"><strong>CEP: </strong>${imovel.cep}</p>
-                                       <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-                                          <button class="btn btn-outline-secondary px-3 me-md-2 btn-ver"
-                                             data-imovel-id="${imovel.id}">Ver</button>
-                                          <button id="btnExcluirAnuncio-${imovel.id}" type="button"
-                                             class="btn btn-outline-danger px-3 btnExcluirAnuncio"><i class="bi bi-trash3"></i>
-                                             Excluir</button>
-                                       </div>
-                                    </div>
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
+                     <div class="card-body" id="imoveisContainer">
+                        <!--  -->
                   </div>
                </div>
             </div>
@@ -381,7 +253,8 @@
       <!-- Bootstrap -->
       <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
       <script src="../vendor/custom/custom-main.js"></script>
-      <!-- <script src="/vendor/custom/custom-main.js"></script> -->
+      <script src="/vendor/custom/custom-main.js"></script>
+      <script src="../vendor/custom/catalogo.js"></script>
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 
