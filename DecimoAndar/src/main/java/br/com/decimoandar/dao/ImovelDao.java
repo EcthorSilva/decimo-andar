@@ -127,7 +127,6 @@ public class ImovelDao {
     }
 
     // Função para buscar os imóveis de um usuário logado
-    // Função para buscar os imóveis de um usuário logado
     public List<Imovel> getImoveisUsuarioAtivo(int userId) {
         List<Imovel> imoveis = new ArrayList<>();
 
@@ -254,4 +253,58 @@ public class ImovelDao {
 
         return imovel;
     }
+    public List<Imovel> getImoveisParaExibicao(int limit) {
+        List<Imovel> imoveis = new ArrayList<>();
+
+        try {
+            Connection connection = DriverManager.getConnection("jdbc:h2:~/test", "sa", "sa");
+
+            if (connection != null) {
+                System.out.println("Success in database connection");
+            } else {
+                System.out.println("Failed to connect to the database");
+                return imoveis;
+            }
+
+            String SQL = "SELECT i.id as id_imovel, i.tipoVenda, i.valor, i.endereco, ii.caminho_imagem " +
+                    "FROM DECIMO_ANDAR.Imovel i " +
+                    "LEFT JOIN (SELECT imovel_id, caminho_imagem FROM DECIMO_ANDAR.ImovelImagem GROUP BY imovel_id) ii " +
+                    "ON i.id = ii.imovel_id " +
+                    "GROUP BY i.id " +
+                    "LIMIT ?";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+            preparedStatement.setInt(1, limit);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                int idImovel = resultSet.getInt("id_imovel");
+                String tipoVenda = resultSet.getString("tipoVenda");
+                String valor = resultSet.getString("valor");
+                String endereco = resultSet.getString("endereco");
+                String caminhoImagem = resultSet.getString("caminho_imagem");
+
+                Imovel imovel = new Imovel();
+                imovel.setIdImovel(idImovel);
+                imovel.setTipoVenda(tipoVenda);
+                imovel.setValor(valor);
+                imovel.setEndereco(endereco);
+
+                // Adiciona apenas a primeira imagem encontrada
+                if (caminhoImagem != null) {
+                    List<String> imagePaths = new ArrayList<>();
+                    imagePaths.add(caminhoImagem);
+                    imovel.setImagePaths(imagePaths);
+                }
+
+                imoveis.add(imovel);
+            }
+
+            connection.close();
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return imoveis;
+    }
+
 }
