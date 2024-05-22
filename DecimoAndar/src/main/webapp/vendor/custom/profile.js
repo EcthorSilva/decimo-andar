@@ -7,33 +7,62 @@ document.addEventListener("DOMContentLoaded", function () {
         var telefone = document.getElementById('telefone').value;
         var dataNascimento = document.getElementById('datanasci').value;
 
+        function validarTelefone(telefone) {
+            const telefoneRegex = /^\(?\d{2}\)?[\s-]?\d{4,5}[\s-]?\d{4}$/;
+            return telefoneRegex.test(telefone);
+        }
+        
+        function calcularIdade(dataNascimento) {
+            const hoje = new Date();
+            const nascimento = new Date(dataNascimento);
+            let idade = hoje.getFullYear() - nascimento.getFullYear();
+            const mes = hoje.getMonth() - nascimento.getMonth();
+            if (mes < 0 || (mes === 0 && hoje.getDate() < nascimento.getDate())) {
+                idade--;
+            }
+            return idade;
+        }
+
         var dados = {
             telefone: telefone,
             dataNascimento: dataNascimento
         };
 
-        fetch('/update-user-data', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(dados),
-        })
-        .then(response => {
-            if (response.ok) {
-                console.log("Dados de usuário atualizados com sucesso!");
-                // Fechar o modal após atualização bem-sucedida
-                $('#modalId').modal('hide');
-                // Atualizar os dados na interface do usuário
-                obterDadosUsuario();
-            } else {
-                console.log("Erro ao atualizar os dados do usuário.");
-                return response.text();
+        processarDadosUsuario(dados);
+
+        function processarDadosUsuario(dados) {
+            if (!validarTelefone(dados.telefone)) {
+                alert("Telefone inválido.");
+                return;
             }
-        })
-        .catch(error => {
-            console.error('Erro ao atualizar os dados do usuário:', error);
-        });
+        
+            if (calcularIdade(dados.dataNascimento) < 18) {
+                alert("Usuário deve ter 18 anos ou mais.");
+                return;
+            }
+        
+            fetch('/update-user-data', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(dados),
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert("Dados de usuário atualizados com sucesso!");
+                    $('#modalId').modal('hide');
+                    obterDadosUsuario();
+                } else {
+                    return response.text().then(text => {
+                        alert("Erro ao atualizar os dados do usuário:", text);
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Erro ao atualizar os dados do usuário:', error);
+            });
+        }
     });
 
     // Função para obter os dados do usuário
@@ -113,7 +142,6 @@ document.addEventListener("DOMContentLoaded", function () {
             });
          },
          error: function () {
-            alert("Erro ao carregar imóveis.");
          }
       });
    }
@@ -204,4 +232,3 @@ document.addEventListener("DOMContentLoaded", function () {
         window.location.href = `/pages/anuncio.html?id=${propertyId}`;
     });
 });
-
