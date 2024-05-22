@@ -23,9 +23,13 @@ import java.util.List;
 
 @WebServlet("/create-imovel")
 @MultipartConfig
-public class ImovelServlet extends HttpServlet {
+public class CreateImovelServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // Configura a codificação de caracteres
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+
         Imovel imovel = new Imovel();
         List<String> imagePaths = new ArrayList<>();
 
@@ -39,40 +43,40 @@ public class ImovelServlet extends HttpServlet {
                     if (item.isFormField()) {
                         switch (item.getFieldName()) {
                             case "tipoImovel":
-                                imovel.setTipoImovel(item.getString());
+                                imovel.setTipoImovel(item.getString("UTF-8"));
                                 break;
                             case "tipoVenda":
-                                imovel.setTipoVenda(item.getString());
+                                imovel.setTipoVenda(item.getString("UTF-8"));
                                 break;
                             case "valor":
-                                imovel.setValor(item.getString());
+                                imovel.setValor(item.getString("UTF-8"));
                                 break;
                             case "endereco":
-                                imovel.setEndereco(item.getString());
+                                imovel.setEndereco(item.getString("UTF-8"));
                                 break;
                             case "numero":
-                                imovel.setNumero(item.getString());
+                                imovel.setNumero(item.getString("UTF-8"));
                                 break;
                             case "cidade":
-                                imovel.setCidade(item.getString());
+                                imovel.setCidade(item.getString("UTF-8"));
                                 break;
                             case "uf":
-                                imovel.setUf(item.getString());
+                                imovel.setUf(item.getString("UTF-8"));
                                 break;
                             case "cep":
-                                imovel.setCep(item.getString());
+                                imovel.setCep(item.getString("UTF-8"));
                                 break;
                             case "numQuartos":
-                                imovel.setNumQuartos(item.getString());
+                                imovel.setNumQuartos(item.getString("UTF-8"));
                                 break;
                             case "numBanheiros":
-                                imovel.setNumBanheiros(item.getString());
+                                imovel.setNumBanheiros(item.getString("UTF-8"));
                                 break;
                             case "metrosQuadrados":
-                                imovel.setMetrosQuadrados(item.getString());
+                                imovel.setMetrosQuadrados(item.getString("UTF-8"));
                                 break;
                             case "descricaoImovel":
-                                imovel.setDescricaoImovel(item.getString());
+                                imovel.setDescricaoImovel(item.getString("UTF-8"));
                                 break;
                         }
                     }

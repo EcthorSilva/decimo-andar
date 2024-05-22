@@ -114,7 +114,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                                ${items.map(imovel => `
                                                    <div class="col-md-4 mb-3">
                                                        <div class="card">
-                                                           <img class="img-fluid" src="${imovel.imagePaths[0]}" alt="Imagem do Imóvel">
+                                                           <img class="card-img-top img-fluid" style="height: 200px; object-fit: cover;" src="${imovel.imagePaths[0]}" alt="Imagem do Imóvel">
                                                            <div class="card-body">
                                                                <h6 class="card-title">${imovel.endereco}</h6>
                                                                <p class="card-text"><strong>CEP: </strong>${imovel.cep}</p>
