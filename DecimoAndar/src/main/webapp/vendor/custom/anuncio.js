@@ -51,6 +51,10 @@ function loadPropertyDetails(propertyId) {
                                 width="600" height="250" style="border:0;" allowfullscreen="" loading="lazy"
                                 referrerpolicy="no-referrer-when-downgrade"></iframe>`;
             $("#mapa").html(iframe);
+
+            // Atualiza o link do botão de WhatsApp
+            var whatsappLink = `https://wa.me/+55${data.phoneNumber}`;
+            $("#botaochamar a").attr("href", whatsappLink);
         },
         error: function (xhr, status, error) {
             console.error("Erro ao carregar detalhes do imóvel:", error);

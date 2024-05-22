@@ -32,10 +32,13 @@ public class ImovelDetailsServlet extends HttpServlet {
                 return;
             }
 
-            // Converte o imóvel em formato JSON
-            String json = convertToJson(imovel);
+            // Fetch the advertiser's phone number
+            String phoneNumber = imovelDao.getAdvertiserPhoneNumber(imovel.getUserId());
 
-            // Escreve a resposta como JSON
+            // Convert the property to JSON format
+            String json = convertToJson(imovel, phoneNumber);
+
+            // Write the response as JSON
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
             PrintWriter out = response.getWriter();
@@ -47,7 +50,7 @@ public class ImovelDetailsServlet extends HttpServlet {
         }
     }
 
-    private String convertToJson(Imovel imovel) {
+    private String convertToJson(Imovel imovel, String phoneNumber) {
         StringBuilder json = new StringBuilder("{");
         json.append("\"id\":\"").append(imovel.getIdImovel()).append("\",");
         json.append("\"tipoImovel\":\"").append(imovel.getTipoImovel()).append("\",");
@@ -64,7 +67,6 @@ public class ImovelDetailsServlet extends HttpServlet {
         json.append("\"descricaoImovel\":\"").append(imovel.getDescricaoImovel()).append("\",");
         json.append("\"imagePaths\":[");
 
-        // Adiciona os caminhos das imagens
         if (imovel.getImagePaths() != null) {
             for (int i = 0; i < imovel.getImagePaths().size(); i++) {
                 json.append("\"").append(imovel.getImagePaths().get(i)).append("\"");
@@ -74,7 +76,9 @@ public class ImovelDetailsServlet extends HttpServlet {
             }
         }
 
-        json.append("]}");
+        json.append("],");
+        json.append("\"phoneNumber\":\"").append(phoneNumber).append("\"");
+        json.append("}");
         return json.toString();
     }
 }

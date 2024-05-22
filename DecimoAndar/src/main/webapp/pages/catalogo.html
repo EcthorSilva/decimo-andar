@@ -17,31 +17,26 @@
    <body>
       <!-- Start Header -->
       <header class="p-3 border-bottom shadow bg-body fixed-top">
-         <div
-            class="container d-flex flex-wrap align-items-center justify-content-center justify-content-md-between mb-1 ">
+         <div class="container d-flex flex-wrap align-items-center justify-content-center justify-content-md-between mb-1 ">
             <a href="/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
                <img src="../assets/icons/icons8-home.svg" alt="" width="50" height="50" title="instagram">
             </a>
-
             <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-               <li><a href="#" class="nav-link px-2 link-dark">Comprar</a></li>
+               <li><a href="catalogo.html" class="nav-link px-2 link-dark">Buscar</a></li>
                <li><a id="AnunciarHeader" class="nav-link px-2 link-dark">Anunciar</a></li>
                <li><a href="#" class="nav-link px-2 link-dark">Ajuda</a></li>
                <li><a href="#" class="nav-link px-2 link-dark">Sobre nós</a></li>
-            </ul>
-
+           </ul>
             <!-- Caso o usuario não esteja logado -->
             <li class="botao1 list-group-item nav-item">
-               <a href="../pages/login.html"
-                  class="btn btn-outline-secondary me-2 d-block text-decoration-none rounded-pill"
+               <a href="../pages/login.html" class="btn btn-outline-secondary me-2 d-block text-decoration-none rounded-pill"
                   style="width: 90px; height: 40px;">Login</a>
             </li>
             <!-- Caso o usuario já tenha logado -->
             <li class="botao2 list-group-item nav-item dropdown-custom visually-hidden">
                <a href="#" class="d-block link-body-emphasis text-decoration-none" data-bs-toggle="dropdown"
                   aria-expanded="false">
-                  <img src="../assets/images/perfil/perfil.jpg" alt="mdo" width="50px" height="50px"
-                     class="rounded-circle">
+                  <img src="../assets/images/perfil/perfil.jpg" alt="mdo" width="50px" height="50px" class="rounded-circle">
                </a>
                <ul class="dropdown-menu  gap-1 p-2 rounded-3 mx-0 shadow w-220px">
                   <li>
@@ -50,21 +45,15 @@
                         &nbsp; Perfil</a>
                   </li>
                   <li>
-                     <a class="dropdown-item rounded-2" href="#">
-                        <img src="../vendor/bootstrap/bootstrap-icons/heart.svg" alt="" title="Favoritos">
-                        &nbsp; Favoritos
-                     </a>
-                  </li>
-                  <li>
-                     <a class="dropdown-item rounded-2" href="#">
-                        <img src="../vendor/bootstrap/bootstrap-icons/gear.svg" alt="" title="Configuração">
-                        &nbsp; Configuração</a>
+                     <a id="bntExcluirConta" class="dropdown-item rounded-2" href="#">
+                        <img src="../vendor/bootstrap/bootstrap-icons/person-x-fill.svg" alt="" title="Excluir conta">
+                        &nbsp; Excluir conta</a>
                   </li>
                   <li>
                      <hr class="dropdown-divider">
                   </li>
                   <li>
-                     <a class="dropdown-item d-flex gap-2 align-items-center" id="logoutButton">
+                     <a class="dropdown-item d-flex gap-2 align-items-center" href="#">
                         <img src="../vendor/bootstrap/bootstrap-icons/box-arrow-left.svg" alt="" title="logout">
                         &nbsp; logout
                      </a>
@@ -81,7 +70,7 @@
                   <!-- mini perfil -->
                   <div class="card mb-4">
                      <div class="card-header py-2 d-flex align-items-center justify-content-between">
-                        <h5 class="mb-0">Filtrar por preço</h5>
+                        <h5 class="mb-0">Ordenar por preço</h5>
                      </div>
                      <div class="card-body ">
                          <div class="input-group">
@@ -105,16 +94,24 @@
                            <ul class="list-group list-group-flush">
                               <li class="list-group-item d-flex justify-content-start border-0 px-0 pb-0 mt-1">
                                  <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="tipoVenda" id="locacaoRadio" value="locacao">
-                                    <label class="form-check-label" for="locacaoRadio">
+                                     <input class="form-check-input" type="radio" name="tipoVenda" id="ambosRadio" value="ambos">
+                                     <label class="form-check-label" for="ambosRadio">
+                                         Ambos
+                                     </label>
+                                 </div>
+                             </li>
+                              <li class="list-group-item d-flex justify-content-start border-0 px-0 pb-0 mt-1">
+                                 <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="tipoVenda" id="vendaRadio" value="vender">
+                                    <label class="form-check-label" for="vendaRadio">
                                        Venda
                                     </label>
                                  </div>
                               </li>
                               <li class="list-group-item d-flex justify-content-start border-0 px-0 pb-0 mt-1">
                                  <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="tipoVenda" id="locacaoRadio" value="locacao">
-                                    <label class="form-check-label" for="locacaoRadio">
+                                    <input class="form-check-input" type="radio" name="tipoVenda" id="aluguelRadio" value="alugar">
+                                    <label class="form-check-label" for="aluguelRadio">
                                        Locação
                                     </label>
                                  </div>
@@ -253,7 +250,6 @@
       <!-- Bootstrap -->
       <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
       <script src="../vendor/custom/custom-main.js"></script>
-      <script src="/vendor/custom/custom-main.js"></script>
       <script src="../vendor/custom/catalogo.js"></script>
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>

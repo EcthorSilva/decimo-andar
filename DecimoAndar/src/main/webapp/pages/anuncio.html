@@ -23,11 +23,11 @@
                <img src="../assets/icons/icons8-home.svg" alt="" width="50" height="50" title="instagram">
             </a>
             <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-               <li><a href="#" class="nav-link px-2 link-dark">Comprar</a></li>
-               <li><a href="#" class="nav-link px-2 link-dark">Anunciar</a></li>
+               <li><a href="catalogo.html" class="nav-link px-2 link-dark">Buscar</a></li>
+               <li><a id="AnunciarHeader" class="nav-link px-2 link-dark">Anunciar</a></li>
                <li><a href="#" class="nav-link px-2 link-dark">Ajuda</a></li>
                <li><a href="#" class="nav-link px-2 link-dark">Sobre nós</a></li>
-            </ul>
+           </ul>
             <!-- Caso o usuario não esteja logado -->
             <li class="botao1 list-group-item nav-item">
                <a href="../pages/login.html" class="btn btn-outline-secondary me-2 d-block text-decoration-none rounded-pill"
@@ -135,54 +135,61 @@
                      </div>
                  </div>
                  <!-- descrição -->
-                 <div class="col-md-6">
-                     <div class="card mb-4 h-100">
-                         <div class="card-header py-3">
-                             <h5 class="mb-0">Descrição</h5>
-                         </div>
-                         <div class="card-body">
-                             <div id="sss" class="mt-2 mb-4">
-                                 <div class="card text-start border-0">
-                                     <div class="card-body">
-                                         <!-- Endereço -->
-                                         <div class="row">
-                                             <div class="col col-md-9">
-                                                 <p id="logradouro"><strong>Logradouro: </strong> Av. Eng. Eusébio Stevaux</p>
-                                             </div>
-                                             <div class="col col-md-3 ">
-                                                 <p id="numero"><strong>Número: </strong> 823</p>
-                                             </div>
-                                         </div>
-                                         <div class="row">
-                                             <!-- CIDADE -->
-                                             <div class="col col-md-5">
-                                                 <p id="cidade"><strong>Cidade: </strong> São Paulo</p>
-                                             </div>
-                                             <!-- UF -->
-                                             <div class="col col-md-3 ">
-                                                 <p id="estado"><strong>Estado: </strong> SP</p>
-                                             </div>
-                                             <!-- CEP -->
-                                             <div class="col col-md-4">
-                                                 <p id="cep"><strong>CEP: </strong> 04696-000</p>
-                                             </div>
-                                         </div>
-                                     </div>
-                                 </div>
-                             </div>
-                             <!-- DESCRICAO -->
-                             <div class="card text-start">
-                                 <div class="card-body">
-                                     <h6 class="card-subtitle mb-2 text-black-50">Descrição</h6>
-                                     <p class="card-text" id="descricao">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Adipisci perspiciatis aliquid ipsum perferendis laudantium autem, laborum officia saepe. Ipsam exercitationem dolore eligendi, illo iste rerum praesentium autem atque corporis reprehenderit.</p>
-                                 </div>
-                             </div>
-                             <div id="mapa" class="mt-5 border-0 rounded-3 shadow-sm">
-                                 <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3654.1713889822545!2d-46.7040323183628!3d-23.669828123870488!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce515bb231b5ed%3A0x327b78892baef8e6!2zU2VuYWMgTmHDp8O1ZXMgVW5pZGFz!5e0!3m2!1spt-BR!2sbr!4v1716145780152!5m2!1spt-BR!2sbr" width="600" height="250" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                             </div>
-                         </div>
+               <div class="col-md-6">
+                  <div class="card mb-4 h-75">
+                     <div class="card-header py-3">
+                        <h5 class="mb-0">Descrição</h5>
                      </div>
-                 </div>
+                     <div class="card-body">
+                        <div id="sss" class="mt-2 mb-4">
+                           <div class="card text-start border-0">
+                              <div class="card-body">
+                                 <!-- Endereço -->
+                                 <div class="row">
+                                    <div class="col col-md-9">
+                                       <p id="logradouro"><strong>Logradouro: </strong> Av. Eng. Eusébio Stevaux</p>
+                                    </div>
+                                    <div class="col col-md-3 ">
+                                       <p id="numero"><strong>Número: </strong> 823</p>
+                                    </div>
+                                 </div>
+                                 <div class="row">
+                                    <!-- CIDADE -->
+                                    <div class="col col-md-5">
+                                       <p id="cidade"><strong>Cidade: </strong> São Paulo</p>
+                                    </div>
+                                    <!-- UF -->
+                                    <div class="col col-md-3 ">
+                                       <p id="estado"><strong>Estado: </strong> SP</p>
+                                    </div>
+                                    <!-- CEP -->
+                                    <div class="col col-md-4">
+                                       <p id="cep"><strong>CEP: </strong> 04696-000</p>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <!-- DESCRICAO -->
+                        <div class="card text-start">
+                           <div class="card-body">
+                              <h6 class="card-subtitle mb-2 text-black-50">Descrição</h6>
+                              <p class="card-text" id="descricao">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Adipisci
+                                 perspiciatis aliquid ipsum perferendis laudantium autem, laborum officia saepe. Ipsam exercitationem
+                                 dolore eligendi, illo iste rerum praesentium autem atque corporis reprehenderit.</p>
+                           </div>
+                        </div>
+                        <div id="botaochamar" class="mt-2 mb-4">
+                           <!-- botão para conversar -->
+                           <div class="card text-start border-0 mt-5">
+                              <div class="d-grid gap-2 d-md-flex justify-content-md-start align-itens-center ">
+                                 <a href="https://wa.me/" class="btn btn-outline-secondary px-3 me-md-2"><i class="bi bi-whatsapp"></i> Mande uma mensagem</a>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
              </div>
          </div>
      </main>
